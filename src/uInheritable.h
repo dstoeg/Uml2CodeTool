@@ -12,11 +12,15 @@ class uInheritable
 public:
     uInheritable();
     // void accept(Visitor * visitor);
+    std::vector<uMethod> getMethods() const;
+    std::vector<uParameter> getAttributes() const;
+    std::vector<uReference*> getReferences() const;
+    uAccess getAccess() const;
 
 private:
     std::vector<uMethod> mMethods;
     std::vector<uParameter> mAttributes;
-    std::vector<uReference> mReferences;
+    std::vector<uReference*> mReferences;
     uAccess mAccess;
 };
 
