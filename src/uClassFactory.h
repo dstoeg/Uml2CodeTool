@@ -10,7 +10,7 @@ class uClassFactory
 {
 public:
     uClassFactory();
-    uInheritable * createClass(uClassType type);
+    uInheritable * createClass(uClassType type, std::string const& name);
 
 private:
 

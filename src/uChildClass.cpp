@@ -1,12 +1,12 @@
 #include "uChildClass.h"
 
 
-uChildClass::uChildClass()
+uChildClass::uChildClass(std::string const& name) : uInheritable(name)
 {
 
 }
 
-uChildClass::uChildClass(uInheritable * base)
+uChildClass::uChildClass(std::string const& name, uInheritable * base) : uInheritable(name)
 {
     mBaseClass = base;
 }

@@ -7,6 +7,7 @@ class uLanguageCPP : public uLanguageStrategy
 {
 public:
     uLanguageCPP();
+    virtual std::string createMethod(uMethod const& method);
 
 private:
 };

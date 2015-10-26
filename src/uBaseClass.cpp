@@ -1,6 +1,6 @@
 #include "uBaseClass.h"
 
-uBaseClass::uBaseClass()
+uBaseClass::uBaseClass(std::string const& name) : uInheritable(name)
 {
 
 }

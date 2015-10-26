@@ -6,7 +6,7 @@
 class uInterface : public uInheritable
 {
 public:
-    uInterface();
+    uInterface(std::string const& name);
 
 private:
 

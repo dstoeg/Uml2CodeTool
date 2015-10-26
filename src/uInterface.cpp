@@ -1,6 +1,6 @@
 #include "uInterface.h"
 
-uInterface::uInterface()
+uInterface::uInterface(std::string const& name) : uInheritable(name)
 {
 
 }

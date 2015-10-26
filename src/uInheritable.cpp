@@ -1,8 +1,9 @@
 #include "uInheritable.h"
 
-uInheritable::uInheritable()
-{
 
+uInheritable::uInheritable(const std::string &name)
+{
+    mName = name;
 }
 
 std::vector<uMethod> uInheritable::getMethods() const
@@ -23,5 +24,10 @@ std::vector<uReference *> uInheritable::getReferences() const
 uAccess uInheritable::getAccess() const
 {
     return mAccess;
+}
+
+std::string uInheritable::getName() const
+{
+    return mName;
 }
 

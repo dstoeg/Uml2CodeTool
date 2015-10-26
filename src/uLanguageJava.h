@@ -7,6 +7,7 @@ class uLanguageJava : public uLanguageStrategy
 {
 public:
     uLanguageJava();
+    virtual std::string createMethod(uMethod const& method);
 
 private:
 

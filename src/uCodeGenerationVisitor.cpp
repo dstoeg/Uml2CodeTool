@@ -1,5 +1,7 @@
 #include "uCodeGenerationVisitor.h"
 
+using namespace std;
+
 uCodeGenerationVisitor::uCodeGenerationVisitor()
 {
 
@@ -22,27 +24,31 @@ uLanguageStrategy * uCodeGenerationVisitor::getLanguage() const
 
 void uCodeGenerationVisitor::visit(uChildClass *childClass)
 {
-    std::vector<uMethod> methods = childClass->getMethods();
-    std::vector<uParameter> attributes = childClass->getAttributes();
-    std::vector<uReference*> references = childClass->getReferences();
+    vector<uMethod> methods = childClass->getMethods();
+    vector<uParameter> attributes = childClass->getAttributes();
+    vector<uReference*> references = childClass->getReferences();
     uAccess access = childClass->getAccess();
     uInheritable * base = childClass->getBaseClass();
+    string name = childClass->getName();
+
 
 }
 
 void uCodeGenerationVisitor::visit(uBaseClass *baseClass)
 {
-    std::vector<uMethod> methods = baseClass->getMethods();
-    std::vector<uParameter> attributes = baseClass->getAttributes();
-    std::vector<uReference*> references = baseClass->getReferences();
+    vector<uMethod> methods = baseClass->getMethods();
+    vector<uParameter> attributes = baseClass->getAttributes();
+    vector<uReference*> references = baseClass->getReferences();
     uAccess access = baseClass->getAccess();
+    string name = baseClass->getName();
 }
 
 void uCodeGenerationVisitor::visit(uInterface *interfaceClass)
 {
-    std::vector<uMethod> methods = interfaceClass->getMethods();
-    std::vector<uParameter> attributes = interfaceClass->getAttributes();
-    std::vector<uReference*> references = interfaceClass->getReferences();
+    vector<uMethod> methods = interfaceClass->getMethods();
+    vector<uParameter> attributes = interfaceClass->getAttributes();
+    vector<uReference*> references = interfaceClass->getReferences();
     uAccess access = interfaceClass->getAccess();
+    string name = interfaceClass->getName();
 }
 

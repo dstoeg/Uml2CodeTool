@@ -6,7 +6,7 @@
 class uBaseClass : public uInheritable
 {
 public:
-    uBaseClass();
+    uBaseClass(std::string const& name);
 
 private:
 

@@ -2,14 +2,16 @@
 #define ULANGUAGESTRATEGY
 
 #include <string>
+#include "uMethod.h"
 
 class uLanguageStrategy {
 
 public:
-    std::string getFileExtension() const { return "";}
+    std::string getFileExtension() const { return mFileExtension;}
+    virtual std::string createMethod(uMethod const& method) {return "";}
 
-private:
-
+protected:
+    std::string mFileExtension;
 };
 
 #endif // ULANGUAGESTRATEGY

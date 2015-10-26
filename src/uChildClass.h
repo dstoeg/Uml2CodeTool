@@ -6,8 +6,8 @@
 class uChildClass : public uInheritable
 {
 public:
-    uChildClass();
-    uChildClass(uInheritable * base);
+    uChildClass(std::string const& name);
+    uChildClass(std::string const& name, uInheritable * base);
     uInheritable * getBaseClass() const;
 
 private:
