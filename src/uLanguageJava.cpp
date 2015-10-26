@@ -20,3 +20,9 @@ std::string uLanguageJava::createMethod(const uMethod &method)
     return methodStr;
 }
 
+string uLanguageJava::createAttribute(const uParameter &attribute)
+{
+    string attributeString = getAccessString(attribute.getAccess()) + " " + attribute.getType() + " " + attribute.getName() + ";";
+    return attributeString;
+}
+

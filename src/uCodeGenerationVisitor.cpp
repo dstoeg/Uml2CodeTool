@@ -1,4 +1,6 @@
 #include "uCodeGenerationVisitor.h"
+#include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -50,5 +52,18 @@ void uCodeGenerationVisitor::visit(uInterface *interfaceClass)
     vector<uReference*> references = interfaceClass->getReferences();
     uAccess access = interfaceClass->getAccess();
     string name = interfaceClass->getName();
+
+}
+
+bool uCodeGenerationVisitor::createFile(string const& name, string const& content)
+{
+    ofstream myfile;
+    myfile.open(name);
+    if (!myfile.is_open())
+        return false;
+
+    myfile << content;
+    myfile.close();
+    return true;
 }
 

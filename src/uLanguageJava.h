@@ -8,6 +8,7 @@ class uLanguageJava : public uLanguageStrategy
 public:
     uLanguageJava();
     virtual std::string createMethod(uMethod const& method);
+    virtual std::string createAttribute(uParameter const& attribute);
 
 private:
 

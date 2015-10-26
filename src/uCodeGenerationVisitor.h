@@ -16,8 +16,12 @@ public:
     virtual void visit(uBaseClass * baseClass);
     virtual void visit(uInterface * interfaceClass);
 
+    bool createFile(std::string const& name, std::string const& content);
+
+
 private:
     uLanguageStrategy * mLanguage;
+
 };
 
 #endif // UCODEGENERATIONVISITOR_H

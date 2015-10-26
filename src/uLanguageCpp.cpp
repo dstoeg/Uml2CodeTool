@@ -21,3 +21,9 @@ std::string uLanguageCPP::createMethod(const uMethod & method)
     return methodStr;
 }
 
+string uLanguageCPP::createAttribute(const uParameter &attribute)
+{
+    string attributeString = attribute.getType() + " " + attribute.getName() + ";";
+    return attributeString;
+}
+
