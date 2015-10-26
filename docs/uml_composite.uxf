@@ -4,15 +4,16 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>670</x>
-      <y>390</y>
-      <w>170</w>
+      <x>660</x>
+      <y>530</y>
+      <w>180</w>
       <h>120</h>
     </coordinates>
     <panel_attributes>uBaseClass
 --
 
 --
++ uBaseClass(string)
 + accept(Visitor*)</panel_attributes>
     <additional_attributes/>
   </element>
@@ -20,7 +21,7 @@
     <id>UMLClass</id>
     <coordinates>
       <x>480</x>
-      <y>390</y>
+      <y>530</y>
       <w>170</w>
       <h>120</h>
     </coordinates>
@@ -28,6 +29,7 @@
 --
 
 --
++ uInterface(string)
 + accept(Visitor*)</panel_attributes>
     <additional_attributes/>
   </element>
@@ -35,9 +37,9 @@
     <id>UMLClass</id>
     <coordinates>
       <x>460</x>
-      <y>190</y>
-      <w>250</w>
-      <h>150</h>
+      <y>230</y>
+      <w>260</w>
+      <h>240</h>
     </coordinates>
     <panel_attributes>uInheritable
 --
@@ -45,26 +47,33 @@
 - mAttributes : vector&lt;uParameter&gt;
 - mReferences : vector&lt;uReference&gt;
 - mAccess : uAccess
+- mName : string
 --
-+ accept(Visitor*)</panel_attributes>
++ uInheritable(string)
++ accept(Visitor*)
++ getMethods() :vector&lt;uMethod&gt;
++ getAttributes() : vector&lt;uParameter&gt;
++ getReferences() : vector&lt;Reference&gt;
++ getAccess() : uAccess
++ getName() : string</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>560</x>
-      <y>330</y>
+      <y>460</y>
       <w>30</w>
-      <h>60</h>
+      <h>70</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;40.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>350</x>
-      <y>350</y>
+      <y>490</y>
       <w>430</w>
       <h>40</h>
     </coordinates>
@@ -75,7 +84,7 @@
     <id>Relation</id>
     <coordinates>
       <x>750</x>
-      <y>360</y>
+      <y>500</y>
       <w>30</w>
       <h>50</h>
     </coordinates>
@@ -86,7 +95,7 @@
     <id>Relation</id>
     <coordinates>
       <x>560</x>
-      <y>360</y>
+      <y>500</y>
       <w>30</w>
       <h>50</h>
     </coordinates>
@@ -96,15 +105,17 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>280</x>
-      <y>390</y>
-      <w>180</w>
+      <x>240</x>
+      <y>530</y>
+      <w>230</w>
       <h>120</h>
     </coordinates>
     <panel_attributes>uChildClass
 --
 - mBaseClass : Interhitable*
 --
++ uChildClass(string)
++ uChildClass(uInheritable*, string)
 + accept(Visitor*)</panel_attributes>
     <additional_attributes/>
   </element>
@@ -112,7 +123,7 @@
     <id>Relation</id>
     <coordinates>
       <x>350</x>
-      <y>360</y>
+      <y>500</y>
       <w>30</w>
       <h>50</h>
     </coordinates>
@@ -122,20 +133,20 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>210</x>
-      <y>250</y>
-      <w>270</w>
-      <h>250</h>
+      <x>190</x>
+      <y>290</y>
+      <w>290</w>
+      <h>350</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-
 1..n</panel_attributes>
-    <additional_attributes>70.0;230.0;10.0;230.0;10.0;10.0;250.0;10.0</additional_attributes>
+    <additional_attributes>50.0;330.0;10.0;330.0;10.0;10.0;270.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>990</x>
-      <y>200</y>
+      <y>240</y>
       <w>150</w>
       <h>80</h>
     </coordinates>
@@ -147,58 +158,62 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>700</x>
-      <y>210</y>
-      <w>310</w>
+      <x>710</x>
+      <y>250</y>
+      <w>300</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-
 0...n</panel_attributes>
-    <additional_attributes>10.0;20.0;290.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;280.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>700</x>
-      <y>240</y>
-      <w>310</w>
+      <x>710</x>
+      <y>280</y>
+      <w>300</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-
 1</panel_attributes>
-    <additional_attributes>290.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>280.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>920</x>
-      <y>360</y>
+      <y>400</y>
       <w>140</w>
       <h>80</h>
     </coordinates>
     <panel_attributes>uAggregation
 --
-</panel_attributes>
+
+--
++ uAggregation()</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>1080</x>
-      <y>360</y>
+      <y>400</y>
       <w>140</w>
       <h>80</h>
     </coordinates>
     <panel_attributes>uComposition
 --
-</panel_attributes>
+
+--
++ uComposition()</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>1060</x>
-      <y>270</y>
+      <y>310</y>
       <w>30</w>
       <h>80</h>
     </coordinates>
@@ -209,7 +224,7 @@
     <id>Relation</id>
     <coordinates>
       <x>970</x>
-      <y>310</y>
+      <y>350</y>
       <w>210</w>
       <h>40</h>
     </coordinates>
@@ -220,7 +235,7 @@
     <id>Relation</id>
     <coordinates>
       <x>1150</x>
-      <y>320</y>
+      <y>360</y>
       <w>30</w>
       <h>60</h>
     </coordinates>
@@ -230,40 +245,49 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>220</x>
-      <y>20</y>
-      <w>240</w>
-      <h>130</h>
+      <x>210</x>
+      <y>50</y>
+      <w>260</w>
+      <h>170</h>
     </coordinates>
     <panel_attributes>uMethod
 --
 - mName : string
 - mReturnType : string
 - mAccess : Access
-- mParameters : vector&lt;Parameter&gt;</panel_attributes>
+- mParameters : vector&lt;Parameter&gt;
+--
++ getName() : string
++ getReturnType() : string
++ getAccess() : uAccess
++ getParameters() : vector&lt;uParameter&gt;</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>570</x>
-      <y>30</y>
-      <w>160</w>
-      <h>100</h>
+      <x>580</x>
+      <y>20</y>
+      <w>260</w>
+      <h>150</h>
     </coordinates>
-    <panel_attributes>&lt;&lt;struct&gt;&gt;
-uParameter
+    <panel_attributes>uParameter
 --
  mName : string
  mType : string
- mAccess : uAccess</panel_attributes>
+ mAccess : uAccess
+--
+uParameter(string, string, uAccess)
++ getName() : string
++ getType() : string
++ getAccess() : uAccess</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>450</x>
-      <y>60</y>
+      <x>460</x>
+      <y>100</y>
       <w>140</w>
       <h>40</h>
     </coordinates>
@@ -275,19 +299,19 @@ uParameter
     <id>Relation</id>
     <coordinates>
       <x>320</x>
-      <y>140</y>
+      <y>210</y>
       <w>160</w>
-      <h>100</h>
+      <h>70</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-
 0 .. n</panel_attributes>
-    <additional_attributes>140.0;80.0;10.0;80.0;10.0;10.0</additional_attributes>
+    <additional_attributes>140.0;50.0;10.0;50.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>20</x>
-      <y>20</y>
+      <y>60</y>
       <w>150</w>
       <h>110</h>
     </coordinates>
@@ -304,19 +328,19 @@ protected
     <id>Relation</id>
     <coordinates>
       <x>160</x>
-      <y>50</y>
-      <w>80</w>
+      <y>90</y>
+      <w>70</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-
 1</panel_attributes>
-    <additional_attributes>60.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>50.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>70</x>
-      <y>120</y>
+      <y>160</y>
       <w>410</w>
       <h>140</h>
     </coordinates>
@@ -328,7 +352,7 @@ protected
     <id>Relation</id>
     <coordinates>
       <x>620</x>
-      <y>120</y>
+      <y>160</y>
       <w>30</w>
       <h>90</h>
     </coordinates>
@@ -339,7 +363,7 @@ protected
     <id>Relation</id>
     <coordinates>
       <x>970</x>
-      <y>320</y>
+      <y>360</y>
       <w>30</w>
       <h>60</h>
     </coordinates>
