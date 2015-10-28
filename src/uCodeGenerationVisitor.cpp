@@ -35,51 +35,17 @@ void uCodeGenerationVisitor::setFileAttributes(const string &author, const strin
 
 void uCodeGenerationVisitor::visit(uChildClass *childClass)
 {
-    createFile(childClass->getName() + mLanguage->getFileExtension(), mAuthor, mDate, mLanguage->createFileContent(childClass));
-
+    createFile(childClass->getName() + mLanguage->getFileExtension(), mAuthor, mDate, mLanguage->createFileContent(childClass->getBaseClass()));
 }
 
 void uCodeGenerationVisitor::visit(uBaseClass *baseClass)
 {
-    vector<uMethod> methods = baseClass->getMethods();
-    vector<uParameter> attributes = baseClass->getAttributes();
-    vector<uReference*> references = baseClass->getReferences();
-    uAccess access = baseClass->getAccess();
-    string name = baseClass->getName();
-
-    // add file header
-
-    // add multiple inclusion protection
-
-    // class name - inheritance
-
-    // public section
-
-    // private section
-
-    // end class
+    createFile(baseClass->getName() + mLanguage->getFileExtension(), mAuthor, mDate, mLanguage->createFileContent(baseClass));
 }
 
 void uCodeGenerationVisitor::visit(uInterface *interfaceClass)
 {
-    vector<uMethod> methods = interfaceClass->getMethods();
-    vector<uParameter> attributes = interfaceClass->getAttributes();
-    vector<uReference*> references = interfaceClass->getReferences();
-    uAccess access = interfaceClass->getAccess();
-    string name = interfaceClass->getName();
-
-    // add file header
-
-    // add multiple inclusion protection
-
-    // class name - inheritance
-
-    // public section
-
-    // private section
-
-    // end class
-
+    createFile(interfaceClass->getName() + mLanguage->getFileExtension(), mAuthor, mDate, mLanguage->createFileContent(interfaceClass));
 }
 
 bool uCodeGenerationVisitor::createFile(string const& name, string const& author, string const& date, string const& content)
