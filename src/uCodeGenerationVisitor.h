@@ -11,16 +11,22 @@ public:
     uCodeGenerationVisitor(uLanguageStrategy * language);
     void setLanguage(uLanguageStrategy * language);
     uLanguageStrategy * getLanguage() const;
+    void setFileAttributes(std::string const& author, std::string const& date);
 
     virtual void visit(uChildClass * childClass);
     virtual void visit(uBaseClass * baseClass);
     virtual void visit(uInterface * interfaceClass);
 
-    bool createFile(std::string const& name, std::string const& content);
+    bool createFile(std::string const& name, std::string const& author, std::string const& date, std::string const& content);
 
 
 private:
     uLanguageStrategy * mLanguage;
+
+    std::string mAuthor;
+    std::string mDate;
+
+    std::string getFileHeader(std::string const& fileName, std::string const& author, std::string const& date);
 
 };
 

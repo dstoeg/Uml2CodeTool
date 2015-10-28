@@ -7,8 +7,9 @@ class uBaseClass : public uInheritable
 {
 public:
     uBaseClass(std::string const& name);
+    virtual void accept(uVisitor * visitor);
 
-private:
+protected:
 
 };
 

@@ -9,6 +9,7 @@ public:
     uChildClass(std::string const& name);
     uChildClass(std::string const& name, uInheritable * base);
     uInheritable * getBaseClass() const;
+    virtual void accept(uVisitor * visitor);
 
 private:
     uInheritable * mBaseClass;

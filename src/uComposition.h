@@ -6,7 +6,7 @@
 class uComposition : public uReference
 {
 public:
-    uComposition();
+    uComposition(uInheritable * reference, uAccess access);
 
 private:
 

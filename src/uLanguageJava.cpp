@@ -20,9 +20,20 @@ std::string uLanguageJava::createMethod(const uMethod &method)
     return methodStr;
 }
 
+string uLanguageJava::createReference(const uReference &reference)
+{
+    // TODO
+    return "";
+}
+
 string uLanguageJava::createAttribute(const uParameter &attribute)
 {
     string attributeString = getAccessString(attribute.getAccess()) + " " + attribute.getType() + " " + attribute.getName() + ";";
     return attributeString;
+}
+
+string uLanguageJava::createFileContent(uInheritable * aClass, string const& base)
+{
+    return "";
 }
 

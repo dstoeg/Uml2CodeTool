@@ -6,7 +6,7 @@
 class uAggregation : public uReference
 {
 public:
-    uAggregation();
+    uAggregation(uInheritable * reference, uAccess access);
 
 private:
 

@@ -4,6 +4,7 @@
 #include "uAccess.h"
 #include "uParameter.h"
 #include "uMethod.h"
+#include "uChildClass.h"
 #include "uLanguageCpp.h"
 #include "uLanguageJava.h"
 #include "uCodeGenerationVisitor.h"
@@ -12,29 +13,28 @@ using namespace std;
 
 int main()
 {
-    // test the language strategy
+    // method1
     vector<uParameter> params;
     params.push_back(uParameter("param1", "int", uPrivate));
     params.push_back(uParameter("param2", "string", uPrivate));
     params.push_back(uParameter("param3", "float", uPrivate));
     uMethod method("myMethod", "int", uPublic, params);
 
-    uLanguageStrategy * strategy = new uLanguageCPP();
+
+
+    uChildClass childClass("ChildClass");
+
+    childClass.addMethod(method);
+    childClass.addAttribute(uParameter("param1", "int", uProtected));
+    childClass.addAttribute(uParameter("param2", "int", uPrivate));
+    childClass.addAttribute(uParameter("param3", "string", uPublic));
+
+
     cout << endl << "C++" << endl;
-    cout << strategy->createMethod(method) << endl;
-    cout << strategy->createAttribute(params[0]) << endl;
-
-    strategy = new uLanguageJava();
-    cout << endl << "Java" << endl;
-    cout << strategy->createMethod(method) << endl;
-    cout << strategy->createAttribute(params[0]) << endl << endl;
-
+    uLanguageStrategy * strategy = new uLanguageCPP();
     uCodeGenerationVisitor * generator = new uCodeGenerationVisitor(strategy);
-    if (!generator->createFile("Test.java", "test content"))
-        cout << "error writing file" << endl;
-    else
-        cout << "successfully created file" << endl;
-
+    generator->setFileAttributes("daniel stoeger", "21/9/15");
+    childClass.accept(generator);
 
     return 0;
 }
