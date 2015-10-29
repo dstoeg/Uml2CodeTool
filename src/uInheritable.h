@@ -18,6 +18,7 @@ public:
     std::vector<uParameter> getAttributes() const;
     std::vector<uReference*> getReferences() const;
     uAccess getAccess() const;
+    void setAccess(uAccess access);
     std::string getName() const;
     bool hasParent() const;
 

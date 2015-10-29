@@ -35,7 +35,7 @@ void uCodeGenerationVisitor::setFileAttributes(const string &author, const strin
 
 void uCodeGenerationVisitor::visit(uChildClass *childClass)
 {
-    createFile(childClass->getName() + mLanguage->getFileExtension(), mAuthor, mDate, mLanguage->createFileContent(childClass->getBaseClass()));
+    createFile(childClass->getName() + mLanguage->getFileExtension(), mAuthor, mDate, mLanguage->createFileContent(childClass, childClass->getBaseClass()->getName()));
 }
 
 void uCodeGenerationVisitor::visit(uBaseClass *baseClass)

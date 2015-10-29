@@ -31,6 +31,11 @@ uAccess uInheritable::getAccess() const
     return mAccess;
 }
 
+void uInheritable::setAccess(uAccess access)
+{
+    mAccess = access;
+}
+
 std::string uInheritable::getName() const
 {
     return mName;

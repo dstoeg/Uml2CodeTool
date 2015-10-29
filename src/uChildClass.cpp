@@ -5,6 +5,7 @@
 uChildClass::uChildClass(std::string const& name) : uInheritable(name)
 {
     mHasParent = true;
+    mBaseClass = NULL;
 }
 
 uChildClass::uChildClass(std::string const& name, uInheritable * base) : uInheritable(name)

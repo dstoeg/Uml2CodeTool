@@ -4,7 +4,7 @@
 #include "uAccess.h"
 #include "uParameter.h"
 #include "uMethod.h"
-#include "uChildClass.h"
+#include "uBaseClass.h"
 #include "uLanguageCpp.h"
 #include "uLanguageJava.h"
 #include "uCodeGenerationVisitor.h"
@@ -22,19 +22,23 @@ int main()
 
 
 
-    uChildClass childClass("ChildClass");
+    uBaseClass baseClass("ChildClass");
+    baseClass.setAccess(uPublic);
 
-    childClass.addMethod(method);
-    childClass.addAttribute(uParameter("param1", "int", uProtected));
-    childClass.addAttribute(uParameter("param2", "int", uPrivate));
-    childClass.addAttribute(uParameter("param3", "string", uPublic));
+    baseClass.addMethod(method);
+    baseClass.addAttribute(uParameter("param1", "int", uProtected));
+    baseClass.addAttribute(uParameter("param2", "int", uPrivate));
+    baseClass.addAttribute(uParameter("param3", "string", uPublic));
 
 
     cout << endl << "C++" << endl;
-    uLanguageStrategy * strategy = new uLanguageCPP();
+    //uLanguageStrategy * strategy = new uLanguageCPP();
+    uLanguageStrategy * strategy = new uLanguageJava();
     uCodeGenerationVisitor * generator = new uCodeGenerationVisitor(strategy);
     generator->setFileAttributes("daniel stoeger", "21/9/15");
-    childClass.accept(generator);
+    baseClass.accept(generator);
+
+
 
     return 0;
 }
