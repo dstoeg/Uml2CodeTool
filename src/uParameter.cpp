@@ -3,7 +3,7 @@
 
 using namespace std;
 
-uParameter::uParameter(const string &name, const string &type, uAccess access)
+uParameter::uParameter(uAccess access, std::string const&type, std::string const& name)
 {
     mName = name;
     mType = type;

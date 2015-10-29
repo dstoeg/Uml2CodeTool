@@ -53,7 +53,7 @@ string uLanguageCPP::createFileContent(uInheritable * aClass, std::string const&
     // TODO
 
     // class name - inheritance
-    if (base != "")
+    if (base == "")
         fileContent << "class " << aClass->getName() << " {" << endl << endl;
     else
         fileContent << "class " << aClass->getName() << " : public " << base << "{" << endl << endl;

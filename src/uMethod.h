@@ -7,7 +7,7 @@
 class uMethod
 {
 public:
-    uMethod(std::string const& name, std::string const& returnType, uAccess access, std::vector<uParameter> const& params);
+    uMethod(uAccess access, std::string const& returnType, std::string const& name, std::vector<uParameter> const& params);
     std::string getName() const;
     std::string getReturnType() const;
     uAccess getAccess() const;

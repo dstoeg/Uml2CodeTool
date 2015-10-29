@@ -6,7 +6,7 @@
 class uParameter {
 
 public:
-    uParameter(std::string const& name, std::string const&type, uAccess access);
+    uParameter(uAccess access, std::string const&type, std::string const& name);
     std::string getName() const;
     std::string getType() const;
     uAccess getAccess() const;

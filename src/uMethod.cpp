@@ -1,7 +1,7 @@
 #include "uMethod.h"
 
 
-uMethod::uMethod(const std::string &name, const std::string &returnType, uAccess access, const std::vector<uParameter> &params)
+uMethod::uMethod(uAccess access, std::string const& returnType, std::string const& name, std::vector<uParameter> const& params)
 {
     mName = name;
     mReturnType = returnType;
