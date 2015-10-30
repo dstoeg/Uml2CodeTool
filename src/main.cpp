@@ -10,10 +10,17 @@
 #include "uLanguagePython.h"
 #include "uCodeGenerationVisitor.h"
 
+#include "test/TestMain.h"
+
 using namespace std;
+
 
 int main()
 {
+    // run all test cases first
+    TestMain tests;
+    tests.execute();
+
     // create container for class diagram
     vector<uInheritable*> classDiagram;
 
@@ -83,5 +90,6 @@ int main()
     delete generator; generator = NULL;
 
     return 0;
+
 }
 
