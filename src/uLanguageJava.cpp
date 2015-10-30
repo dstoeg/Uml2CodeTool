@@ -9,6 +9,7 @@ uLanguageJava::uLanguageJava()
     mHasSeparateFiles = false;
     mImplementationFileExtension = "";
     mDeclarationFileExtension = ".java";
+    mLineComment = "//";
 }
 
 std::string uLanguageJava::createMethodDeclaration(const uMethod &method)
@@ -77,4 +78,3 @@ string uLanguageJava::createImplementationFileContent(uInheritable *aClass, cons
     // not supported in Java
     return "";
 }
-

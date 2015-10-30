@@ -13,6 +13,7 @@ uLanguageCPP::uLanguageCPP()
     mHasSeparateFiles = true;
     mDeclarationFileExtension = ".h";
     mImplementationFileExtension = ".cpp";
+    mLineComment = "//";
 }
 
 
@@ -154,4 +155,3 @@ string uLanguageCPP::createImplementationFileContent(uInheritable *aClass, const
 
     return fileContent.str();
 }
-

@@ -17,7 +17,7 @@ public:
     virtual void visit(uBaseClass * baseClass);
     virtual void visit(uInterface * interfaceClass);
 
-    bool createFile(std::string const& name, std::string const& author, std::string const& date, std::string const& content);
+    bool createFile(std::string const& name, std::string const& author, std::string const& date, std::string const& content, std::string const& lineComment);
 
 
 private:
@@ -26,7 +26,7 @@ private:
     std::string mAuthor;
     std::string mDate;
 
-    std::string getFileHeader(std::string const& fileName, std::string const& author, std::string const& date);
+    std::string getFileHeader(std::string const& fileName, std::string const& author, std::string const& date, std::string const& lineComment);
 
 };
 
