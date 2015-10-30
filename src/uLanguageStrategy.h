@@ -15,11 +15,13 @@ public:
     virtual std::string createDeclarationFileContent(uInheritable * aClass, std::string const& base = "") {return "";}
     virtual std::string createImplementationFileContent(uInheritable * aClass, std::string const& base = "") {return "";}
     bool hasSeparateFiles() const {return mHasSeparateFiles; }
+    std::string getLineComment();
 
 protected:
     std::string mImplementationFileExtension;
     std::string mDeclarationFileExtension;
     bool mHasSeparateFiles;
+    std::string mLineComment;
 
     virtual std::string createMethodDeclaration(uMethod const& method) {return "";}
     virtual std::string createAttributeDeclaration(uParameter const& attribute) {return "";}
@@ -28,4 +30,3 @@ protected:
 };
 
 #endif // ULANGUAGESTRATEGY
-

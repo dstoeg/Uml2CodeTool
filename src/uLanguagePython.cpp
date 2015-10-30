@@ -4,7 +4,8 @@ using namespace std;
 
 uLanguagePython::uLanguagePython()
 {
-    mFileExtension = ".py";
+   mImplementationFileExtension = ".py"; 
+   mLineComment = "#";
 }
 
 
