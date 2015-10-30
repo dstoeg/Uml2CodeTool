@@ -6,10 +6,12 @@ using namespace std;
 
 uLanguageJava::uLanguageJava()
 {
-    mFileExtension = ".java";
+    mHasSeparateFiles = false;
+    mImplementationFileExtension = "";
+    mDeclarationFileExtension = ".java";
 }
 
-std::string uLanguageJava::createMethod(const uMethod &method)
+std::string uLanguageJava::createMethodDeclaration(const uMethod &method)
 {
     string methodStr = "";
     vector<uParameter> params = method.getParameters();
@@ -22,19 +24,25 @@ std::string uLanguageJava::createMethod(const uMethod &method)
     return methodStr;
 }
 
-string uLanguageJava::createReference(const uReference &reference)
+string uLanguageJava::createReferenceDeclaration(const uReference &reference)
 {
     // TODO
     return "";
 }
 
-string uLanguageJava::createAttribute(const uParameter &attribute)
+string uLanguageJava::createMethodImplementation(const uMethod &method, std::string aClass)
+{
+    // not supported in java
+    return "";
+}
+
+string uLanguageJava::createAttributeDeclaration(const uParameter &attribute)
 {
     string attributeString = getAccessString(attribute.getAccess()) + " " + attribute.getType() + " " + attribute.getName() + ";";
     return attributeString;
 }
 
-string uLanguageJava::createFileContent(uInheritable * aClass, string const& base)
+string uLanguageJava::createDeclarationFileContent(uInheritable * aClass, string const& base)
 {
     stringstream fileContent;
 
@@ -50,17 +58,23 @@ string uLanguageJava::createFileContent(uInheritable * aClass, string const& bas
     // attributes
     vector<uParameter> attributes = aClass->getAttributes();
     for (size_t i=0; i<attributes.size(); i++) {
-        fileContent << "\t" << createAttribute(attributes[i]) << endl << endl;
+        fileContent << "\t" << createAttributeDeclaration(attributes[i]) << endl << endl;
     }
 
     // methods
     vector<uMethod> methods = aClass->getMethods();
     for (size_t i=0; i<methods.size(); i++) {
-        fileContent << "\t" << createMethod(methods[i]) << endl;
+        fileContent << "\t" << createMethodDeclaration(methods[i]) << endl;
     }
 
     fileContent << "};" << endl;
 
     return fileContent.str();
+}
+
+string uLanguageJava::createImplementationFileContent(uInheritable *aClass, const string &base)
+{
+    // not supported in Java
+    return "";
 }
 

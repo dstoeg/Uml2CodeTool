@@ -10,15 +10,21 @@
 class uLanguageStrategy {
 
 public:
-    std::string getFileExtension() const { return mFileExtension;}    
-    virtual std::string createFileContent(uInheritable * aClass, std::string const& base = "") {return "";}
+    std::string getImplementationFileExtension() const { return mImplementationFileExtension;}
+    std::string getDeclarationFileExtension() const {return mDeclarationFileExtension; }
+    virtual std::string createDeclarationFileContent(uInheritable * aClass, std::string const& base = "") {return "";}
+    virtual std::string createImplementationFileContent(uInheritable * aClass, std::string const& base = "") {return "";}
+    bool hasSeparateFiles() const {return mHasSeparateFiles; }
 
 protected:
-    std::string mFileExtension;
-    virtual std::string createMethod(uMethod const& method) {return "";}
-    virtual std::string createAttribute(uParameter const& attribute) {return "";}
-    virtual std::string createReference(uReference const& reference) {return "";}
+    std::string mImplementationFileExtension;
+    std::string mDeclarationFileExtension;
+    bool mHasSeparateFiles;
 
+    virtual std::string createMethodDeclaration(uMethod const& method) {return "";}
+    virtual std::string createAttributeDeclaration(uParameter const& attribute) {return "";}
+    virtual std::string createReferenceDeclaration(uReference const& reference) {return "";}
+    virtual std::string createMethodImplementation(uMethod const& method, std::string aClass) {return "";}
 };
 
 #endif // ULANGUAGESTRATEGY

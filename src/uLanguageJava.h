@@ -7,14 +7,14 @@ class uLanguageJava : public uLanguageStrategy
 {
 public:
     uLanguageJava();
-    virtual std::string createFileContent(uInheritable * aClass, std::string const& base = "");
+    virtual std::string createDeclarationFileContent(uInheritable * aClass, std::string const& base = "");
+    virtual std::string createImplementationFileContent(uInheritable * aClass, std::string const& base = "");
 
 protected:
-    virtual std::string createAttribute(uParameter const& attribute);
-    virtual std::string createMethod(uMethod const& method);
-    virtual std::string createReference(uReference const& reference);
-
-
+    virtual std::string createAttributeDeclaration(uParameter const& attribute);
+    virtual std::string createMethodDeclaration(uMethod const& method);
+    virtual std::string createReferenceDeclaration(uReference const& reference);
+    virtual std::string createMethodImplementation(uMethod const& method, std::string aClass);
 };
 
 #endif // ULANGUAGEJAVA_H

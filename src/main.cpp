@@ -64,6 +64,7 @@ int main()
         classDiagram[i]->accept(generator);
     }
 
+
     // free memory
     delete baseClass; baseClass = NULL;
     delete childClass1; childClass1 = NULL;

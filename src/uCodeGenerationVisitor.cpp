@@ -35,17 +35,27 @@ void uCodeGenerationVisitor::setFileAttributes(const string &author, const strin
 
 void uCodeGenerationVisitor::visit(uChildClass *childClass)
 {
-    createFile(childClass->getName() + mLanguage->getFileExtension(), mAuthor, mDate, mLanguage->createFileContent(childClass, childClass->getBaseClass()->getName()));
+    if (mLanguage->hasSeparateFiles()) {
+        createFile(childClass->getName() + mLanguage->getImplementationFileExtension(), mAuthor, mDate, mLanguage->createImplementationFileContent(childClass, childClass->getBaseClass()->getName()));
+    }
+    createFile(childClass->getName() + mLanguage->getDeclarationFileExtension(), mAuthor, mDate, mLanguage->createDeclarationFileContent(childClass, childClass->getBaseClass()->getName()));
+
 }
 
 void uCodeGenerationVisitor::visit(uBaseClass *baseClass)
 {
-    createFile(baseClass->getName() + mLanguage->getFileExtension(), mAuthor, mDate, mLanguage->createFileContent(baseClass));
+    if (mLanguage->hasSeparateFiles()) {
+        createFile(baseClass->getName() + mLanguage->getImplementationFileExtension(), mAuthor, mDate, mLanguage->createImplementationFileContent(baseClass));
+    }
+    createFile(baseClass->getName() + mLanguage->getDeclarationFileExtension(), mAuthor, mDate, mLanguage->createDeclarationFileContent(baseClass));
 }
 
 void uCodeGenerationVisitor::visit(uInterface *interfaceClass)
 {
-    createFile(interfaceClass->getName() + mLanguage->getFileExtension(), mAuthor, mDate, mLanguage->createFileContent(interfaceClass));
+    if (mLanguage->hasSeparateFiles()) {
+        createFile(interfaceClass->getName() + mLanguage->getImplementationFileExtension(), mAuthor, mDate, mLanguage->createImplementationFileContent(interfaceClass));
+    }
+    createFile(interfaceClass->getName() + mLanguage->getDeclarationFileExtension(), mAuthor, mDate, mLanguage->createDeclarationFileContent(interfaceClass));
 }
 
 bool uCodeGenerationVisitor::createFile(string const& name, string const& author, string const& date, string const& content)
