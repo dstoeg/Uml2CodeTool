@@ -7,6 +7,7 @@
 #include "uBaseClass.h"
 #include "uLanguageCpp.h"
 #include "uLanguageJava.h"
+#include "uLanguagePython.h"
 #include "uCodeGenerationVisitor.h"
 
 using namespace std;
@@ -64,6 +65,14 @@ int main()
         classDiagram[i]->accept(generator);
     }
 
+    // generate Python class file
+    cout << endl << "generating Python files" << endl;
+    strategy = new uLanguagePython();
+    generator->setLanguage(strategy);
+    for (size_t i=0; i < classDiagram.size(); i++) {
+        classDiagram[i]->accept(generator);
+    }
+   
 
     // free memory
     delete baseClass; baseClass = NULL;
