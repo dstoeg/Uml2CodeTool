@@ -22,7 +22,7 @@ uLanguagePython::uLanguagePython()
 }
 
 
-std::string uLanguagePython::createMethod(const uMethod & method)
+std::string uLanguagePython::createMethodDeclaration(const uMethod & method)
 {
     std::vector<uParameter> params;
     std::vector<uParameter> methodParams = method.getParameters();
@@ -39,12 +39,12 @@ std::string uLanguagePython::createMethod(const uMethod & method)
 
 }
 
-string uLanguagePython::createAttribute(const uParameter &attribute)
+string uLanguagePython::createAttributeDeclaration(const uParameter &attribute)
 {
     return "self." + attribute.getName() + " = None";
 }
 
-string uLanguagePython::createReference(const uReference &reference)
+string uLanguagePython::createReferenceDeclaration(const uReference &reference)
 {
     // TODO 
     return "";
@@ -64,14 +64,14 @@ string uLanguagePython::createDeclarationFileContent(uInheritable * aClass, std:
 
     std::vector<uParameter> attributes = aClass->getAttributes();
     for (std::vector<uParameter>::iterator it = attributes.begin(); it != attributes.end(); it++) {
-        content << "        " << createAttribute(*it) << endl;
+        content << "        " << createAttributeDeclaration(*it) << endl;
     }
 
     content << endl;
 
     std::vector<uMethod> methods = aClass->getMethods();
     for(std::vector<uMethod>::iterator it = methods.begin(); it != methods.end(); it++) {
-       content << "    " << createMethod(*it) << endl; 
+       content << "    " << createMethodDeclaration(*it) << endl; 
     }
 
 

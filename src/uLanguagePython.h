@@ -10,9 +10,9 @@ public:
     virtual std::string createDeclarationFileContent(uInheritable * aClass, std::string const& base);
 
 protected:
-    virtual std::string createMethod(uMethod const& method);
-    virtual std::string createAttribute(uParameter const& attribute);
-    virtual std::string createReference(uReference const& reference);
+    virtual std::string createMethodDeclaration(uMethod const& method);
+    virtual std::string createAttributeDeclaration(uParameter const& attribute);
+    virtual std::string createReferenceDeclaration(uReference const& reference);
 };
 
 #endif // ULANGUAGE_PYTHON_H
