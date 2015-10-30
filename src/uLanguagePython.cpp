@@ -16,7 +16,8 @@ std::string access(const uAccess access) {
 
 uLanguagePython::uLanguagePython()
 {
-   mImplementationFileExtension = ".py"; 
+   mDeclarationFileExtension = ".py"; 
+   mHasSeparateFiles = false; 
    mLineComment = "#";
 }
 
@@ -49,7 +50,7 @@ string uLanguagePython::createReference(const uReference &reference)
     return "";
 }
 
-string uLanguagePython::createFileContent(uInheritable * aClass, std::string const& base)
+string uLanguagePython::createDeclarationFileContent(uInheritable * aClass, std::string const& base)
 {
     stringstream content;
 

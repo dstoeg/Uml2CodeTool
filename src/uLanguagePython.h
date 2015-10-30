@@ -7,7 +7,7 @@ class uLanguagePython : public uLanguageStrategy
 {
 public:
     uLanguagePython();
-    virtual std::string createFileContent(uInheritable * aClass, std::string const& base);
+    virtual std::string createDeclarationFileContent(uInheritable * aClass, std::string const& base);
 
 protected:
     virtual std::string createMethod(uMethod const& method);
