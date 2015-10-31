@@ -3,6 +3,8 @@
 
 #include "uParameter.h"
 #include <vector>
+#include <iterator>
+
 
 class uMethod
 {
@@ -19,5 +21,9 @@ private:
     uAccess mAccess;
     std::vector<uParameter> mParameters;
 };
+
+
+typedef std::vector<uMethod> TMethods;
+typedef std::vector<uMethod>::iterator TMethodsIter;
 
 #endif // UMETHOD_H

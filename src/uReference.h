@@ -3,6 +3,9 @@
 
 
 #include "uAccess.h"
+#include <vector>
+#include <iterator>
+
 
 class uInheritable;
 
@@ -16,6 +19,10 @@ private:
     uInheritable * mClass;
     uAccess mAccess;
 };
+
+typedef std::vector<uReference*> TReferences;
+typedef std::vector<uReference*>::iterator TReferenceIter;
+
 
 #endif // UREFERENCE
 

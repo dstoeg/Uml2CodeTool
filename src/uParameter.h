@@ -2,6 +2,10 @@
 #define UPARAMETER
 
 #include "uAccess.h"
+#include <vector>
+#include <iterator>
+
+
 
 class uParameter {
 
@@ -16,6 +20,9 @@ private:
     std::string mType;
     uAccess mAccess;
 };
+
+typedef std::vector<uParameter> TParameters;
+typedef std::vector<uParameter>::iterator TParametersIter;
 
 #endif // UPARAMETER
 

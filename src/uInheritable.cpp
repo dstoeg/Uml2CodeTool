@@ -6,6 +6,15 @@ uInheritable::uInheritable(const std::string &name)
     mName = name;
 }
 
+uInheritable::uInheritable(uAccess access, const std::string &name, TParameters &attributes, TMethods &methods, TReferences &references)
+{
+    mAccess = access;
+    mName = name;
+    mAttributes = attributes;
+    mMethods = methods;
+    mReferences = references;
+}
+
 void uInheritable::accept(uVisitor *visitor)
 {
 

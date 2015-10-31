@@ -13,6 +13,7 @@ class uInheritable
 {
 public:
     uInheritable(std::string const& name);
+    uInheritable(uAccess access, std::string const& name, TParameters & attributes, TMethods & methods, TReferences & references);
     virtual void accept(uVisitor * visitor);
     std::vector<uMethod> getMethods() const;
     std::vector<uParameter> getAttributes() const;
