@@ -24,22 +24,23 @@ uInheritable * uClassFactory::createClass(uClassType type, std::string const& na
     }
 }
 
-uInheritable *uClassFactory::createClass(uClassType type, uAccess access, const std::string &name, TParameters &attributes, TMethods &methods, TReferences &references)
+uInheritable * uClassFactory::createClass(uClassType type, uAccess access, const std::string &name, TParameters &attributes, TMethods &methods, TReferences &references, uInheritable *base)
 {
     switch (type) {
 
         case eBaseClass:
-            return new uBaseClass(name);
+            return new uBaseClass(access, name, attributes, methods, references);
             break;
         case eInterface:
-            return new uInterface(name);
+            return new uInterface(access, name, attributes, methods, references);
             break;
         case eChildClass:
-            return new uChildClass(name);
+            return new uChildClass(access, name, attributes, methods, references, base);
             break;
         default:
             return NULL;
             break;
     }
+
 }
 
