@@ -7,8 +7,7 @@
 class uCodeGenerationVisitor : public uVisitor
 {
 public:
-    uCodeGenerationVisitor();
-    uCodeGenerationVisitor(uLanguageStrategy * language);
+    static uCodeGenerationVisitor& getInstance();
     void setLanguage(uLanguageStrategy * language);
     uLanguageStrategy * getLanguage() const;
     void setFileAttributes(std::string const& author, std::string const& date);
@@ -21,6 +20,10 @@ public:
 
 
 private:
+    uCodeGenerationVisitor();
+    uCodeGenerationVisitor(const uCodeGenerationVisitor&);
+    void operator=(uCodeGenerationVisitor const&);
+
     uLanguageStrategy * mLanguage;
 
     std::string mAuthor;

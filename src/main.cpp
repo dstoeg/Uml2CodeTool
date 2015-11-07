@@ -57,7 +57,8 @@ int main()
     // generate C++ header file
     cout << endl << "generating C++ files" << endl;
     uLanguageStrategy * strategy = new uLanguageCPP();
-    uCodeGenerationVisitor * generator = new uCodeGenerationVisitor(strategy);
+    uCodeGenerationVisitor * generator = &uCodeGenerationVisitor::getInstance();
+    generator->setLanguage(strategy);
     generator->setFileAttributes("daniel stoeger", "21/9/15");
     for (size_t i=0; i<classDiagram.size(); i++) {
         classDiagram[i]->accept(generator);
@@ -87,7 +88,7 @@ int main()
     delete childClass2; childClass2 = NULL;
     delete childClass3; childClass3 = NULL;
     delete strategy; strategy = NULL;
-    delete generator; generator = NULL;
+    //delete generator; generator = NULL;
 
     return 0;
 

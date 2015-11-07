@@ -6,15 +6,18 @@
 
 using namespace std;
 
+
+
 uCodeGenerationVisitor::uCodeGenerationVisitor()
 {
     mAuthor = "";
     mDate = "";
 }
 
-uCodeGenerationVisitor::uCodeGenerationVisitor(uLanguageStrategy *language)
+uCodeGenerationVisitor &uCodeGenerationVisitor::getInstance()
 {
-    mLanguage = language;
+    static uCodeGenerationVisitor instance;
+    return instance;
 }
 
 void uCodeGenerationVisitor::setLanguage(uLanguageStrategy * language)

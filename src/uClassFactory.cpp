@@ -5,6 +5,12 @@ uClassFactory::uClassFactory()
 
 }
 
+uClassFactory &uClassFactory::getInstance()
+{
+    static uClassFactory instance;
+    return instance;
+}
+
 uInheritable * uClassFactory::createClass(uClassType type, std::string const& name)
 {
     switch (type) {
