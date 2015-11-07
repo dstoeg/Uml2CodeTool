@@ -15,10 +15,10 @@ uLanguageJava::uLanguageJava()
 std::string uLanguageJava::createMethodDeclaration(const uMethod &method)
 {
     string methodStr = "";
-    vector<uParameter> params = method.getParameters();
+    TParameters params = method.getParameters();
     methodStr += getAccessString(method.getAccess()) + " " + method.getReturnType() + " " + method.getName() + "(";
-    for (size_t i=0; i<params.size()-1; ++i) {
-        methodStr += params[i].getType() + " " + params[i].getName() + ", ";
+    for (TParametersIter iter = params.begin(); iter < params.end(); ++iter) {
+        methodStr += iter->getType() + " " + iter->getName() + ", ";
     }
     methodStr += params[params.size()-1].getType() + " " + params[params.size()-1].getName() + ") \n\t{\n\t\t// TODO\n\t}\n\n";
 
@@ -57,15 +57,15 @@ string uLanguageJava::createDeclarationFileContent(uInheritable * aClass, string
         fileContent << getAccessString(aClass->getAccess()) << " class " << aClass->getName() << " {" << endl << endl;
 
     // attributes
-    vector<uParameter> attributes = aClass->getAttributes();
-    for (size_t i=0; i<attributes.size(); i++) {
-        fileContent << "\t" << createAttributeDeclaration(attributes[i]) << endl << endl;
+    TParameters attributes = aClass->getAttributes();
+    for (TParametersIter iter = attributes.begin(); iter < attributes.end(); ++iter) {
+        fileContent << "\t" << createAttributeDeclaration(*iter) << endl << endl;
     }
 
     // methods
-    vector<uMethod> methods = aClass->getMethods();
-    for (size_t i=0; i<methods.size(); i++) {
-        fileContent << "\t" << createMethodDeclaration(methods[i]) << endl;
+    TMethods methods = aClass->getMethods();
+    for (TMethodsIter iter = methods.begin(); iter < methods.end(); ++iter) {
+        fileContent << "\t" << createMethodDeclaration(*iter) << endl;
     }
 
     fileContent << "};" << endl;

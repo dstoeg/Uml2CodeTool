@@ -20,10 +20,10 @@ uLanguageCPP::uLanguageCPP()
 std::string uLanguageCPP::createMethodDeclaration(const uMethod & method)
 {
     string methodStr = "";
-    vector<uParameter> params = method.getParameters();
+    TParameters params = method.getParameters();
     methodStr += method.getReturnType() + " " + method.getName() + "(";
-    for (size_t i=0; i<params.size()-1; ++i) {
-        methodStr += params[i].getType() + " " + params[i].getName() + ", ";
+    for (TParametersIter iter = params.begin(); iter < params.end(); ++iter) {
+        methodStr += iter->getType() + " " + iter->getName() + ", ";
     }
     methodStr += params[params.size()-1].getType() + " " + params[params.size()-1].getName() + ");";
 
@@ -45,10 +45,10 @@ string uLanguageCPP::createReferenceDeclaration(const uReference &reference)
 string uLanguageCPP::createMethodImplementation(const uMethod &method, std::string aClass)
 {
     string methodStr = "";
-    vector<uParameter> params = method.getParameters();
+    TParameters params = method.getParameters();
     methodStr += method.getReturnType() + " " + aClass + "::" + method.getName() + "(";
-    for (size_t i=0; i<params.size()-1; ++i) {
-        methodStr += params[i].getType() + " " + params[i].getName() + ", ";
+    for (TParametersIter iter = params.begin(); iter < params.end(); ++iter) {
+        methodStr += iter->getType() + " " + iter->getName() + ", ";
     }
     methodStr += params[params.size()-1].getType() + " " + params[params.size()-1].getName() + ") {\n\t//TODO\n}\n\n";
 
@@ -81,42 +81,42 @@ string uLanguageCPP::createDeclarationFileContent(uInheritable * aClass, std::st
     string protectedSection = "";
     string privateSection = "";
 
-    vector<uMethod> methods = aClass->getMethods();
-    for (size_t i=0; i<methods.size(); i++) {
-        if (methods[i].getAccess() == uPublic) {
-            publicSection += "\t" + createMethodDeclaration(methods[i]) + "\n";
+    TMethods methods = aClass->getMethods();
+    for (TMethodsIter iter = methods.begin(); iter < methods.end(); ++iter) {
+        if (iter->getAccess() == uPublic) {
+            publicSection += "\t" + createMethodDeclaration(*iter) + "\n";
         }
-        else if (methods[i].getAccess() == uPrivate) {
-            privateSection += "\t" + createMethodDeclaration(methods[i]) + "\n";
+        else if (iter->getAccess() == uPrivate) {
+            privateSection += "\t" + createMethodDeclaration(*iter) + "\n";
         }
-        else if (methods[i].getAccess() == uProtected) {
-            protectedSection += "\t" + createMethodDeclaration(methods[i]) + "\n";
-        }
-    }
-
-    vector<uParameter> attributes = aClass->getAttributes();
-    for (size_t i=0; i<attributes.size(); i++) {
-        if (attributes[i].getAccess() == uPublic) {
-            publicSection += "\t" + createAttributeDeclaration(attributes[i]) + "\n";
-        }
-        else if (attributes[i].getAccess() == uPrivate) {
-            privateSection += "\t" + createAttributeDeclaration(attributes[i]) + "\n";
-        }
-        else if (attributes[i].getAccess() == uProtected) {
-            protectedSection += "\t" + createAttributeDeclaration(attributes[i]) + "\n";
+        else if (iter->getAccess() == uProtected) {
+            protectedSection += "\t" + createMethodDeclaration(*iter) + "\n";
         }
     }
 
-    vector<uReference*> references = aClass->getReferences();
-    for (size_t i=0; i<references.size(); i++) {
-        if (references[i]->getAccess() == uPublic) {
-            publicSection += "\t" + createReferenceDeclaration((*references[i])) + "\n";
+    TParameters attributes = aClass->getAttributes();
+    for (TParametersIter iter = attributes.begin(); iter < attributes.end(); ++iter) {
+        if (iter->getAccess() == uPublic) {
+            publicSection += "\t" + createAttributeDeclaration(*iter) + "\n";
         }
-        else if (references[i]->getAccess() == uPrivate) {
-            privateSection += "\t" + createReferenceDeclaration((*references[i])) + "\n";
+        else if (iter->getAccess() == uPrivate) {
+            privateSection += "\t" + createAttributeDeclaration(*iter) + "\n";
         }
-        else if (references[i]->getAccess() == uProtected) {
-            protectedSection += "\t" + createReferenceDeclaration((*references[i])) + "\n";
+        else if (iter->getAccess() == uProtected) {
+            protectedSection += "\t" + createAttributeDeclaration(*iter) + "\n";
+        }
+    }
+
+    TReferences references = aClass->getReferences();
+    for (TReferencesIter iter = references.begin(); iter < references.end(); ++iter) {
+        if ((*iter)->getAccess() == uPublic) {
+            publicSection += "\t" + createReferenceDeclaration(*(*iter)) + "\n";
+        }
+        else if ((*iter)->getAccess() == uPrivate) {
+            privateSection += "\t" + createReferenceDeclaration(*(*iter)) + "\n";
+        }
+        else if ((*iter)->getAccess() == uProtected) {
+            protectedSection += "\t" + createReferenceDeclaration(*(*iter)) + "\n";
         }
     }
 
@@ -148,9 +148,9 @@ string uLanguageCPP::createImplementationFileContent(uInheritable *aClass, const
     fileContent << endl << "#include \"" << aClass->getName() + mDeclarationFileExtension << "\"" << endl << endl;
 
     // add methods
-    vector<uMethod> methods = aClass->getMethods();
-    for (size_t i=0; i<methods.size(); i++) {
-        fileContent << createMethodImplementation(methods[i], aClass->getName()) << endl;
+    TMethods methods = aClass->getMethods();
+    for (TMethodsIter iter = methods.begin(); iter < methods.end(); ++iter) {
+        fileContent << createMethodImplementation((*iter), aClass->getName()) << endl;
     }
 
     return fileContent.str();

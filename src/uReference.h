@@ -21,7 +21,7 @@ private:
 };
 
 typedef std::vector<uReference*> TReferences;
-typedef std::vector<uReference*>::iterator TReferenceIter;
+typedef std::vector<uReference*>::iterator TReferencesIter;
 
 
 #endif // UREFERENCE
