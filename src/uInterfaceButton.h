@@ -2,10 +2,6 @@
 #define UINTERFACEBUTTON_H
 
 #include "uButton.h"
-#include "uClassType.h"
-#include "uBaseClass.h"
-#include "uChildClass.h"
-#include "uInterface.h"
 
 class uInterfaceButton: public uButton
 {
