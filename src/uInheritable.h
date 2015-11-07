@@ -36,4 +36,6 @@ protected:
     bool mHasParent;
 };
 
+typedef std::vector<uInheritable*> TClasses;
+
 #endif // UINHERITABLE_H
