@@ -1,15 +1,7 @@
 #include "uDrawVisitor.h"
 
-uDrawVisitor *uDrawVisitor::getInstance()
+uDrawVisitor &uDrawVisitor::getInstance()
 {
-    if(mInstance == 0)
-        mInstance = new uDrawVisitor();
-
+    static uDrawVisitor mInstance;
     return mInstance;
 }
-
-uDrawVisitor::uDrawVisitor()
-{
-
-}
-

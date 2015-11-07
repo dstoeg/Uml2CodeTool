@@ -28,3 +28,11 @@ uInheritable *uClassDiagram::find(const std::string &name) const
     return 0;
 }
 
+void uClassDiagram::applyVisitor(uVisitor *visitor)
+{
+    for(TClassesIter iter = mClasses.begin(); iter < mClasses.end(); iter++){
+        (*iter)->accept(visitor);
+    }
+}
+
+

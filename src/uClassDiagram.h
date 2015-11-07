@@ -1,7 +1,6 @@
 #ifndef UCLASSDIAGRAM_H
 #define UCLASSDIAGRAM_H
 
-#include <vector>
 #include "uInheritable.h"
 
 class uClassDiagram
@@ -12,6 +11,7 @@ public:
     void removeClass(uInheritable * uClass);
     bool contains(uInheritable * uClass) const;
     uInheritable * find(std::string const& name) const;
+    void applyVisitor(uVisitor* visitor);
 
 private:
     TClasses mClasses;

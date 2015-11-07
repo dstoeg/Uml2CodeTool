@@ -1,10 +1,8 @@
 #include "uButton.h"
 
-uButton* uButton::getInstance()
+uButton &uButton::getInstance()
 {
-    if(mInstance == 0)
-        mInstance = new uButton();
-
+    static uButton mInstance;
     return mInstance;
 }
 

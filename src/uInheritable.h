@@ -37,5 +37,6 @@ protected:
 };
 
 typedef std::vector<uInheritable*> TClasses;
+typedef std::vector<uInheritable*>::iterator TClassesIter;
 
 #endif // UINHERITABLE_H

@@ -16,16 +16,13 @@ public:
 
     virtual void update(uInheritable* inheritable) {}
     virtual uInheritable* create(uClassType type, uAccess access, std::string const& name, TParameters & attributes, TMethods & methods, TReferences & references, uInheritable *base) {}
-    static uButton* getInstance();
+    static uButton &getInstance();
     virtual void initializeBoxes(){}
 
 protected:
     uButton(){}
     uButton(uButton const&);
     void operator=(uButton const&);
-
-private:
-    uButton* mInstance = 0;
 };
 
 #endif // UBUTTON_H
