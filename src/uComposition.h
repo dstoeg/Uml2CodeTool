@@ -8,7 +8,6 @@ class uComposition : public uReference
 public:
     uComposition(uInheritable * reference, uAccess access);
 
-private:
 
 };
 

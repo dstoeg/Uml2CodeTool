@@ -7,9 +7,6 @@ class uAggregation : public uReference
 {
 public:
     uAggregation(uInheritable * reference, uAccess access);
-
-private:
-
 };
 
 #endif // UAGGREGATION_H
