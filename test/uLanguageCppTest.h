@@ -15,6 +15,13 @@ private slots:
     void cleanupTestCase();
 
     void getImplementationFileExtensionTest();
+    void getDeclarationFileExtensionTest();
+    void createDeclarationFileContentTest();
+    void createImplementationFileContentTest();
+    void hasSeparateFilesTest();
+    void getLineCommentTest();
+    void getNameTest();
+
 
 private:
     uLanguageCPP * mObject;

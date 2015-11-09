@@ -33,11 +33,8 @@ int main()
     uClassDiagram classDiagram;
 
     // create a random method
-    TParameters params;
-    params.push_back(uParameter(uPrivate , "int", "param1"));
-    params.push_back(uParameter(uPrivate , "string", "param2"));
-    params.push_back(uParameter(uPrivate , "float", "param3"));
-    uMethod method( uPublic, "void", "draw", params);
+    TParameters methodParams = {uParameter(uPrivate , "int", "param1"), uParameter(uPrivate , "string", "param2"), uParameter(uPrivate , "float", "param3")};
+    uMethod method( uPublic, "void", "draw", methodParams);
 
     // create a base class
     TParameters parameters = {uParameter(uPrivate , "int", "id"),uParameter(uProtected , "string", "name"), uParameter(uPublic , "float", "size")};
@@ -59,24 +56,28 @@ int main()
     classDiagram.addClass(childClass3);
 
 
-    // generate C++ header file
-    cout << endl << "generating C++ files" << endl;
-    uLanguageStrategy * strategy = new uLanguageCPP();
+    // create the code generation visitor
     uCodeGenerationVisitor * generator = &uCodeGenerationVisitor::getInstance();
-    generator->setLanguage(strategy);
     generator->setFileAttributes("Carlos, Daniel, Mike", "7/11/15");
+
+    // create the Language Strategies
+    uLanguageStrategy * CPP = new uLanguageCPP();
+    uLanguageStrategy * Java = new uLanguageJava();
+    uLanguageStrategy * Python = new uLanguagePython();
+
+    // generate C++ files
+    cout << endl << "generating C++ files" << endl;
+    generator->setLanguage(CPP);
     classDiagram.applyVisitor(generator);
 
     // generate Java class file
     cout << endl << "generating Java files" << endl;
-    strategy = new uLanguageJava();
-    generator->setLanguage(strategy);
+    generator->setLanguage(Java);
     classDiagram.applyVisitor(generator);
 
     // generate Python class file
-    cout << endl << "generating Python files" << endl;
-    strategy = new uLanguagePython();
-    generator->setLanguage(strategy);
+    cout << endl << "generating Python files" << endl << endl;
+    generator->setLanguage(Python);
     classDiagram.applyVisitor(generator);
    
     // free memory
@@ -84,8 +85,9 @@ int main()
     delete childClass1; childClass1 = NULL;
     delete childClass2; childClass2 = NULL;
     delete childClass3; childClass3 = NULL;
-    delete strategy; strategy = NULL;
-    //delete generator; generator = NULL;
+    delete CPP; CPP = NULL;
+    delete Java; Java = NULL;
+    delete Python; Python = NULL;
 
     return 0;
 

@@ -25,7 +25,6 @@ private:
     void operator=(uCodeGenerationVisitor const&);
 
     uLanguageStrategy * mLanguage;
-
     std::string mAuthor;
     std::string mDate;
 
