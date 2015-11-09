@@ -17,6 +17,8 @@ private slots:
     void initTestCase();
     void cleanupTestCase();
     void getNameTest();
+    void getTypeTest();
+    void getAccessTest();
 };
 
 #endif // UPARAMETERTEST_H

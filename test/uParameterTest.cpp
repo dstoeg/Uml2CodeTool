@@ -11,6 +11,16 @@ void uParameterTest::getNameTest()
     QVERIFY(mParam->getName() == "TestParameter");
 }
 
+void uParameterTest::getAccessTest()
+{
+    QVERIFY(mParam->getAccess() == uAccess::uPrivate);
+}
+
+void uParameterTest::getTypeTest()
+{
+    QVERIFY(mParam->getType() == "string");
+}
+
 void uParameterTest::initTestCase()
 {
     mParam = new uParameter(uAccess::uPrivate, "string", "TestParameter");
