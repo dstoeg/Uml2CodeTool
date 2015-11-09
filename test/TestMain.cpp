@@ -6,6 +6,9 @@
 #include "test/uInheritableTest.h"
 #include "test/uParameterTest.h"
 #include "test/uCompositionTest.h"
+#include "test/uButtonTest.h"
+#include "test/uClassButtonTest.h"
+#include "test/uInterfaceButtonTest.h"
 
 
 TestMain::TestMain()
@@ -25,6 +28,15 @@ void TestMain::execute()
 
     uCompositionTest testC;
     QTest::qExec(&testC);
+
+    uButtonTest testButton;
+    QTest::qExec(&testButton);
+
+    uClassButtonTest testClassButton;
+    QTest::qExec(&testClassButton);
+
+    uInterfaceButtonTest testInterfaceButton;
+    QTest::qExec(&testInterfaceButton);
 
     std::cout << std::endl;
 }

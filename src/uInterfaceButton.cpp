@@ -17,9 +17,9 @@ void uInterfaceButton::update(uInheritable* inheritable)
 }
 
 //Constructor should be changed when the boxes are implemented with the GUI
-uInheritable* uInterfaceButton::create(uClassType type, uAccess access, const std::string &name, TParameters &attributes, TMethods &methods, TReferences &references, uInheritable *base)
+uInheritable* uInterfaceButton::create(uClassType type, uAccess access, const std::string &name, TParameters &attributes, TMethods &methods, TReferences &references)
 {
-    uInheritable * newClass = uClassFactory::getInstance().createClass(uClassType::eInterface,access, name, attributes, methods, references, base);
+    uInheritable * newClass = uClassFactory::getInstance().createClass(uClassType::eInterface,access, name, attributes, methods, references, NULL);
 
     //mainDiagram.add(newClass);
     return newClass;
