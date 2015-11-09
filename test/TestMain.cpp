@@ -6,14 +6,11 @@
 #include "test/uInheritableTest.h"
 #include "test/uParameterTest.h"
 #include "test/uCompositionTest.h"
-<<<<<<< HEAD
 #include "test/uButtonTest.h"
 #include "test/uClassButtonTest.h"
 #include "test/uInterfaceButtonTest.h"
-=======
 #include "test/uCodeGenerationVisitorTest.h"
 #include "test/uLanguageCppTest.h"
->>>>>>> 90f872db224c8d52a572f8dd08d38b582a7195ee
 
 
 TestMain::TestMain()

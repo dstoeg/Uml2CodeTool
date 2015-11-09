@@ -23,10 +23,12 @@ int main()
 {
 
 #ifdef TEST
+
     // run all test cases first
     cout << "execute tests" << endl;
     TestMain tests;
     tests.execute();
+
 #endif
 
     // create class diagram
@@ -54,7 +56,6 @@ int main()
 
     uInheritable * childClass3 = uClassButton::getInstance().create(eChildClass, uPublic, "Triangle", nullParameters, nullMethods, references, baseClass);
     classDiagram.addClass(childClass3);
-
 
     // create the code generation visitor
     uCodeGenerationVisitor * generator = &uCodeGenerationVisitor::getInstance();
