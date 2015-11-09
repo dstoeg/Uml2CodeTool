@@ -19,6 +19,7 @@ uLanguagePython::uLanguagePython()
    mDeclarationFileExtension = ".py"; 
    mHasSeparateFiles = false; 
    mLineComment = "#";
+   mName = "Python";
 }
 
 

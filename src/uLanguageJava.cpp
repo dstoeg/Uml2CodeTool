@@ -10,6 +10,7 @@ uLanguageJava::uLanguageJava()
     mImplementationFileExtension = "";
     mDeclarationFileExtension = ".java";
     mLineComment = "//";
+    mName = "Java";
 }
 
 std::string uLanguageJava::createMethodDeclaration(const uMethod &method)

@@ -16,8 +16,10 @@ public:
     virtual std::string createImplementationFileContent(uInheritable * aClass, std::string const& base = "") {return "";}
     bool hasSeparateFiles() const {return mHasSeparateFiles; }
     std::string getLineComment() const {return mLineComment;}
+    std::string getName() const {return mName;}
 
 protected:
+    std::string mName;
     std::string mImplementationFileExtension;
     std::string mDeclarationFileExtension;
     bool mHasSeparateFiles;

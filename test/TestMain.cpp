@@ -6,9 +6,14 @@
 #include "test/uInheritableTest.h"
 #include "test/uParameterTest.h"
 #include "test/uCompositionTest.h"
+<<<<<<< HEAD
 #include "test/uButtonTest.h"
 #include "test/uClassButtonTest.h"
 #include "test/uInterfaceButtonTest.h"
+=======
+#include "test/uCodeGenerationVisitorTest.h"
+#include "test/uLanguageCppTest.h"
+>>>>>>> 90f872db224c8d52a572f8dd08d38b582a7195ee
 
 
 TestMain::TestMain()
@@ -20,14 +25,20 @@ void TestMain::execute()
 {
     std::cout << "starting tests..." << std::endl << std::endl;
 
-    uInheritableTest test;
-    QTest::qExec(&test);
+    uInheritableTest test1;
+    QTest::qExec(&test1);
 
-    uParameterTest testP;
-    QTest::qExec(&testP);
+    uParameterTest test2;
+    QTest::qExec(&test2);
 
-    uCompositionTest testC;
-    QTest::qExec(&testC);
+    uCompositionTest test3;
+    QTest::qExec(&test3);
+
+    uCodeGenerationVisitorTest  test4;
+    QTest::qExec(&test4);
+
+    uLanguageCppTest test5;
+    QTest::qExec(&test5);
 
     uButtonTest testButton;
     QTest::qExec(&testButton);

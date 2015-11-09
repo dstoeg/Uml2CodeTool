@@ -14,6 +14,7 @@ uLanguageCPP::uLanguageCPP()
     mDeclarationFileExtension = ".h";
     mImplementationFileExtension = ".cpp";
     mLineComment = "//";
+    mName = "C++";
 }
 
 
