@@ -9,23 +9,28 @@
 #include "uLanguageJava.h"
 #include "uLanguagePython.h"
 #include "uCodeGenerationVisitor.h"
-
-#include "test/TestMain.h"
 #include "uClassDiagram.h"
 #include "uClassButton.h"
+#include "test/TestMain.h"
+
+// enable/disable testing by commenting/uncommenting following statement
+#define TEST
 
 using namespace std;
 
 
 int main()
 {
+
+#ifdef TEST
     // run all test cases first
+    cout << "execute tests" << endl;
     TestMain tests;
     tests.execute();
+#endif
 
     // create class diagram
     uClassDiagram classDiagram;
-
 
     // create a random method
     TParameters params;
