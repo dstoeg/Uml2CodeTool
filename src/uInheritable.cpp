@@ -13,6 +13,7 @@ uInheritable::uInheritable(uAccess access, const std::string &name, TParameters 
     mAttributes = attributes;
     mMethods = methods;
     mReferences = references;
+    mHasParent = false;
 }
 
 void uInheritable::accept(uVisitor *visitor)
@@ -48,6 +49,11 @@ void uInheritable::setAccess(uAccess access)
 std::string uInheritable::getName() const
 {
     return mName;
+}
+
+bool uInheritable::hasParent()
+{
+    return hasParent();
 }
 
 bool uInheritable::operator==(const uInheritable &class1) const

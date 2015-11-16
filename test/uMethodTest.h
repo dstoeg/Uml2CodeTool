@@ -19,7 +19,7 @@ private slots:
     void getNameTest();
     void getReturnTypeTest();
     void getAccessTest();
-    void getParametersTest();
+//    void getParametersTest();
 };
 
 #endif // UMETHODTEST_H

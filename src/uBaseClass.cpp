@@ -8,7 +8,7 @@ uBaseClass::uBaseClass(std::string const& name) : uInheritable(name)
 
 uBaseClass::uBaseClass(uAccess access, const std::string &name, TParameters &attributes, TMethods &methods, TReferences &references) : uInheritable(access, name, attributes, methods, references)
 {
-
+    mHasParent = false;
 }
 
 void uBaseClass::accept(uVisitor *visitor)

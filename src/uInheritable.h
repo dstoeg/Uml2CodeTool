@@ -21,7 +21,7 @@ public:
     uAccess getAccess() const;
     void setAccess(uAccess access);
     std::string getName() const;
-    bool hasParent() const;
+    bool hasParent();
     inline bool operator==(const uInheritable &class1) const;
     inline bool operator!=(const uInheritable &class1) const;
 

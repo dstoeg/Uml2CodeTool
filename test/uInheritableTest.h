@@ -17,6 +17,16 @@ private slots:
     void initTestCase();
     void cleanupTestCase();
     void getNameTest();
+//    void getMethodsTest();
+//    void getAttributesTest();
+    void getReferencesTest();
+    void getAccessTest();
+    void setAccessTest();
+    void hasParentTest();
+
+//    void addMethodTest();
+//    void addAttributeTest();
+//    void addReferenceTest();
 };
 
 #endif // UINHERITABLETEST_H

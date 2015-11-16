@@ -22,13 +22,13 @@ void uMethodTest::getReturnTypeTest()
     QVERIFY(mMethod->getReturnType() == "void");
 }
 
-void uMethodTest::getParametersTest()
-{
-    // TODO compare vector of structs
-    TParameters params;
-    params.push_back(uParameter(uPrivate, "string", "param1"));
-//    QCOMPARE(mMethod->getParameters(), params);
-}
+//void uMethodTest::getParametersTest()
+//{
+//    // TODO compare vector of structs
+//    TParameters params;
+//    params.push_back(uParameter(uPrivate, "string", "param1"));
+//    QVERIFY(mMethod->getParameters() == params);
+//}
 
 void uMethodTest::initTestCase()
 {

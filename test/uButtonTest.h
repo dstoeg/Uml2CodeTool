@@ -16,7 +16,6 @@ private slots:
     void getInstanceTest();
 //    virtual void update(uInheritable* inheritable) {}
 //    virtual uInheritable* create(uClassType type, uAccess access, std::string const& name, TParameters & attributes, TMethods & methods, TReferences & references, uInheritable *base) {}
-//    static uButton &getInstance();
 //    virtual void initializeBoxes(){}
 
 private:

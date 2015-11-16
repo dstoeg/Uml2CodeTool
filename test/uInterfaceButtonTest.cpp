@@ -28,11 +28,6 @@ void uInterfaceButtonTest::createTest()
     TReferences references;
     uInheritable * interfaceTest1 = new uInterface(uPrivate, "Test Class", params, methods, references);
     uInheritable * interfaceTest2 = mObject->create(eInterface, uPrivate, "Test Class", params, methods, references);
-//    QVERIFY(interfaceTest1->getAccess() == interfaceTest2->getAccess());
-//    QVERIFY(interfaceTest1->getAttributes() == interfaceTest2->getAttributes());
-//    QVERIFY(interfaceTest1->getMethods() == interfaceTest2->getMethods());
-//    QVERIFY(interfaceTest1->getName() == interfaceTest2->getName());
-//    QVERIFY(interfaceTest1->getReferences() == interfaceTest2->getReferences());
-    QVERIFY(true);
+    QVERIFY(interfaceTest1 == interfaceTest2);
 }
 

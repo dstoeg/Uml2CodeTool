@@ -11,6 +11,8 @@
 #include "test/uInterfaceButtonTest.h"
 #include "test/uCodeGenerationVisitorTest.h"
 #include "test/uLanguageCppTest.h"
+#include "test/uReferenceTest.h"
+#include "test/uAggregationTest.h"
 
 
 TestMain::TestMain()
@@ -45,6 +47,12 @@ void TestMain::execute()
 
     uInterfaceButtonTest testInterfaceButton;
     QTest::qExec(&testInterfaceButton);
+
+    uReferenceTest testReference;
+    QTest::qExec(&testReference);
+
+    uAggregationTest testAggregation;
+    QTest::qExec(&testAggregation);
 
     std::cout << std::endl;
 }
