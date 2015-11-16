@@ -50,6 +50,17 @@ std::string uInheritable::getName() const
     return mName;
 }
 
+bool uInheritable::operator==(const uInheritable &class1) const
+{
+    return mName==class1.getName() && mAccess==class1.getAccess() && mAttributes==class1.getAttributes() &&
+            mReferences==class1.getReferences() && mMethods==class1.getMethods();
+}
+
+bool uInheritable::operator!=(const uInheritable &class1) const
+{
+    return !operator==(class1);
+}
+
 void uInheritable::addMethod(uMethod method)
 {
     mMethods.push_back(method);
@@ -65,3 +76,18 @@ void uInheritable::addReference(uReference * reference)
     mReferences.push_back(reference);
 }
 
+static bool operator==(TClasses& classes1, TClasses& classes2){
+    if(classes1.size()!=classes2.size())
+        return false;
+
+    TClassesIter iter2 = classes2.begin();
+    for (TClassesIter iter1 = classes1.begin(); iter1 != classes1.end(); iter1++, iter2++ ){
+        if((*iter1)!=(*iter2))
+            return false;
+    }
+    return true;
+}
+
+static bool operator!=(TClasses& classes1, TClasses& classes2){
+    return !operator==(classes1,classes2);
+}

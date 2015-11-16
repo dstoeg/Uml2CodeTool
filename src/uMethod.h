@@ -14,6 +14,8 @@ public:
     std::string getReturnType() const;
     uAccess getAccess() const;
     std::vector<uParameter> getParameters() const;
+    inline bool operator==(const uMethod& m2) const;
+    inline bool operator!=(const uMethod& m2) const;
 
 private:
     std::string mName;

@@ -14,6 +14,8 @@ public:
     std::string getName() const;
     std::string getType() const;
     uAccess getAccess() const;
+    inline bool operator==(const uParameter& p2) const;
+    inline bool operator!=(const uParameter& p2) const;
 
 private:
     std::string mName;
