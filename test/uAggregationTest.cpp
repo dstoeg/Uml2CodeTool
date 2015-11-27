@@ -10,7 +10,7 @@ uAggregationTest::uAggregationTest(QObject *parent) : QObject(parent)
 void uAggregationTest::initTestCase()
 {
         uInheritable * reference = new uInheritable("TestReference");
-        mObject = new uReference(reference, uAccess::uPublic);
+        mObject = new uAggregation(reference, uAccess::uPublic);
 }
 
 

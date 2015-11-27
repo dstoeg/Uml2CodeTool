@@ -22,7 +22,7 @@ private slots:
     void getReferencesTest();
     void getAccessTest();
     void setAccessTest();
-    void hasParentTest();
+//    void hasParentTest();
 
 //    void addMethodTest();
 //    void addAttributeTest();

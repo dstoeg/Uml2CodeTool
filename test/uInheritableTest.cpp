@@ -43,10 +43,10 @@ void uInheritableTest::setAccessTest()
     mObject->setAccess(uPublic);
 }
 
-void uInheritableTest::hasParentTest()
-{
-    QVERIFY(mObject->hasParent() == false);
-}
+//void uInheritableTest::hasParentTest()
+//{
+//    QVERIFY(mObject->hasParent() == false);
+//}
 
 void uInheritableTest::initTestCase()
 {
