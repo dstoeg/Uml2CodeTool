@@ -1,3 +1,4 @@
+/*
 #include <iostream>
 #include <vector>
 
@@ -14,7 +15,7 @@
 #include "test/TestMain.h"
 
 // enable/disable testing by commenting/uncommenting following statement
-#define TEST
+//#define TEST
 
 using namespace std;
 
@@ -67,12 +68,12 @@ int main()
     uLanguageStrategy * Python = new uLanguagePython();
 
     // generate C++ files
-    cout << endl << "generating C++ files" << endl;
+    cout << endl << "generating C++ files" << endl << endl;
     generator->setLanguage(CPP);
     classDiagram.applyVisitor(generator);
 
     // generate Java class file
-    cout << endl << "generating Java files" << endl;
+    cout << endl << "generating Java files" << endl << endl;
     generator->setLanguage(Java);
     classDiagram.applyVisitor(generator);
 
@@ -92,5 +93,19 @@ int main()
 
     return 0;
 
+}
+*/
+
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
+
+int main(int argc, char *argv[])
+{
+    QGuiApplication app(argc, argv);
+
+    QQmlApplicationEngine engine;
+    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+
+    return app.exec();
 }
 

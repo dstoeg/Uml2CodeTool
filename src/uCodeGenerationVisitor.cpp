@@ -40,25 +40,30 @@ void uCodeGenerationVisitor::visit(uChildClass *childClass)
 {
     if (mLanguage->hasSeparateFiles()) {
         createFile(childClass->getName() + mLanguage->getImplementationFileExtension(), mAuthor, mDate, mLanguage->createImplementationFileContent(childClass, childClass->getBaseClass()->getName()), mLanguage->getLineComment());
+        cout << "    " << childClass->getName() + mLanguage->getImplementationFileExtension() << endl;
     }
     createFile(childClass->getName() + mLanguage->getDeclarationFileExtension(), mAuthor, mDate, mLanguage->createDeclarationFileContent(childClass, childClass->getBaseClass()->getName()), mLanguage->getLineComment());
-
+    cout << "    " << childClass->getName() + mLanguage->getDeclarationFileExtension() << endl;
 }
 
 void uCodeGenerationVisitor::visit(uBaseClass *baseClass)
 {
     if (mLanguage->hasSeparateFiles()) {
         createFile(baseClass->getName() + mLanguage->getImplementationFileExtension(), mAuthor, mDate, mLanguage->createImplementationFileContent(baseClass), mLanguage->getLineComment());
+        cout << "    " << baseClass->getName() + mLanguage->getImplementationFileExtension() << endl;
     }
     createFile(baseClass->getName() + mLanguage->getDeclarationFileExtension(), mAuthor, mDate, mLanguage->createDeclarationFileContent(baseClass), mLanguage->getLineComment());
+    cout << "    " << baseClass->getName() + mLanguage->getDeclarationFileExtension() << endl;
 }
 
 void uCodeGenerationVisitor::visit(uInterface *interfaceClass)
 {
     if (mLanguage->hasSeparateFiles()) {
         createFile(interfaceClass->getName() + mLanguage->getImplementationFileExtension(), mAuthor, mDate, mLanguage->createImplementationFileContent(interfaceClass), mLanguage->getLineComment());
+        cout << "    " << interfaceClass->getName() + mLanguage->getImplementationFileExtension() << endl;
     }
     createFile(interfaceClass->getName() + mLanguage->getDeclarationFileExtension(), mAuthor, mDate, mLanguage->createDeclarationFileContent(interfaceClass), mLanguage->getLineComment());
+    cout << "    " << interfaceClass->getName() + mLanguage->getDeclarationFileExtension() << endl;
 }
 
 bool uCodeGenerationVisitor::createFile(string const& name, string const& author, string const& date, string const& content, string const& lineComment)
