@@ -98,12 +98,17 @@ int main()
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
+#include "UiEventDispatcher.h"
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
+    UiEventDispatcher dispatcher;
+
     QQmlApplicationEngine engine;
+    engine.rootContext()->setContextProperty("dispatcher", &dispatcher);
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
     return app.exec();

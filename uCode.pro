@@ -35,7 +35,9 @@ SOURCES += src/main.cpp \
     test/uLanguageCppTest.cpp \
     test/uMethodTest.cpp \
     test/uParameterTest.cpp \
-    test/uReferenceTest.cpp
+    test/uReferenceTest.cpp \
+    src/UiEventDispatcher.cpp \
+    src/uStringConverter.cpp
 
 RESOURCES += ui/qml.qrc
 
@@ -80,5 +82,7 @@ HEADERS += \
     test/uLanguageCppTest.h \
     test/uMethodTest.h \
     test/uParameterTest.h \
-    test/uReferenceTest.h
+    test/uReferenceTest.h \
+    src/UiEventDispatcher.h \
+    src/uStringConverter.h
 

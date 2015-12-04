@@ -1,6 +1,10 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>UMenuBar.qml</file>
+        <file>UClassTypeSelection.qml</file>
+        <file>UClassPanel.qml</file>
+        <file>UDrawingCanvas.qml</file>
+        <file>StyledText.qml</file>
     </qresource>
 </RCC>
-
