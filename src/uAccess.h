@@ -43,6 +43,23 @@ static std::string getAccessUmlString(uAccess access) {
     }
 }
 
+static uAccess getAccessFromChar(char c) {
+    switch (c) {
+        case '+':
+            return uPublic;
+            break;
+        case '-':
+            return uPrivate;
+            break;
+        case '#':
+            return uProtected;
+            break;
+        default:
+            return uPublic;
+            break;
+    }
+}
+
 
 #endif // UACCESS
 

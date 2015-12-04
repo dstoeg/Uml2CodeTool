@@ -16,9 +16,8 @@ TMethods uStringConverter::parseMethods(const std::string &text)
     vector<string> methodStrings;
     std::string delimiter = "\n";
 
-
     for (vector<string>::iterator iter = methodStrings.begin(); iter < methodStrings.end(); ++iter) {
-
+        string method = (*iter);
         uAccess access;
         string name;
         TParameters parameters;
