@@ -4,7 +4,7 @@ import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.1
 
 ColumnLayout {
-
+    id: classPanel
     spacing : 0
 
     Label {
@@ -97,6 +97,9 @@ ColumnLayout {
 
             Layout.fillHeight: true
             Layout.fillWidth: true
+            onClicked: {
+
+            }
 
         }
         Button {

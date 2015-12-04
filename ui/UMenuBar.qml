@@ -4,7 +4,7 @@ import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.1
 
 MenuBar {
-
+    id: mainMenuBar
     Menu {
 
         title: "File"
@@ -39,6 +39,11 @@ MenuBar {
 
         MenuItem {
             text: "Generate"
+            onTriggered: {
+                var component = Qt.createComponent("UCodeGenerationDialogue.qml");
+                win = component.createObject(mainMenuBar);
+                win.show();
+            }
         }
     }
 

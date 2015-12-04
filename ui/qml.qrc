@@ -6,5 +6,7 @@
         <file>UClassPanel.qml</file>
         <file>UDrawingCanvas.qml</file>
         <file>StyledText.qml</file>
+        <file>UCodeGenerationDialogue.qml</file>
+        <file>UFileDialog.qml</file>
     </qresource>
 </RCC>

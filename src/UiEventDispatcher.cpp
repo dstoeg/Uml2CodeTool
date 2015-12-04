@@ -55,3 +55,8 @@ void UiEventDispatcher::setClassState(int type)
     cout << "switched to " << getClassTypeString(mSelectedClassState) << endl;
 }
 
+void UiEventDispatcher::generateCode()
+{
+    cout << "generating code" << endl;
+}
+
