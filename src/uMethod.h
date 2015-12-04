@@ -27,5 +27,6 @@ private:
 
 typedef std::vector<uMethod> TMethods;
 typedef std::vector<uMethod>::iterator TMethodsIter;
+typedef std::vector<uMethod>::const_iterator TMethodsConstIter;
 
 #endif // UMETHOD_H

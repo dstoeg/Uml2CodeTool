@@ -43,12 +43,6 @@ ApplicationWindow {
                 Layout.preferredWidth: parent.width
                 Layout.preferredHeight: parent.height * 0.95
             }
-            /*
-            UClassGenerationButton {
-                Layout.preferredWidth: parent.width
-                Layout.preferredHeight: parent.height * 0.05
-            }
-            */
         }
     }
 }

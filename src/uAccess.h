@@ -26,5 +26,23 @@ static std::string getAccessString(uAccess access) {
     }
 }
 
+static std::string getAccessUmlString(uAccess access) {
+    switch (access) {
+        case uPublic:
+            return "+";
+            break;
+        case uPrivate:
+            return "-";
+            break;
+        case uProtected:
+            return "#";
+            break;
+        default:
+            return "";
+            break;
+    }
+}
+
+
 #endif // UACCESS
 
