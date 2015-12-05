@@ -27,23 +27,75 @@ ColumnLayout {
         font.pointSize: 9
     }
 
-    Label {
+    RowLayout {
         Layout.fillHeight: true
         Layout.fillWidth: true
-        StyledText {
-            text: "Name"
-            horizontalAlignment: Text.AlignLeft
+        spacing: parent.width/4
+        Label {
+            width: parent.width*3/5
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            StyledText {
+                text: "Name"
+                horizontalAlignment: Text.AlignLeft
+            }
+        }
+        Label {
+            width: parent.width/5
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            //anchors.centerIn: xField
+            StyledText {
+                text: "X (0-7)"
+                horizontalAlignment: xField.Top
+            }
+        }
+        Label {
+            Layout.fillHeight: true
+            width: parent.width/5
+            Layout.fillWidth: true
+            //anchors.centerIn: yField
+            StyledText {
+                text: "Y (0-4)"
+                horizontalAlignment: yField.Top
+            }
         }
     }
 
-    TextField {
-        id: nameField
+    RowLayout {
         Layout.fillHeight: true
         Layout.fillWidth: true
-        font.family: "Droid Sans"
-        font.bold: false
-        font.italic: false
-        font.pointSize: 9
+        spacing: parent.width/20
+        TextField {
+            id: nameField
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            width: parent.width*3/5
+            font.family: "Droid Sans"
+            font.bold: false
+            font.italic: false
+            font.pointSize: 9
+        }
+        TextField {
+            id: xField
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            width: parent.width/5
+            font.family: "Droid Sans"
+            font.bold: false
+            font.italic: false
+            font.pointSize: 9
+        }
+        TextField {
+            id: yField
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            width: parent.width/5
+            font.family: "Droid Sans"
+            font.bold: false
+            font.italic: false
+            font.pointSize: 9
+        }
     }
 
     Label {
@@ -85,9 +137,6 @@ ColumnLayout {
         font.pointSize: 9
     }
 
-    property int coordX: 20
-    property int coordY: 20
-
     RowLayout {
         spacing : 2
         Layout.fillHeight: true
@@ -101,16 +150,13 @@ ColumnLayout {
             Layout.fillHeight: true
             Layout.fillWidth: true
             onClicked: {
+                var coordX = xField.text
+                var coordY = yField.text
                 var name = nameField.text
                 var parent = parentField.text
                 var methods = methodField.text
                 var attributes = attributeField.text
                 drawingCanvas.insertClass(coordX,coordY,name, methods,attributes)
-                coordX += 200
-                if(coordX >= 1200 ){
-                    coordX = 20
-                    coordY += 200
-                }
                 drawingCanvas.requestPaint()
             }
 
@@ -127,7 +173,7 @@ ColumnLayout {
                 var methods = methodField.text
                 var attributes = attributeField.text
                 dispatcher.createClass(name, parent, methods, attributes)
-                drawingCanvas.drawClass(name, parent, methods, attributes)
+                drawingCanvas.requestPaint()
             }
         }
     }

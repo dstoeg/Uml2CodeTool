@@ -20,7 +20,6 @@ Canvas {
         context.fill();
 
         drawClasses();
-        //drawClass(300, 300, "name", "methods", "attributes")
     }
 
     function clearData(){
@@ -62,19 +61,19 @@ Canvas {
                 for(var i = 0; i < rs.rows.length; i++) {
                     drawClass(rs.rows.item(i).coordx, rs.rows.item(i).coordy, rs.rows.item(i).name, rs.rows.item(i).methods, rs.rows.item(i).attributes)
                 }
-                drawClass(300, 300, "name", "methods", "attributes")
+                drawClass(2, 2, "name", "methods", "attributes")
             }
          )
     }
 
     function drawClass(coordX, coordY, name, methods, attributes) {
 
-        var x = Number(coordX)
-        var y = Number(coordY)
+        var x = (Number(coordX)%8) * Number(width)/9
+        var y = (Number(coordY)%5) * Number(height)*2/9
 
         //console.log("Drawing class: "+name +", "+ methods +", "+ attributes)
-        var classWidth = 120;
-        var classHeight = 180;
+        var classWidth = Number(width)/10;
+        var classHeight = Number(height)/5;
 
         var firstDelimiter1 = classHeight * 0.15;
         var firstDelimiter2 = classHeight * 0.16;

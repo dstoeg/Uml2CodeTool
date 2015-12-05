@@ -11,6 +11,9 @@ ApplicationWindow {
     title: "uCode"
     color:  "white"
 
+    onWidthChanged: drawingCanvas.requestPaint()
+    onHeightChanged: drawingCanvas.requestPaint()
+
     //Creates the Menu bar at the top
     menuBar : UMenuBar {
 
