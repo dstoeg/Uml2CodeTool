@@ -3,11 +3,14 @@ import QtQuick.Window 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.1
 
+
+//This class creates the three buttons
 RowLayout {
     spacing : 2
     Layout.fillHeight: true
     Layout.fillWidth: true
 
+    //base button
     Rectangle {
         id: uBaseClassButton
         color: "white"
@@ -29,6 +32,7 @@ RowLayout {
         }
     }
 
+    //Interface button
     Rectangle {
         id: uInterfaceClassButton
         color: "white"
@@ -50,6 +54,7 @@ RowLayout {
         }
     }
 
+    //Child button
     Rectangle {
         id: uChildClassButton
         color: "white"

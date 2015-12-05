@@ -98,7 +98,11 @@ ColumnLayout {
             Layout.fillHeight: true
             Layout.fillWidth: true
             onClicked: {
-
+                var name = nameField.text
+                var parent = parentField.text
+                var methods = methodField.text
+                var attributes = attributeField.text
+                myDrawingCanvas.drawClass(150,150, name, attributes, methods);
             }
 
         }
