@@ -1,5 +1,6 @@
 #include "UiEventDispatcher.h"
 #include "uClassFactory.h"
+#include "uDebugPrinter.h"
 
 #include <iostream>
 
@@ -18,14 +19,12 @@ void UiEventDispatcher::createClass(QString name)
 
 void UiEventDispatcher::createClass(QString name, QString parent, QString methods, QString attributes)
 {
-    cout << "[log] creating class:" << endl;
-    cout << "name: " << name.toStdString() << endl;
-    cout << "parent: " << parent.toStdString() << endl;
-    cout << "methods: " << methods.toStdString() << endl;
-    cout << "attributes: " << attributes.toStdString() << endl;
-
     // convert string to objects
     TMethods methodObjects = mConverter.parseMethods(methods.toStdString());
+    uDebugPrinter printer;
+    printer.printMethod(methodObjects[0]);
+
+
     TParameters attributeObjects = mConverter.parseAttributes(attributes.toStdString());
 
     // call factory to create object

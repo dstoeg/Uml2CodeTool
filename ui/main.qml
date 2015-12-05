@@ -24,7 +24,7 @@ ApplicationWindow {
 
         // Creates the Canvas to draw the UML Diagram
         UDrawingCanvas {
-            id: myDrawingCanvas
+            id: drawingCanvas
             Layout.preferredWidth: parent.width * 0.75
             Layout.preferredHeight: parent.height
         }

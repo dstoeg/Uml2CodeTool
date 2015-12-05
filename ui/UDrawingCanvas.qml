@@ -7,7 +7,6 @@ Canvas {
     Layout.fillHeight: true
     Layout.fillWidth: true
     Layout.margins: 5
-    id: mycanvas
 
     onPaint: {
         // Get drawing context
