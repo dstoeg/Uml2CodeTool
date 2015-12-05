@@ -27,7 +27,9 @@ ApplicationWindow {
             id: drawingCanvas
             Layout.preferredWidth: parent.width * 0.75
             Layout.preferredHeight: parent.height
+            Component.onCompleted: clearData() //delete the data from the local Storage
         }
+
 
         //Right column with buttons and boxes
         ColumnLayout {

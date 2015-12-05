@@ -2,7 +2,6 @@ import QtQuick 2.3
 import QtQuick.Window 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.1
-import "canvas.js" as CanvasJs
 
 ColumnLayout {
     id: classPanel
@@ -106,9 +105,9 @@ ColumnLayout {
                 var parent = parentField.text
                 var methods = methodField.text
                 var attributes = attributeField.text
-                CanvasJs.insertClass(coordX,coordY,name, methods,attributes)
+                drawingCanvas.insertClass(coordX,coordY,name, methods,attributes)
                 coordX += 200
-                if(coordX >= 600 ){
+                if(coordX >= 1200 ){
                     coordX = 20
                     coordY += 200
                 }
