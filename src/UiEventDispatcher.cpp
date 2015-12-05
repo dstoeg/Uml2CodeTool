@@ -66,6 +66,9 @@ void UiEventDispatcher::generateCode()
     uDebugPrinter::printText("generating code");
     uDebugPrinter::printText("language: " + mCodeGenerator->getLanguage()->getName());
 
+    // TODO
+    mCodeGenerator->setFileAttributes("", "");
+
     mClassDiagram.applyVisitor(mCodeGenerator);
 }
 
