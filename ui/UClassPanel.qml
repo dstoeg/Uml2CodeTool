@@ -2,6 +2,7 @@ import QtQuick 2.3
 import QtQuick.Window 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.1
+import "canvas.js" as CanvasJs
 
 ColumnLayout {
     id: classPanel
@@ -85,6 +86,9 @@ ColumnLayout {
         font.pointSize: 9
     }
 
+    property int coordX: 20
+    property int coordY: 20
+
     RowLayout {
         spacing : 2
         Layout.fillHeight: true
@@ -102,7 +106,13 @@ ColumnLayout {
                 var parent = parentField.text
                 var methods = methodField.text
                 var attributes = attributeField.text
-                myDrawingCanvas.drawClass(150,150, name, attributes, methods);
+                CanvasJs.insertClass(coordX,coordY,name, methods,attributes)
+                coordX += 200
+                if(coordX >= 600 ){
+                    coordX = 20
+                    coordY += 200
+                }
+                drawingCanvas.requestPaint()
             }
 
         }

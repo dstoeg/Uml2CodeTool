@@ -8,5 +8,6 @@
         <file>StyledText.qml</file>
         <file>UCodeGenerationDialogue.qml</file>
         <file>UFileDialog.qml</file>
+        <file>canvas.js</file>
     </qresource>
 </RCC>
