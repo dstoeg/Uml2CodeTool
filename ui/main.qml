@@ -11,22 +11,25 @@ ApplicationWindow {
     title: "uCode"
     color:  "white"
 
+    //Creates the Menu bar at the top
     menuBar : UMenuBar {
 
     }
 
+    //Main Window
     RowLayout {
         id: mainWindow
         anchors.fill: parent
         spacing: 5
 
-
+        // Creates the Canvas to draw the UML Diagram
         UDrawingCanvas {
             id: drawingCanvas
             Layout.preferredWidth: parent.width * 0.75
             Layout.preferredHeight: parent.height
         }
 
+        //Right column with buttons and boxes
         ColumnLayout {
             id: sideWindow
             spacing : 5
@@ -35,11 +38,13 @@ ApplicationWindow {
             Layout.margins: 10
             Layout.leftMargin: 5
 
+            // Buttons Base, Interface and Child
             UClassTypeSelection {
                 Layout.preferredWidth: parent.width
                 Layout.preferredHeight: parent.height * 0.05
             }
 
+            //Boxes and buttons Create and Update
             UClassPanel {
                 Layout.preferredWidth: parent.width
                 Layout.preferredHeight: parent.height * 0.95
