@@ -2,35 +2,36 @@
 #include "uClassFactory.h"
 #include "uDebugPrinter.h"
 
-#include <iostream>
-
 
 using namespace std;
 
 UiEventDispatcher::UiEventDispatcher(QObject *parent) : QObject(parent)
 {
-
+    mCodeGenerator = &uCodeGenerationVisitor::getInstance();
 }
 
 void UiEventDispatcher::createClass(QString name)
 {
-    cout << "[log] create class called" << endl;
+
 }
 
 void UiEventDispatcher::createClass(QString name, QString parent, QString methods, QString attributes)
 {
-    // convert string to objects
-    TMethods methodObjects = mConverter.parseMethods(methods.toStdString());
-    uDebugPrinter printer;
-    printer.printMethod(methodObjects[0]);
+    // convert method string to uMethod objects
+    TMethods methodObjects = uStringConverter::parseMethods(methods.toStdString());
 
+    // convert attribute string to uParameter objects
+    TParameters attributeObjects = uStringConverter::parseAttributes(attributes.toStdString());
 
-    TParameters attributeObjects = mConverter.parseAttributes(attributes.toStdString());
+    TReferences refs;
 
     // call factory to create object
+    uInheritable * obj = new uBaseClass(uPublic, name.toStdString(), attributeObjects, methodObjects, refs);
 
+    uDebugPrinter::printClass(obj);
 
     // do something with object
+    mClassDiagram.addClass(obj);
 }
 
 void UiEventDispatcher::setClassState(int type)
@@ -51,11 +52,23 @@ void UiEventDispatcher::setClassState(int type)
     }
 
     // TODO remove
-    cout << "switched to " << getClassTypeString(mSelectedClassState) << endl;
+    uDebugPrinter::printText("switched to " + getClassTypeString(mSelectedClassState));
+}
+
+void UiEventDispatcher::setLanguage(QString language)
+{
+    uDebugPrinter::printText("set language called " + language.toStdString());
+    mCodeGenerator->setLanguage(uStringConverter::parseLanguage(language.toStdString()));
 }
 
 void UiEventDispatcher::generateCode()
 {
-    cout << "generating code" << endl;
+    uDebugPrinter::printText("generating code");
+    uDebugPrinter::printText("language: " + mCodeGenerator->getLanguage()->getName());
+
+    // TODO
+    mCodeGenerator->setFileAttributes("", "");
+
+    mClassDiagram.applyVisitor(mCodeGenerator);
 }
 

@@ -9,6 +9,7 @@
 #include "uLanguageStrategy.h"
 #include "uCodeGenerationVisitor.h"
 #include "uClassDiagram.h"
+#include "uCodeGenerationVisitor.h"
 
 
 class UiEventDispatcher : public QObject
@@ -21,6 +22,7 @@ public:
 
     Q_INVOKABLE void setClassState(int type);
 
+    Q_INVOKABLE void setLanguage(QString language);
     Q_INVOKABLE void generateCode();
 
 signals:
@@ -33,10 +35,9 @@ private:
     bool mCreateDoxyGenComments;
     std::string folderName;
     std::string projectFile;
-    uStringConverter mConverter;
     uClassType mSelectedClassState;
-    uLanguageStrategy * mLanguageStrategy;
     uClassDiagram mClassDiagram;
+    uCodeGenerationVisitor * mCodeGenerator;
 
 };
 

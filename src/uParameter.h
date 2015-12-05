@@ -25,6 +25,7 @@ private:
 
 typedef std::vector<uParameter> TParameters;
 typedef std::vector<uParameter>::iterator TParametersIter;
+typedef std::vector<uParameter>::const_iterator TParametersConstIter;
 
 #endif // UPARAMETER
 

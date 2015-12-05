@@ -41,7 +41,7 @@ MenuBar {
             text: "Generate"
             onTriggered: {
                 var component = Qt.createComponent("UCodeGenerationDialogue.qml");
-                win = component.createObject(mainMenuBar);
+                var win = component.createObject(mainMenuBar);
                 win.show();
             }
         }
