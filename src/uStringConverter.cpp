@@ -1,6 +1,11 @@
-#include "uStringConverter.h"
+
 #include <sstream>
 #include <iostream>
+
+#include "uStringConverter.h"
+#include "uLanguageCpp.h"
+#include "uLanguageJava.h"
+#include "uLanguagePython.h"
 
 using namespace std;
 
@@ -107,6 +112,21 @@ TParameters uStringConverter::parseAttributes(const std::string &text)
     return attributes;
 }
 
+uLanguageStrategy * uStringConverter::parseLanguage(const string &language)
+{
+    uLanguageStrategy * strategy;
+    if (language == "C++")
+        strategy = new uLanguageCPP();
+    else if (language == "Java")
+        strategy = new uLanguageJava();
+    else if (language == "Python")
+        strategy = new uLanguagePython();
+    else
+        strategy = NULL;
+
+    return strategy;
+}
+
 std::string uStringConverter::createMethodString(const TMethods &methods)
 {
     stringstream text;
@@ -152,7 +172,7 @@ std::vector<std::string> uStringConverter::splitString(std::string const& text) 
     return methodStrings;
 }
 
-bool uStringConverter::isAccessChar(char c) const{
+bool uStringConverter::isAccessChar(char c) {
     return (c == '+' || c == '-' || c == '#');
 }
 

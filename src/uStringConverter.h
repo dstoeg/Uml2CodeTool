@@ -4,21 +4,22 @@
 #include <string>
 #include <vector>
 #include "uInheritable.h"
+#include "uLanguageStrategy.h"
 
 class uStringConverter
 {
 public:
     uStringConverter();
 
-    TMethods parseMethods(std::string const& text);
-    TParameters parseAttributes(std::string const& text);
-
-    std::string createMethodString(TMethods const& methods);
-    std::string createAttributeString(TParameters const& attributes);
+    static TMethods parseMethods(std::string const& text);
+    static TParameters parseAttributes(std::string const& text);
+    static uLanguageStrategy * parseLanguage(std::string const& language);
+    static std::string createMethodString(TMethods const& methods);
+    static std::string createAttributeString(TParameters const& attributes);
 
 private:
-    std::vector<std::string> splitString(std::string const& text);
-    bool isAccessChar(char c) const;
+    static std::vector<std::string> splitString(std::string const& text);
+    static bool isAccessChar(char c);
 };
 
 #endif // USTRINGCONVERTER_H

@@ -30,7 +30,11 @@ ApplicationWindow {
                 }
             }
             ComboBox {
-                model: [ "C++", "Java", "Python" ]
+                id: languageCB
+                model: [ "None", "C++", "Java", "Python" ]
+                onCurrentIndexChanged: {
+                    dispatcher.setLanguage(languageCB.currentText);
+                }
             }
         }
 
@@ -52,7 +56,7 @@ ApplicationWindow {
                 }
                 onClicked: {
                     var component = Qt.createComponent("UFileDialog.qml");
-                    win2 = component.createObject(classPanel);
+                    var win2 = component.createObject(generationDialog);
                     win2.show();
                 }
             }

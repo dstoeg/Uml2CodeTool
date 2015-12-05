@@ -2,11 +2,12 @@
 #include "uClassFactory.h"
 #include "uDebugPrinter.h"
 
+
 using namespace std;
 
 UiEventDispatcher::UiEventDispatcher(QObject *parent) : QObject(parent)
 {
-
+    mCodeGenerator = &uCodeGenerationVisitor::getInstance();
 }
 
 void UiEventDispatcher::createClass(QString name)
@@ -17,10 +18,10 @@ void UiEventDispatcher::createClass(QString name)
 void UiEventDispatcher::createClass(QString name, QString parent, QString methods, QString attributes)
 {
     // convert method string to uMethod objects
-    TMethods methodObjects = mConverter.parseMethods(methods.toStdString());
+    TMethods methodObjects = uStringConverter::parseMethods(methods.toStdString());
 
     // convert attribute string to uParameter objects
-    TParameters attributeObjects = mConverter.parseAttributes(attributes.toStdString());
+    TParameters attributeObjects = uStringConverter::parseAttributes(attributes.toStdString());
 
     TReferences refs;
 
@@ -30,6 +31,7 @@ void UiEventDispatcher::createClass(QString name, QString parent, QString method
     uDebugPrinter::printClass(obj);
 
     // do something with object
+    mClassDiagram.addClass(obj);
 }
 
 void UiEventDispatcher::setClassState(int type)
@@ -53,8 +55,17 @@ void UiEventDispatcher::setClassState(int type)
     uDebugPrinter::printText("switched to " + getClassTypeString(mSelectedClassState));
 }
 
+void UiEventDispatcher::setLanguage(QString language)
+{
+    uDebugPrinter::printText("set language called " + language.toStdString());
+    mCodeGenerator->setLanguage(uStringConverter::parseLanguage(language.toStdString()));
+}
+
 void UiEventDispatcher::generateCode()
 {
     uDebugPrinter::printText("generating code");
+    uDebugPrinter::printText("language: " + mCodeGenerator->getLanguage()->getName());
+
+    mClassDiagram.applyVisitor(mCodeGenerator);
 }
 
