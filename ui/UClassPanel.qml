@@ -114,6 +114,7 @@ ColumnLayout {
                 var methods = methodField.text
                 var attributes = attributeField.text
                 dispatcher.createClass(name, parent, methods, attributes)
+                drawingCanvas.drawClass(name, parent, methods, attributes)
             }
         }
     }

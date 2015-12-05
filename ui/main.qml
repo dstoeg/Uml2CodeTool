@@ -22,6 +22,7 @@ ApplicationWindow {
 
 
         UDrawingCanvas {
+            id: drawingCanvas
             Layout.preferredWidth: parent.width * 0.75
             Layout.preferredHeight: parent.height
         }

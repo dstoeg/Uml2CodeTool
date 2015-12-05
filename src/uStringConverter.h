@@ -15,6 +15,10 @@ public:
 
     std::string createMethodString(TMethods const& methods);
     std::string createAttributeString(TParameters const& attributes);
+
+private:
+    std::vector<std::string> splitString(std::string const& text);
+    bool isAccessChar(char c) const;
 };
 
 #endif // USTRINGCONVERTER_H
