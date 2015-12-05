@@ -8,7 +8,12 @@ uDebugPrinter::uDebugPrinter()
 
 }
 
-void uDebugPrinter::printMethod(const uMethod &method) const
+void uDebugPrinter::printText(const string &text)
+{
+    debug_print(text);
+}
+
+void uDebugPrinter::printMethod(const uMethod &method)
 {
 
     string output = getAccessString(method.getAccess()) + " " + method.getReturnType() + " " + method.getName() + "(";
@@ -22,7 +27,36 @@ void uDebugPrinter::printMethod(const uMethod &method) const
     debug_print(output);
 }
 
-void uDebugPrinter::debug_print(const string &text) const
+void uDebugPrinter::printMethods(const TMethods &methods)
+{
+    for (TMethodsConstIter iter = methods.begin(); iter != methods.end(); ++iter) {
+        printMethod(*iter);
+    }
+}
+
+void uDebugPrinter::printAttribute(const uParameter &attribute)
+{
+    string output = getAccessString(attribute.getAccess()) + " " + attribute.getType() + " " + attribute.getName();
+    debug_print(output);
+}
+
+void uDebugPrinter::printAttributes(const TParameters &params)
+{
+    for (TParametersConstIter iter = params.begin(); iter != params.end(); ++iter) {
+        printAttribute(*iter);
+    }
+}
+
+void uDebugPrinter::printClass(uInheritable const * const obj)
+{
+    debug_print("Name: " + obj->getName());
+    debug_print("Methods: ");
+    printMethods(obj->getMethods());
+    debug_print("Attributes: ");
+    printAttributes(obj->getAttributes());
+}
+
+void uDebugPrinter::debug_print(const string &text)
 {
     cout << "[DEBUG] " << text << endl;
 }

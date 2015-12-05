@@ -2,9 +2,6 @@
 #include "uClassFactory.h"
 #include "uDebugPrinter.h"
 
-#include <iostream>
-
-
 using namespace std;
 
 UiEventDispatcher::UiEventDispatcher(QObject *parent) : QObject(parent)
@@ -14,21 +11,23 @@ UiEventDispatcher::UiEventDispatcher(QObject *parent) : QObject(parent)
 
 void UiEventDispatcher::createClass(QString name)
 {
-    cout << "[log] create class called" << endl;
+
 }
 
 void UiEventDispatcher::createClass(QString name, QString parent, QString methods, QString attributes)
 {
-    // convert string to objects
+    // convert method string to uMethod objects
     TMethods methodObjects = mConverter.parseMethods(methods.toStdString());
-    uDebugPrinter printer;
-    printer.printMethod(methodObjects[0]);
 
-
+    // convert attribute string to uParameter objects
     TParameters attributeObjects = mConverter.parseAttributes(attributes.toStdString());
 
-    // call factory to create object
+    TReferences refs;
 
+    // call factory to create object
+    uInheritable * obj = new uBaseClass(uPublic, name.toStdString(), attributeObjects, methodObjects, refs);
+
+    uDebugPrinter::printClass(obj);
 
     // do something with object
 }
@@ -51,11 +50,11 @@ void UiEventDispatcher::setClassState(int type)
     }
 
     // TODO remove
-    cout << "switched to " << getClassTypeString(mSelectedClassState) << endl;
+    uDebugPrinter::printText("switched to " + getClassTypeString(mSelectedClassState));
 }
 
 void UiEventDispatcher::generateCode()
 {
-    cout << "generating code" << endl;
+    uDebugPrinter::printText("generating code");
 }
 
