@@ -31,6 +31,12 @@ ApplicationWindow {
             Layout.preferredWidth: parent.width * 0.75
             Layout.preferredHeight: parent.height
             Component.onCompleted: clearData() //delete the data from the local Storage
+            MouseArea {
+                anchors.fill: parent
+                acceptedButtons: Qt.LeftButton
+                onClicked: drawingCanvas.selectClass(mouse.x, mouse.y)
+                cursorShape: Qt.UpArrowCursor
+            }
         }
 
 

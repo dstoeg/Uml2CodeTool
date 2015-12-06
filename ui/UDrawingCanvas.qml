@@ -20,7 +20,14 @@ Canvas {
         context.fill();
 
         var classDiagram = dispatcher.getClassDiagram();
-        for(var i = 0; i < classDiagram.size(); i++) {
+
+        var diagramSize;
+        if(classDiagram === null)
+            diagramSize = 0
+        else
+            diagramSize = classDiagram.size()
+
+        for(var i = 0; i < diagramSize; i++) {
             var name = classDiagram.get(i).qGetName();
             var methods = uStringConverter.qCreateMethodString(classDiagram.get(i).qGetMethods());
             drawClass(100, 100, name, methods, "");
@@ -139,5 +146,27 @@ Canvas {
         // draw projection of arrow, then rotate
     }
 
+    function selectClass(x, y){
+        //console.log("Selected area in (" + x +"," + y + ")")
+
+        //Open the database
+        var db = LocalStorage.openDatabaseSync("classesDB", "1.0", "Database for storing classes", 1000000);
+
+        db.transaction(
+            function(tx) {
+                // Create the database if it doesn't already exist
+                tx.executeSql('CREATE TABLE IF NOT EXISTS Classes(coordx TEXT, coordy TEXT, name TEXT, methods TEXT, attributes TEXT)');
+
+                // Get all added classes
+                var rs = tx.executeSql('SELECT * FROM Classes');
+
+//                //look for the class
+//                for(var i = 0; i < rs.rows.length; i++) {
+//                    drawClass(rs.rows.item(i).coordx, rs.rows.item(i).coordy, rs.rows.item(i).name, rs.rows.item(i).methods, rs.rows.item(i).attributes)
+//                }
+//                drawClass(2, 2, "name", "methods", "attributes")
+            }
+         )
+    }
 
 }
