@@ -29,8 +29,9 @@ Canvas {
 
         for(var i = 0; i < diagramSize; i++) {
             var name = classDiagram.get(i).qGetName();
-            var methods = uStringConverter.qCreateMethodString(classDiagram.get(i).qGetMethods());
-            drawClass(100, 100, name, methods, "");
+            //var methods = stringConverter.qCreateMethodString(classDiagram.get(i).getMethods());
+            //var attributes = stringConverter.qCreateAttributeString(classDiagram.get(i).getAttributes());
+            //drawClass(100, 100, name, methods, attributes);
         }
     }
 
