@@ -8,6 +8,8 @@ ApplicationWindow {
     visible: true
     width: 1600
     height: 900
+    minimumWidth: 300
+    minimumHeight: 300
     title: "uCode"
     color:  "white"
 
