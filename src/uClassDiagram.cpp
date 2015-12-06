@@ -4,7 +4,7 @@
 
 using namespace std;
 
-uClassDiagram::uClassDiagram()
+uClassDiagram::uClassDiagram(QObject *parent) : QObject(parent)
 {
 }
 
@@ -33,6 +33,17 @@ void uClassDiagram::applyVisitor(uVisitor *visitor)
     for(TClassesIter iter = mClasses.begin(); iter < mClasses.end(); iter++){
         (*iter)->accept(visitor);
     }
+}
+
+uInheritable *uClassDiagram::get(int index) const
+{
+    if (index >= mClasses.size()) return NULL;
+    return mClasses[index];
+}
+
+int uClassDiagram::size() const
+{
+    return mClasses.size();
 }
 
 

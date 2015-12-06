@@ -8,6 +8,7 @@ using namespace std;
 UiEventDispatcher::UiEventDispatcher(QObject *parent) : QObject(parent)
 {
     mCodeGenerator = &uCodeGenerationVisitor::getInstance();
+    mClassDiagram = new uClassDiagram();
 }
 
 void UiEventDispatcher::createClass(QString name)
@@ -31,7 +32,7 @@ void UiEventDispatcher::createClass(QString name, QString parent, QString method
     uDebugPrinter::printClass(obj);
 
     // do something with object
-    mClassDiagram.addClass(obj);
+    mClassDiagram->addClass(obj);
 }
 
 void UiEventDispatcher::setClassState(int type)
@@ -69,6 +70,11 @@ void UiEventDispatcher::generateCode()
     // TODO
     mCodeGenerator->setFileAttributes("", "");
 
-    mClassDiagram.applyVisitor(mCodeGenerator);
+    mClassDiagram->applyVisitor(mCodeGenerator);
+}
+
+uClassDiagram * UiEventDispatcher::getClassDiagram()
+{
+    return mClassDiagram;
 }
 

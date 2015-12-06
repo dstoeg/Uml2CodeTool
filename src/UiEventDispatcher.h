@@ -24,6 +24,7 @@ public:
 
     Q_INVOKABLE void setLanguage(QString language);
     Q_INVOKABLE void generateCode();
+    Q_INVOKABLE uClassDiagram * getClassDiagram();
 
 signals:
 
@@ -36,7 +37,7 @@ private:
     std::string folderName;
     std::string projectFile;
     uClassType mSelectedClassState;
-    uClassDiagram mClassDiagram;
+    uClassDiagram * mClassDiagram;
     uCodeGenerationVisitor * mCodeGenerator;
 
 };

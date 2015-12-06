@@ -99,7 +99,12 @@ int main()
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <QQmlEngine>
+#include <QObject>
+#include <QQmlComponent>
 #include "UiEventDispatcher.h"
+#include "uClassDiagram.h"
+#include "uStringConverter.h"
 
 int main(int argc, char *argv[])
 {
@@ -108,6 +113,10 @@ int main(int argc, char *argv[])
     UiEventDispatcher dispatcher;
 
     QQmlApplicationEngine engine;
+    qmlRegisterType<uClassDiagram>("com.uCode.demo", 1, 0, "uClassDiagram");
+    qmlRegisterType<uInheritable>("com.uCode.demo", 1, 0, "uInheritable");
+    qmlRegisterType<uStringConverter>("com.uCode.demo", 1, 0, "uStringConverter");
+
     engine.rootContext()->setContextProperty("dispatcher", &dispatcher);
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 

@@ -3,19 +3,26 @@
 
 #include <string>
 #include <vector>
+#include <QObject>
+#include <QString>
+
 #include "uInheritable.h"
 #include "uLanguageStrategy.h"
 
-class uStringConverter
+class uStringConverter : public QObject
 {
+    Q_OBJECT
 public:
-    uStringConverter();
+    explicit uStringConverter(QObject *parent = 0);
 
     static TMethods parseMethods(std::string const& text);
     static TParameters parseAttributes(std::string const& text);
     static uLanguageStrategy * parseLanguage(std::string const& language);
     static std::string createMethodString(TMethods const& methods);
     static std::string createAttributeString(TParameters const& attributes);
+
+    // qml functions
+    Q_INVOKABLE QString qCreateMethodString(TMethods const& methods);
 
 private:
     static std::vector<std::string> splitString(std::string const& text);

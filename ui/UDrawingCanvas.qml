@@ -19,7 +19,14 @@ Canvas {
         context.clearRect(0, 0, width, height);
         context.fill();
 
-        drawClasses();
+        //drawClasses();
+        var classDiagram = dispatcher.getClassDiagram();
+        for(var i = 0; i < classDiagram.size(); i++) {
+            var name = classDiagram.get(i).qGetName();
+            var methods = uStringConverter.qCreateMethodString(classDiagram.get(i).qGetMethods());
+            drawClass(100, 100, name, methods, "");
+        }
+
         //drawClass(300, 300, "name", "methods", "attributes")
     }
 

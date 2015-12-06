@@ -9,7 +9,7 @@
 
 using namespace std;
 
-uStringConverter::uStringConverter()
+uStringConverter::uStringConverter(QObject *parent) : QObject(parent)
 {
 
 }
@@ -181,5 +181,10 @@ std::string uStringConverter::createAttributeString(const TParameters &attribute
     // TODO
 
     return "";
+}
+
+QString uStringConverter::qCreateMethodString(const TMethods &methods)
+{
+    return QString::fromStdString(createMethodString(methods));
 }
 

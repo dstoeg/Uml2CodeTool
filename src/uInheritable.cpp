@@ -1,12 +1,17 @@
 #include "uInheritable.h"
 
 
-uInheritable::uInheritable(const std::string &name)
+uInheritable::uInheritable(QObject *parent) : QObject(parent)
+{
+
+}
+
+uInheritable::uInheritable(const std::string &name)  : QObject(0)
 {
     mName = name;
 }
 
-uInheritable::uInheritable(uAccess access, const std::string &name, TParameters &attributes, TMethods &methods, TReferences &references)
+uInheritable::uInheritable(uAccess access, const std::string &name, TParameters &attributes, TMethods &methods, TReferences &references) : QObject(0)
 {
     mAccess = access;
     mName = name;
@@ -49,6 +54,11 @@ void uInheritable::setAccess(uAccess access)
 std::string uInheritable::getName() const
 {
     return mName;
+}
+
+QString uInheritable::qGetName() const
+{
+    return QString::fromStdString(mName);
 }
 
 bool uInheritable::hasParent()
