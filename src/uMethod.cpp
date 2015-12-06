@@ -1,7 +1,12 @@
 #include "uMethod.h"
 
 
-uMethod::uMethod(uAccess access, std::string const& returnType, std::string const& name, std::vector<uParameter> const& params)
+uMethod::uMethod(QObject *parent) : QObject(parent)
+{
+
+}
+
+uMethod::uMethod(uAccess access, std::string const& returnType, std::string const& name, std::vector<uParameter> const& params) : QObject(0)
 {
     mName = name;
     mReturnType = returnType;

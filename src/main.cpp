@@ -111,13 +111,19 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     UiEventDispatcher dispatcher;
+    uStringConverter converter;
 
     QQmlApplicationEngine engine;
     qmlRegisterType<uClassDiagram>("com.uCode.demo", 1, 0, "uClassDiagram");
     qmlRegisterType<uInheritable>("com.uCode.demo", 1, 0, "uInheritable");
     qmlRegisterType<uStringConverter>("com.uCode.demo", 1, 0, "uStringConverter");
+    //qmlRegisterType<uMethod>("com.uCode.demo", 1, 0, "uMethod");
+    //qmlRegisterType<uParameter>("com.uCode.demo", 1, 0, "uParameter");
+    //qmlRegisterType<std::vector<uMethod>>("com.uCode.demo", 1, 0, "TMethods");
+    //qmlRegisterType<TParameters>("com.uCode.demo", 1, 0, "TParameters");
 
     engine.rootContext()->setContextProperty("dispatcher", &dispatcher);
+    engine.rootContext()->setContextProperty("stringConverter", &converter);
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
     return app.exec();

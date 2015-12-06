@@ -188,3 +188,8 @@ QString uStringConverter::qCreateMethodString(const TMethods &methods)
     return QString::fromStdString(createMethodString(methods));
 }
 
+QString uStringConverter::qCreateAttributeString(const TParameters &attributes)
+{
+    return QString::fromStdString(createAttributeString(attributes));
+}
+

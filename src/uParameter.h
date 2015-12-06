@@ -1,15 +1,18 @@
 #ifndef UPARAMETER
 #define UPARAMETER
 
+#include <QObject>
+
 #include "uAccess.h"
 #include <vector>
 #include <iterator>
 
 
 
-class uParameter {
-
+class uParameter { //: public QObject {
+    //Q_OBJECT
 public:
+    //explicit uParameter(QObject *parent = 0);
     uParameter(uAccess access, std::string const&type, std::string const& name);
     std::string getName() const;
     std::string getType() const;

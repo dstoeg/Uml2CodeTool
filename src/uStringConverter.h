@@ -23,6 +23,7 @@ public:
 
     // qml functions
     Q_INVOKABLE QString qCreateMethodString(TMethods const& methods);
+    Q_INVOKABLE QString qCreateAttributeString(TParameters const& attributes);
 
 private:
     static std::vector<std::string> splitString(std::string const& text);

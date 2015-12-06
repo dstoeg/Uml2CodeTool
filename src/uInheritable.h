@@ -20,8 +20,8 @@ public:
     uInheritable(std::string const& name);
     uInheritable(uAccess access, std::string const& name, TParameters & attributes, TMethods & methods, TReferences & references);
     virtual void accept(uVisitor * visitor);
-    std::vector<uMethod> getMethods() const;
-    std::vector<uParameter> getAttributes() const;
+    Q_INVOKABLE std::vector<uMethod> getMethods() const;
+    Q_INVOKABLE std::vector<uParameter> getAttributes() const;
     std::vector<uReference*> getReferences() const;
     uAccess getAccess() const;
     void setAccess(uAccess access);
