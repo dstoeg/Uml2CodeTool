@@ -2,13 +2,13 @@
 #include "uParameter.h"
 
 using namespace std;
-/*
+
 uParameter::uParameter(QObject *parent) : QObject(parent)
 {
 
 }
-*/
-uParameter::uParameter(uAccess access, std::string const&type, std::string const& name) //: QObject(0)
+
+uParameter::uParameter(uAccess access, std::string const&type, std::string const& name) : QObject(0)
 {
     mName = name;
     mType = type;

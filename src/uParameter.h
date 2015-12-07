@@ -9,10 +9,10 @@
 
 
 
-class uParameter { //: public QObject {
-    //Q_OBJECT
+class uParameter : public QObject {
+    Q_OBJECT
 public:
-    //explicit uParameter(QObject *parent = 0);
+    explicit uParameter(QObject *parent = 0);
     uParameter(uAccess access, std::string const&type, std::string const& name);
     std::string getName() const;
     std::string getType() const;

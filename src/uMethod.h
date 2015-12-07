@@ -13,7 +13,7 @@ class uMethod : public QObject
    Q_OBJECT
 public:
     explicit uMethod(QObject *parent = 0);
-    uMethod(uMethod &&) = default;
+    //uMethod(uMethod &&) = default;
     uMethod(uAccess access, std::string const& returnType, std::string const& name, const TParameters &params);
     std::string getName() const;
     std::string getReturnType() const;
