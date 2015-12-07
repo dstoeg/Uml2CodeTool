@@ -19,20 +19,22 @@ Canvas {
         context.clearRect(0, 0, width, height);
         context.fill();
 
-        var classDiagram = dispatcher.getClassDiagram();
+        drawClasses()
 
-        var diagramSize;
-        if(classDiagram === null)
-            diagramSize = 0
-        else
-            diagramSize = classDiagram.size()
+//        var classDiagram = dispatcher.getClassDiagram();
 
-        for(var i = 0; i < diagramSize; i++) {
-            var name = classDiagram.get(i).qGetName();
-            //var methods = stringConverter.qCreateMethodString(classDiagram.get(i).getMethods());
-            //var attributes = stringConverter.qCreateAttributeString(classDiagram.get(i).getAttributes());
-            //drawClass(100, 100, name, methods, attributes);
-        }
+//        var diagramSize;
+//        if(classDiagram === null)
+//            diagramSize = 0
+//        else
+//            diagramSize = classDiagram.size()
+
+//        for(var i = 0; i < diagramSize; i++) {
+//            var name = classDiagram.get(i).qGetName();
+//            //var methods = stringConverter.qCreateMethodString(classDiagram.get(i).getMethods());
+//            //var attributes = stringConverter.qCreateAttributeString(classDiagram.get(i).getAttributes());
+//            //drawClass(100, 100, name, methods, attributes);
+//        }
     }
 
     function clearData(){
@@ -74,7 +76,7 @@ Canvas {
                 for(var i = 0; i < rs.rows.length; i++) {
                     drawClass(rs.rows.item(i).coordx, rs.rows.item(i).coordy, rs.rows.item(i).name, rs.rows.item(i).methods, rs.rows.item(i).attributes)
                 }
-                drawClass(2, 2, "name", "methods", "attributes")
+                //drawClass(2, 2, "name", "methods", "attributes")
             }
          )
     }
@@ -100,7 +102,9 @@ Canvas {
 
         var context = getContext("2d");
         context.strokeStyle = "black"
-        context.font = "8px sans-serif";
+        var letterFont = width < height ? Number(width)/90: Number(height)/60;
+        //console.log("LetterFont: " + letterFont)
+        context.font = letterFont + "px sans-serif";
 
         // draw frame
         context.rect(x, y, classWidth, classHeight);
