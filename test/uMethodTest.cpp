@@ -35,7 +35,7 @@ void uMethodTest::initTestCase()
     // do objects need to be explicitly declared or can they be
 //    passed by functions anonymously?
     TParameters params;
-    params.push_back(uParameter(uPrivate, "string", "param1"));
+    params.push_back(new uParameter(uPrivate, "string", "param1"));
     mMethod = new uMethod(uAccess::uPrivate, "void", "TestMethod",
     params);
 }

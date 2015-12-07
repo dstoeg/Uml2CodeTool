@@ -6,7 +6,7 @@ uMethod::uMethod(QObject *parent) : QObject(parent)
 
 }
 
-uMethod::uMethod(uAccess access, std::string const& returnType, std::string const& name, std::vector<uParameter> const& params) : QObject(0)
+uMethod::uMethod(uAccess access, std::string const& returnType, std::string const& name, TParameters const& params) : QObject(0)
 {
     mName = name;
     mReturnType = returnType;
@@ -29,19 +29,19 @@ uAccess uMethod::getAccess() const
     return mAccess;
 }
 
-std::vector<uParameter> uMethod::getParameters() const
+std::vector<uParameter *> uMethod::getParameters() const
 {
     return mParameters;
 }
 
-bool uMethod::operator!=(const uMethod &m2) const
-{
-    return !operator==(m2);
-}
-
-bool uMethod::operator==(const uMethod &m2) const
+inline bool uMethod::operator==(const uMethod &m2) const
 {
     return mAccess==m2.getAccess() && mName==m2.getName() && mReturnType==m2.getReturnType() && mParameters==m2.getParameters();
+}
+
+inline bool uMethod::operator!=(const uMethod &m2) const
+{
+    return !operator==(m2);
 }
 
 static bool operator==(TMethods& methods1, TMethods& methods2){

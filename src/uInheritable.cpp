@@ -26,12 +26,12 @@ void uInheritable::accept(uVisitor *visitor)
 
 }
 
-std::vector<uMethod> uInheritable::getMethods() const
+std::vector<uMethod*> uInheritable::getMethods() const
 {
     return mMethods;
 }
 
-std::vector<uParameter> uInheritable::getAttributes() const
+std::vector<uParameter*> uInheritable::getAttributes() const
 {
     return mAttributes;
 }
@@ -77,12 +77,12 @@ bool uInheritable::operator!=(const uInheritable &class1) const
     return !operator==(class1);
 }
 
-void uInheritable::addMethod(uMethod method)
+void uInheritable::addMethod(uMethod *method)
 {
     mMethods.push_back(method);
 }
 
-void uInheritable::addAttribute(uParameter attribute)
+void uInheritable::addAttribute(uParameter *attribute)
 {
     mAttributes.push_back(attribute);
 }

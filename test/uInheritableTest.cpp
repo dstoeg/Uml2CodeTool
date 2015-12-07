@@ -50,9 +50,9 @@ void uInheritableTest::setAccessTest()
 
 void uInheritableTest::initTestCase()
 {
-    TParameters methodParams = {uParameter(uPrivate , "int", "param1"), uParameter(uPrivate , "string", "param2"), uParameter(uPrivate , "float", "param3")};
-    uMethod method( uPublic, "void", "draw", methodParams);
-    TParameters parameters = {uParameter(uPrivate , "int", "id"),uParameter(uProtected , "string", "name"), uParameter(uPublic , "float", "size")};
+    TParameters methodParams = {new uParameter(uPrivate , "int", "param1"),new uParameter(uPrivate , "string", "param2"),new uParameter(uPrivate , "float", "param3")};
+    uMethod *method = new uMethod( uPublic, "void", "draw", methodParams);
+    TParameters parameters = {new uParameter(uPrivate , "int", "id"),new uParameter(uProtected , "string", "name"),new uParameter(uPublic , "float", "size")};
     TMethods methods = {method};
     TReferences references;
     mObject = new uInheritable(uPublic,"TestClass", parameters, methods, references);

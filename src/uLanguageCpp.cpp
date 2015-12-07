@@ -18,22 +18,22 @@ uLanguageCPP::uLanguageCPP()
 }
 
 
-std::string uLanguageCPP::createMethodDeclaration(const uMethod & method)
+std::string uLanguageCPP::createMethodDeclaration(uMethod * method)
 {
     string methodStr = "";
-    TParameters params = method.getParameters();
-    methodStr += method.getReturnType() + " " + method.getName() + "(";
+    TParameters params = method->getParameters();
+    methodStr += method->getReturnType() + " " + method->getName() + "(";
     for (TParametersIter iter = params.begin(); iter < params.end(); ++iter) {
-        methodStr += iter->getType() + " " + iter->getName() + ", ";
+        methodStr += (*iter)->getType() + " " + (*iter)->getName() + ", ";
     }
-    methodStr += params[params.size()-1].getType() + " " + params[params.size()-1].getName() + ");";
+    methodStr += params[params.size()-1]->getType() + " " + params[params.size()-1]->getName() + ");";
 
     return methodStr;
 }
 
-string uLanguageCPP::createAttributeDeclaration(const uParameter &attribute)
+string uLanguageCPP::createAttributeDeclaration(uParameter * attribute)
 {
-    string attributeString = attribute.getType() + " " + attribute.getName() + ";";
+    string attributeString = attribute->getType() + " " + attribute->getName() + ";";
     return attributeString;
 }
 
@@ -43,15 +43,15 @@ string uLanguageCPP::createReferenceDeclaration(const uReference &reference)
     return "";
 }
 
-string uLanguageCPP::createMethodImplementation(const uMethod &method, std::string aClass)
+string uLanguageCPP::createMethodImplementation(uMethod * method, std::string aClass)
 {
     string methodStr = "";
-    TParameters params = method.getParameters();
-    methodStr += method.getReturnType() + " " + aClass + "::" + method.getName() + "(";
+    TParameters params = method->getParameters();
+    methodStr += method->getReturnType() + " " + aClass + "::" + method->getName() + "(";
     for (TParametersIter iter = params.begin(); iter < params.end(); ++iter) {
-        methodStr += iter->getType() + " " + iter->getName() + ", ";
+        methodStr += (*iter)->getType() + " " + (*iter)->getName() + ", ";
     }
-    methodStr += params[params.size()-1].getType() + " " + params[params.size()-1].getName() + ") {\n\t//TODO\n}\n\n";
+    methodStr += params[params.size()-1]->getType() + " " + params[params.size()-1]->getName() + ") {\n\t//TODO\n}\n\n";
 
     return methodStr;
 }
@@ -84,26 +84,26 @@ string uLanguageCPP::createDeclarationFileContent(uInheritable * aClass, std::st
 
     TMethods methods = aClass->getMethods();
     for (TMethodsIter iter = methods.begin(); iter < methods.end(); ++iter) {
-        if (iter->getAccess() == uPublic) {
+        if ((*iter)->getAccess() == uPublic) {
             publicSection += "\t" + createMethodDeclaration(*iter) + "\n";
         }
-        else if (iter->getAccess() == uPrivate) {
+        else if ((*iter)->getAccess() == uPrivate) {
             privateSection += "\t" + createMethodDeclaration(*iter) + "\n";
         }
-        else if (iter->getAccess() == uProtected) {
+        else if ((*iter)->getAccess() == uProtected) {
             protectedSection += "\t" + createMethodDeclaration(*iter) + "\n";
         }
     }
 
     TParameters attributes = aClass->getAttributes();
     for (TParametersIter iter = attributes.begin(); iter < attributes.end(); ++iter) {
-        if (iter->getAccess() == uPublic) {
+        if ((*iter)->getAccess() == uPublic) {
             publicSection += "\t" + createAttributeDeclaration(*iter) + "\n";
         }
-        else if (iter->getAccess() == uPrivate) {
+        else if ((*iter)->getAccess() == uPrivate) {
             privateSection += "\t" + createAttributeDeclaration(*iter) + "\n";
         }
-        else if (iter->getAccess() == uProtected) {
+        else if ((*iter)->getAccess() == uProtected) {
             protectedSection += "\t" + createAttributeDeclaration(*iter) + "\n";
         }
     }

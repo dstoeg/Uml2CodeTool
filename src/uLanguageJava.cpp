@@ -13,15 +13,15 @@ uLanguageJava::uLanguageJava()
     mName = "Java";
 }
 
-std::string uLanguageJava::createMethodDeclaration(const uMethod &method)
+std::string uLanguageJava::createMethodDeclaration(uMethod * method)
 {
     string methodStr = "";
-    TParameters params = method.getParameters();
-    methodStr += getAccessString(method.getAccess()) + " " + method.getReturnType() + " " + method.getName() + "(";
+    TParameters params = method->getParameters();
+    methodStr += getAccessString(method->getAccess()) + " " + method->getReturnType() + " " + method->getName() + "(";
     for (TParametersIter iter = params.begin(); iter < params.end(); ++iter) {
-        methodStr += iter->getType() + " " + iter->getName() + ", ";
+        methodStr += (*iter)->getType() + " " + (*iter)->getName() + ", ";
     }
-    methodStr += params[params.size()-1].getType() + " " + params[params.size()-1].getName() + ") \n\t{\n\t\t// TODO\n\t}\n\n";
+    methodStr += params[params.size()-1]->getType() + " " + params[params.size()-1]->getName() + ") \n\t{\n\t\t// TODO\n\t}\n\n";
 
     return methodStr;
 }
@@ -38,9 +38,9 @@ string uLanguageJava::createMethodImplementation(const uMethod &method, std::str
     return "";
 }
 
-string uLanguageJava::createAttributeDeclaration(const uParameter &attribute)
+string uLanguageJava::createAttributeDeclaration(uParameter * attribute)
 {
-    string attributeString = getAccessString(attribute.getAccess()) + " " + attribute.getType() + " " + attribute.getName() + ";";
+    string attributeString = getAccessString(attribute->getAccess()) + " " + attribute->getType() + " " + attribute->getName() + ";";
     return attributeString;
 }
 

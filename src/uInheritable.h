@@ -20,8 +20,8 @@ public:
     uInheritable(std::string const& name);
     uInheritable(uAccess access, std::string const& name, TParameters & attributes, TMethods & methods, TReferences & references);
     virtual void accept(uVisitor * visitor);
-    Q_INVOKABLE std::vector<uMethod> getMethods() const;
-    Q_INVOKABLE std::vector<uParameter> getAttributes() const;
+    Q_INVOKABLE std::vector<uMethod *> getMethods() const;
+    Q_INVOKABLE std::vector<uParameter *> getAttributes() const;
     std::vector<uReference*> getReferences() const;
     uAccess getAccess() const;
     void setAccess(uAccess access);
@@ -31,8 +31,8 @@ public:
     inline bool operator==(const uInheritable &class1) const;
     inline bool operator!=(const uInheritable &class1) const;
 
-    void addMethod(uMethod method);
-    void addAttribute(uParameter attribute);
+    void addMethod(uMethod * method);
+    void addAttribute(uParameter * attribute);
     void addReference(uReference * reference);
 
     // QML function
@@ -40,8 +40,8 @@ public:
 
 protected:
     std::string mName;
-    std::vector<uMethod> mMethods;
-    std::vector<uParameter> mAttributes;
+    std::vector<uMethod*> mMethods;
+    std::vector<uParameter*> mAttributes;
     std::vector<uReference*> mReferences;
     uAccess mAccess;
     bool mHasParent;

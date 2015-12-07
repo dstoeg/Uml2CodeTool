@@ -59,7 +59,7 @@ TMethods uStringConverter::parseMethods(const std::string &text)
             if (method[i] == ',') i++;
 
             while(method[i] == ' ') i++;
-            parameters.push_back(uParameter(uPublic, type, name));
+            parameters.push_back(new uParameter(uPublic, type, name));
         }
 
         // parse return type
@@ -69,7 +69,7 @@ TMethods uStringConverter::parseMethods(const std::string &text)
             i++;
         }
 
-        methods.push_back(uMethod(access, returnType, name, parameters));
+        methods.push_back(new uMethod(access, returnType, name, parameters));
     }
     return methods;
 }
@@ -105,7 +105,7 @@ TParameters uStringConverter::parseAttributes(const std::string &text)
             if (attribute[i] != ' ') type += attribute[i];
             i++;
         }
-        attributes.push_back(uParameter(access, type, name));
+        attributes.push_back(new uParameter(access, type, name));
     }
 
 
@@ -133,19 +133,19 @@ std::string uStringConverter::createMethodString(const TMethods &methods)
     for (TMethodsConstIter iter = methods.begin(); iter < methods.end(); ++iter) {
 
         // access
-        text << getAccessUmlString(iter->getAccess()) << endl;
+        text << getAccessUmlString((*iter)->getAccess()) << endl;
 
         // method name
-        text << " " << iter->getName() << "(";
+        text << " " << (*iter)->getName() << "(";
 
         // parameters
-        TParameters parameters = iter->getParameters();
+        TParameters parameters = (*iter)->getParameters();
         for (TParametersIter it = parameters.begin(); it<parameters.end(); ++it) {
             if (it == parameters.end()-1) {
-                text << it->getType() << " " << it->getName();
+                text << (*it)->getType() << " " << (*it)->getName();
             }
             else {
-                text << it->getType() << " " << it->getName() << ", ";
+                text << (*it)->getType() << " " << (*it)->getName() << ", ";
             }
         }
 
@@ -153,7 +153,7 @@ std::string uStringConverter::createMethodString(const TMethods &methods)
         text << ") : ";
 
         // return type
-        text << iter->getReturnType() << endl;
+        text << (*iter)->getReturnType() << endl;
     }
 
     return text.str();

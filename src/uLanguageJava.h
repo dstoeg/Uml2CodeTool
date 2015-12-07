@@ -11,8 +11,8 @@ public:
     virtual std::string createImplementationFileContent(uInheritable * aClass, std::string const& base = "");
 
 protected:
-    virtual std::string createAttributeDeclaration(uParameter const& attribute);
-    virtual std::string createMethodDeclaration(uMethod const& method);
+    virtual std::string createAttributeDeclaration(uParameter * attribute);
+    virtual std::string createMethodDeclaration(uMethod *method);
     virtual std::string createReferenceDeclaration(uReference const& reference);
     virtual std::string createMethodImplementation(uMethod const& method, std::string aClass);
 };

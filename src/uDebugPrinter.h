@@ -9,9 +9,9 @@ class uDebugPrinter
 public:
     uDebugPrinter();
     static void printText(std::string const& text);
-    static void printMethod(uMethod const& method);
+    static void printMethod(uMethod *method);
     static void printMethods(TMethods const& methods);
-    static void printAttribute(uParameter const& attribute);
+    static void printAttribute(uParameter *attribute);
     static void printAttributes(TParameters const& params);
     static void printClass(uInheritable const * const obj);
 

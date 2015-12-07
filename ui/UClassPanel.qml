@@ -156,6 +156,7 @@ ColumnLayout {
                 var parent = parentField.text
                 var methods = methodField.text
                 var attributes = attributeField.text
+                dispatcher.createClass(name, parent, methods, attributes)
                 drawingCanvas.insertClass(coordX,coordY,name, methods,attributes)
                 drawingCanvas.requestPaint()
             }

@@ -13,15 +13,15 @@ void uDebugPrinter::printText(const string &text)
     debug_print(text);
 }
 
-void uDebugPrinter::printMethod(const uMethod &method)
+void uDebugPrinter::printMethod(uMethod * method)
 {
 
-    string output = getAccessString(method.getAccess()) + " " + method.getReturnType() + " " + method.getName() + "(";
-    for (size_t i=0; i<method.getParameters().size(); i++) {
-        if (i== method.getParameters().size()-1)
-            output += method.getParameters()[i].getType() + " " + method.getParameters()[i].getName();
+    string output = getAccessString(method->getAccess()) + " " + method->getReturnType() + " " + method->getName() + "(";
+    for (size_t i=0; i< method->getParameters().size(); i++) {
+        if (i== method->getParameters().size()-1)
+            output += method->getParameters()[i]->getType() + " " + method->getParameters()[i]->getName();
         else
-            output += method.getParameters()[i].getType() + " " + method.getParameters()[i].getName() + ", ";
+            output += method->getParameters()[i]->getType() + " " + method->getParameters()[i]->getName() + ", ";
     }
     output += ")";
     debug_print(output);
@@ -34,9 +34,9 @@ void uDebugPrinter::printMethods(const TMethods &methods)
     }
 }
 
-void uDebugPrinter::printAttribute(const uParameter &attribute)
+void uDebugPrinter::printAttribute(uParameter * attribute)
 {
-    string output = getAccessString(attribute.getAccess()) + " " + attribute.getType() + " " + attribute.getName();
+    string output = getAccessString(attribute->getAccess()) + " " + attribute->getType() + " " + attribute->getName();
     debug_print(output);
 }
 

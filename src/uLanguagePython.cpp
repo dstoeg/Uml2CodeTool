@@ -23,26 +23,26 @@ uLanguagePython::uLanguagePython()
 }
 
 
-std::string uLanguagePython::createMethodDeclaration(const uMethod & method)
+std::string uLanguagePython::createMethodDeclaration(uMethod * method)
 {
     TParameters params;
-    TParameters methodParams = method.getParameters();
-    params.push_back(uParameter(uPublic, "", "self"));
+    TParameters methodParams = method->getParameters();
+    params.push_back(new uParameter(uPublic, "", "self"));
     params.insert(params.end(), methodParams.begin(), methodParams.end());
 
-    string methodStr = "def " + access(method.getAccess()) + method.getName() + "(";
+    string methodStr = "def " + access(method->getAccess()) + method->getName() + "(";
 
     for (TParametersIter it = params.begin(); it != params.end(); it++) {
-        methodStr += it->getName() + ", ";
+        methodStr += (*it)->getName() + ", ";
     }
 
     return methodStr.substr(0, methodStr.length()-2) + "):\n        \"\"\"TODO: Method docstring\"\"\"\n        pass\n\n";
 
 }
 
-string uLanguagePython::createAttributeDeclaration(const uParameter &attribute)
+string uLanguagePython::createAttributeDeclaration(uParameter * attribute)
 {
-    return "self." + attribute.getName() + " = None";
+    return "self." + attribute->getName() + " = None";
 }
 
 string uLanguagePython::createReferenceDeclaration(const uReference &reference)
