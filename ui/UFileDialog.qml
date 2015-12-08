@@ -6,9 +6,11 @@ import QtQuick.Dialogs 1.0
 
 FileDialog {
     id: fileDialog
-    title: "Please choose a file"
+    title: "Please choose a folder"
     folder: shortcuts.home
+    selectFolder: true
     onAccepted: {
+        console.log("Accepted "+fileUrl);
 
     }
     onRejected: {
