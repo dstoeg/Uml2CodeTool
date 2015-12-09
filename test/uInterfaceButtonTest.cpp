@@ -27,7 +27,7 @@ void uInterfaceButtonTest::createTest()
     TMethods methods;
     TReferences references;
     uInheritable * interfaceTest1 = new uInterface(uPrivate, "Test Class", params, methods, references);
-    uInheritable * interfaceTest2 = mObject->create(eInterface, uPrivate, "Test Class", params, methods, references);
+    uInheritable * interfaceTest2 = mObject->create(uPrivate, "Test Class", params, methods, references);
     QVERIFY(interfaceTest1 == interfaceTest2);
 }
 

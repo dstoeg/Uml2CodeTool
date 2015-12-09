@@ -1,5 +1,6 @@
 #include "uDebugPrinter.h"
 #include <iostream>
+#include <typeinfo>
 
 using namespace std;
 
@@ -54,6 +55,7 @@ void uDebugPrinter::printAttributes(const TParameters &params)
 
 void uDebugPrinter::printClass(uInheritable * obj)
 {
+    debug_print("Object type: " + string(typeid(obj).name()));
     debug_print("Name: " + obj->getName());
     debug_print("Methods: ");
     printMethods(obj->getMethods());

@@ -159,7 +159,10 @@ ColumnLayout {
 
                 if (!gridLayout.contains(name) && gridLayout.isEmpty(parseInt(coordX), parseInt(coordY))) {
                     gridLayout.addClass(parseInt(coordX), parseInt(coordY), name)
+
+
                     dispatcher.createClass(name, parent, methods, attributes)
+
                     drawingCanvas.requestPaint()
                     clearTextFields()
                     drawingCanvas.selectedClass = ""
@@ -191,6 +194,7 @@ ColumnLayout {
                     diagram.removeClass(obj)
 
                     dispatcher.createClass(name, parent, methods, attributes)
+
                     drawingCanvas.requestPaint()
                     clearTextFields()
                     drawingCanvas.selectedClass = ""

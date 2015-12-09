@@ -1,6 +1,9 @@
 #include "UiEventDispatcher.h"
 #include "uDebugPrinter.h"
 #include "uClassType.h"
+#include "uClassButton.h"
+#include "uInterfaceButton.h"
+#include "uChildButton.h"
 
 
 using namespace std;
@@ -10,6 +13,7 @@ UiEventDispatcher::UiEventDispatcher(QObject *parent) : QObject(parent)
     mCodeGenerator = &uCodeGenerationVisitor::getInstance();
     mClassDiagram = new uClassDiagram();
     mFactory = &uClassFactory::getInstance();
+    mClassButton = &uClassButton::getInstance();
 }
 
 void UiEventDispatcher::createClass(QString name)
@@ -26,16 +30,17 @@ void UiEventDispatcher::createClass(QString name, QString parent, QString method
     // convert attribute string to uParameter objects
     TParameters attributeObjects = uStringConverter::parseAttributes(attributes.toStdString());
 
-    TReferences refs;
+    // TODO
+    TReferences referenceObjects;
 
     // TODO find parent given name
     // TODO replace with found parent class
     uInheritable * testBase;
 
     // call factory to create object
-    obj = mFactory->createClass(eBaseClass, uPublic, name.toStdString(), attributeObjects, methodObjects, refs, testBase);
+    obj = mClassButton->create(uPublic, name.toStdString(), attributeObjects, methodObjects, referenceObjects, testBase);
 
-//    uDebugPrinter::printClass(obj);
+    uDebugPrinter::printClass(obj);
 
     // do something with object
     mClassDiagram->addClass(obj);
@@ -46,20 +51,17 @@ void UiEventDispatcher::setClassState(int type)
     switch (type) {
 
         case 0:
-            mSelectedClassState = eBaseClass;
+            mClassButton = &uClassButton::getInstance();
             break;
         case 1:
-            mSelectedClassState = eInterface;
+            mClassButton = &uInterfaceButton::getInstance();
             break;
         case 2:
-            mSelectedClassState = eChildClass;
+            mClassButton = &uChildButton::getInstance();
             break;
         default:
             break;
     }
-
-    // TODO remove
-    uDebugPrinter::printText("switched to " + getClassTypeString(mSelectedClassState));
 }
 
 void UiEventDispatcher::setLanguage(QString language)

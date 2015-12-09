@@ -8,8 +8,7 @@ class uClassButton : public uButton
 public:
     static uClassButton &getInstance();
     void update(uInheritable* inheritable);
-    uInheritable* create(uClassType type, uAccess access, std::string const& name, TParameters & attributes, TMethods & methods, TReferences & references, uInheritable *base);
-    void initializeBoxes();
+    uInheritable* create(uAccess access, std::string const& name, TParameters & attributes, TMethods & methods, TReferences & references, uInheritable *base = NULL);
 
 protected:
     uClassButton(){}

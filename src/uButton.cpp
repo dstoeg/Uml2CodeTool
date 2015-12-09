@@ -6,4 +6,9 @@ uButton &uButton::getInstance()
     return mInstance;
 }
 
+uButton::uButton(QObject *parent) : QObject(parent)
+{
+
+}
+
 

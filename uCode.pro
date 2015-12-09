@@ -39,7 +39,8 @@ SOURCES += src/main.cpp \
     src/UiEventDispatcher.cpp \
     src/uStringConverter.cpp \
     src/uDebugPrinter.cpp \
-    src/uGridLayout.cpp
+    src/uGridLayout.cpp \
+    src/uChildButton.cpp
 
 RESOURCES += ui/qml.qrc
 
@@ -88,5 +89,6 @@ HEADERS += \
     src/UiEventDispatcher.h \
     src/uStringConverter.h \
     src/uDebugPrinter.h \
-    src/uGridLayout.h
+    src/uGridLayout.h \
+    src/uChildButton.h
 

@@ -27,7 +27,7 @@ void uClassButtonTest::createTest()
     TMethods methods;
     TReferences references;
     uInheritable * classButton1 = new uBaseClass(uPrivate, "Test Class", params, methods, references);
-    uInheritable * classButton2 = mObject->create(eBaseClass, uPrivate, "Test Class", params, methods, references, NULL);
+    uInheritable * classButton2 = mObject->create(uPrivate, "Test Class", params, methods, references, NULL);
     QVERIFY(classButton1 == classButton2);
 }
 

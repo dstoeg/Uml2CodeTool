@@ -1,6 +1,7 @@
 #include "uClassButton.h"
 #include "uDrawVisitor.h"
 #include "uClassFactory.h"
+#include "uDebugPrinter.h"
 
 uClassButton &uClassButton::getInstance()
 {
@@ -16,16 +17,10 @@ void uClassButton::update(uInheritable* inheritable)
     uDrawVisitor::getInstance().repaint();
 }
 
-uInheritable* uClassButton::create(uClassType type, uAccess access, const std::string &name, TParameters &attributes, TMethods &methods, TReferences &references, uInheritable *base)
+uInheritable* uClassButton::create(uAccess access, const std::string &name, TParameters &attributes, TMethods &methods, TReferences &references, uInheritable *base)
 {
-    uInheritable * newClass = uClassFactory::getInstance().createClass(type,access, name, attributes, methods, references, base);
+    uDebugPrinter::printText("creating new uBaseClass");
 
-    //mainDiagram.add(newClass);
+    uInheritable * newClass = uClassFactory::getInstance().createClass(uClassType::eBaseClass ,access, name, attributes, methods, references, base);
     return newClass;
 }
-
-void uClassButton::initializeBoxes()
-{
-     //Here there should be initialized the boxes, so we don't have to ask for parameters in the Create() method
-}
-

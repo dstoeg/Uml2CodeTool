@@ -1,6 +1,7 @@
 #include "uInterfaceButton.h"
 #include "uDrawVisitor.h"
 #include "uClassFactory.h"
+#include "uDebugPrinter.h"
 
 uInterfaceButton &uInterfaceButton::getInstance()
 {
@@ -17,15 +18,10 @@ void uInterfaceButton::update(uInheritable* inheritable)
 }
 
 //Constructor should be changed when the boxes are implemented with the GUI
-uInheritable* uInterfaceButton::create(uClassType type, uAccess access, const std::string &name, TParameters &attributes, TMethods &methods, TReferences &references)
+uInheritable* uInterfaceButton::create(uAccess access, std::string const& name, TParameters & attributes, TMethods & methods, TReferences & references, uInheritable *base)
 {
-    uInheritable * newClass = uClassFactory::getInstance().createClass(uClassType::eInterface,access, name, attributes, methods, references, NULL);
-
-    //mainDiagram.add(newClass);
+    uDebugPrinter::printText("creating new uInterface");
+    uInheritable * newClass = uClassFactory::getInstance().createClass(uClassType::eInterface,access, name, attributes, methods, references, base);
     return newClass;
 }
 
-void uInterfaceButton::initializeBoxes()
-{
-     //Here there should be initialized the boxes, so we don't have to ask for parameters in the Create() method
-}

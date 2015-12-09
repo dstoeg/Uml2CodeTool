@@ -9,18 +9,20 @@
 
 #include <vector>
 
+#include <QObject>
 
-class uButton
+
+class uButton : public QObject
 {
+    Q_OBJECT
 public:
 
-    virtual void update(uInheritable* inheritable) {}
-    virtual uInheritable* create(uClassType type, uAccess access, std::string const& name, TParameters & attributes, TMethods & methods, TReferences & references, uInheritable *base) {}
+    Q_INVOKABLE virtual void update(uInheritable* inheritable) {}
+    Q_INVOKABLE virtual uInheritable* create(uAccess access, std::string const& name, TParameters & attributes, TMethods & methods, TReferences & references, uInheritable *base = NULL) {}
     static uButton &getInstance();
-    virtual void initializeBoxes(){}
 
 protected:
-    uButton(){}
+    uButton(QObject * parent = 0);
     uButton(uButton const&);
     void operator=(uButton const&);
 };

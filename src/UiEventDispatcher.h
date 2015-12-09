@@ -11,6 +11,7 @@
 #include "uClassDiagram.h"
 #include "uCodeGenerationVisitor.h"
 #include "uClassFactory.h"
+#include "uButton.h"
 
 
 class UiEventDispatcher : public QObject
@@ -37,7 +38,7 @@ private:
     bool mCreateDoxyGenComments;
     std::string folderName;
     std::string projectFile;
-    uClassType mSelectedClassState;
+    uButton * mClassButton;
     uClassDiagram * mClassDiagram;
     uCodeGenerationVisitor * mCodeGenerator;
     uClassFactory * mFactory;
