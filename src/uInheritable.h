@@ -49,5 +49,6 @@ protected:
 
 typedef std::vector<uInheritable*> TClasses;
 typedef std::vector<uInheritable*>::iterator TClassesIter;
+typedef std::vector<uInheritable*>::const_iterator TClassesConstIter;
 
 #endif // UINHERITABLE_H

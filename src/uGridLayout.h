@@ -18,7 +18,7 @@ public:
     Q_INVOKABLE bool moveClass(QString const& name, int newI, int newJ);
     Q_INVOKABLE bool moveClass(int i, int j, int newI, int newJ);
 
-    Q_INVOKABLE QString const& getString(int i, int j) const;
+    Q_INVOKABLE QString getString(int i, int j) const;
 
     Q_INVOKABLE int getWidth() const;
     Q_INVOKABLE int getHeight() const;

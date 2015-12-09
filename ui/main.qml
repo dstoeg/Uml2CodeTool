@@ -60,6 +60,7 @@ ApplicationWindow {
 
             //Boxes and buttons Create and Update
             UClassPanel {
+                id : uClassPanel
                 Layout.preferredWidth: parent.width
                 Layout.preferredHeight: parent.height * 0.95
             }

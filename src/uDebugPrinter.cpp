@@ -3,7 +3,7 @@
 
 using namespace std;
 
-uDebugPrinter::uDebugPrinter()
+uDebugPrinter::uDebugPrinter(QObject * parent) : QObject(parent)
 {
 
 }
@@ -11,6 +11,11 @@ uDebugPrinter::uDebugPrinter()
 void uDebugPrinter::printText(const string &text)
 {
     debug_print(text);
+}
+
+void uDebugPrinter::qPrintText(const QString &text)
+{
+    printText(text.toStdString());
 }
 
 void uDebugPrinter::printMethod(uMethod * method)
@@ -47,7 +52,7 @@ void uDebugPrinter::printAttributes(const TParameters &params)
     }
 }
 
-void uDebugPrinter::printClass(uInheritable const * const obj)
+void uDebugPrinter::printClass(uInheritable * obj)
 {
     debug_print("Name: " + obj->getName());
     debug_print("Methods: ");

@@ -149,7 +149,26 @@ Canvas {
 
 
     function selectClass(x, y){
-        //console.log("Selected area in (" + x +"," + y + ")")
+        uDebugger.qPrintText("Selected area in (" + x +"," + y + ")");
+
+        var i = parseInt((Number(x) / (Number(width)/gridLayout.getWidth())))
+        var j = parseInt((Number(y) / (Number(height)/gridLayout.getHeight())))
+
+        if (!gridLayout.isEmpty(parseInt(i), parseInt(j))) {
+
+            var name = gridLayout.getString(parseInt(i), parseInt(j))
+            uDebugger.qPrintText("name: " + name)
+            var diagram = dispatcher.getClassDiagram()
+            var uClass = diagram.find(name);
+
+            uDebugger.printClass(uClass)
+
+            // TODO do something with uClass
+
+
+        }
+
+
 
     }
 

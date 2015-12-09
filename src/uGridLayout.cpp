@@ -2,6 +2,7 @@
 #include "uDebugPrinter.h"
 
 #include <string>
+#include <iostream>
 
 using namespace std;
 
@@ -78,10 +79,9 @@ bool uGridLayout::moveClass(int i, int j, int newI, int newJ)
     return ret;
 }
 
-const QString &uGridLayout::getString(int i, int j) const
+QString uGridLayout::getString(int i, int j) const
 {
     if (!checkBounds(i,j)) return "";
-
     return mTable[i][j];
 }
 
