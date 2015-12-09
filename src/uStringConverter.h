@@ -20,6 +20,7 @@ public:
     static uLanguageStrategy * parseLanguage(std::string const& language);
     static std::string createMethodString(TMethods const& methods);
     static std::string createAttributeString(TParameters const& attributes);
+    static uAccess dAccess;
 
     // qml functions
     Q_INVOKABLE QString qCreateMethodString(TMethods const& methods);

@@ -8,6 +8,8 @@
 
 using namespace std;
 
+uAccess uStringConverter::dAccess = uPublic;
+
 uStringConverter::uStringConverter(QObject *parent) : QObject(parent)
 {
 
@@ -31,9 +33,15 @@ TMethods uStringConverter::parseMethods(const std::string &text)
         // parse access
         while (!isAccessChar(method[i]) && i<method.size()) {i++; }
         access = getAccessFromChar(method[i]);
+        // if no char is found, assign defualt
+        if(i >= method.size()-1){
+            i=0;
+            access = dAccess;
+        } else {
+            i++;
+        }
 
         // parse name
-        i++;
         while (method[i] != '(' && i <method.size()) {
             if (method[i] != ' ') name += method[i];
             i++;
@@ -85,14 +93,21 @@ TParameters uStringConverter::parseAttributes(const std::string &text)
         uAccess access;
         string type = "";
         string name = "";
+
         size_t i = 0;
 
         // parse access
         while (!isAccessChar(attribute[i]) && i<attribute.size()) {i++; }
         access = getAccessFromChar(attribute[i]);
+        // if no char is found, assign defualt
+        if(i >= attribute.size()-1){
+            i=0;
+            access = dAccess;
+        } else {
+            i++;
+        }
 
         // parse name
-        i++;
         while (attribute[i] != ':' && i <attribute.size()) {
             if (attribute[i] != ' ') name += attribute[i];
             i++;
