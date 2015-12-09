@@ -5,11 +5,14 @@
 
 using namespace std;
 
+
 UiEventDispatcher::UiEventDispatcher(QObject *parent) : QObject(parent)
 {
     mCodeGenerator = &uCodeGenerationVisitor::getInstance();
     mClassDiagram = new uClassDiagram();
     mFactory = &uClassFactory::getInstance();
+    // Needs a default state
+    mSelectedClassState = eInterface;
 }
 
 void UiEventDispatcher::createClass(QString name)
@@ -33,7 +36,7 @@ void UiEventDispatcher::createClass(QString name, QString parent, QString method
     uInheritable * testBase;
 
     // call factory to create object
-    obj = mFactory->createClass(eBaseClass, uPublic, name.toStdString(), attributeObjects, methodObjects, refs, testBase);
+    obj = mFactory->createClass(mSelectedClassState, uPublic, name.toStdString(), attributeObjects, methodObjects, refs, testBase);
 
 //    uDebugPrinter::printClass(obj);
 
