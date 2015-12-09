@@ -29,8 +29,8 @@ public:
     Q_INVOKABLE int getI(QString const& name) const;
     Q_INVOKABLE int getJ(QString const& name) const;
 
-    bool isEmpty(int i, int j) const;
-    bool contains(QString const& name) const;
+    Q_INVOKABLE bool isEmpty(int i, int j) const;
+    Q_INVOKABLE bool contains(QString const& name) const;
 
 signals:
 

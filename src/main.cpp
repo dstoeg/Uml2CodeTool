@@ -119,8 +119,8 @@ int main(int argc, char *argv[])
     qmlRegisterType<uClassDiagram>("com.uCode.demo", 1, 0, "uClassDiagram");
     qmlRegisterType<uInheritable>("com.uCode.demo", 1, 0, "uInheritable");
     qmlRegisterType<uStringConverter>("com.uCode.demo", 1, 0, "uStringConverter");
-    //qmlRegisterType<uMethod>("com.uCode.demo", 1, 0, "uMethod");
-    //qmlRegisterType<uParameter>("com.uCode.demo", 1, 0, "uParameter");
+    qmlRegisterType<uMethod>("com.uCode.demo", 1, 0, "uMethod");
+    qmlRegisterType<uParameter>("com.uCode.demo", 1, 0, "uParameter");
     //qmlRegisterType<std::vector<uMethod>>("com.uCode.demo", 1, 0, "TMethods");
     //qmlRegisterType<TParameters>("com.uCode.demo", 1, 0, "TParameters");
     qmlRegisterType<uGridLayout>("com.uCode.demo", 1, 0, "uGridLayout");

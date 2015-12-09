@@ -19,8 +19,10 @@ Canvas {
         context.clearRect(0, 0, width, height);
         context.fill();
 
-        //drawClasses()
+        drawClasses()
+    }
 
+    function drawClasses(){
         var classDiagram = dispatcher.getClassDiagram();
 
         var diagramSize;
@@ -32,57 +34,14 @@ Canvas {
 
         for(var i = 0; i < diagramSize; i++) {
             var name = classDiagram.get(i).qGetName();
-            //var methods = stringConverter.qCreateMethodString(classDiagram.get(i).getMethods());
-            //var attributes = stringConverter.qCreateAttributeString(classDiagram.get(i).getAttributes());
+            var methods = stringConverter.qCreateMethodStringFromClass(classDiagram.get(i));
+            var attributes = stringConverter.qCreateAttributeStringFromClass(classDiagram.get(i));
             var x = gridLayout.getI(name);
             var y = gridLayout.getJ(name);
 
-            drawClass(x, y, name, "", "");
+            drawClass(x, y, name, methods, attributes);
         }
-    }
 
-    function clearData(){
-        var db = LocalStorage.openDatabaseSync("classesDB", "1.0", "Database for storing classes", 1000000);
-        db.transaction(
-            function(tx) {
-                tx.executeSql('DROP TABLE IF EXISTS Classes');
-            }
-        )
-    }
-
-    function insertClass(coordX, coordY, newName, newMethods, newAttributes) {
-        var db = LocalStorage.openDatabaseSync("classesDB", "1.0", "Database for storing classes", 1000000);
-
-        db.transaction(
-            function(tx) {
-                // Create the database if it doesn't already exist
-                tx.executeSql('CREATE TABLE IF NOT EXISTS Classes(coordx TEXT, coordy TEXT, name TEXT, methods TEXT, attributes TEXT)');
-
-                // Add (another) class row
-                tx.executeSql('INSERT INTO Classes VALUES(?, ?, ?, ?, ?)', [ coordX, coordY, newName, newMethods, newAttributes ]);
-            }
-        )
-    }
-
-    function drawClasses(){
-        //Open the database
-        var db = LocalStorage.openDatabaseSync("classesDB", "1.0", "Database for storing classes", 1000000);
-
-        db.transaction(
-            function(tx) {
-                // Create the database if it doesn't already exist
-                tx.executeSql('CREATE TABLE IF NOT EXISTS Classes(coordx TEXT, coordy TEXT, name TEXT, methods TEXT, attributes TEXT)');
-
-                // Get all added classes
-                var rs = tx.executeSql('SELECT * FROM Classes');
-
-                //Draw each class
-                for(var i = 0; i < rs.rows.length; i++) {
-                    drawClass(rs.rows.item(i).coordx, rs.rows.item(i).coordy, rs.rows.item(i).name, rs.rows.item(i).methods, rs.rows.item(i).attributes)
-                }
-                //drawClass(2, 2, "name", "methods", "attributes")
-            }
-         )
     }
 
     function drawClass(coordX, coordY, name, methods, attributes) {
@@ -133,7 +92,7 @@ Canvas {
         // draw attributes
         context.moveTo(x+textOffset, y+attributesOffset);
         context.beginPath();
-        context.fillText(attributes, x+textOffset, y+attributesOffset);
+        context.fillText("attributes \r more attributes", x+textOffset, y+attributesOffset);
         context.stroke();
 
         // draw methods
@@ -192,24 +151,6 @@ Canvas {
     function selectClass(x, y){
         //console.log("Selected area in (" + x +"," + y + ")")
 
-        //Open the database
-        var db = LocalStorage.openDatabaseSync("classesDB", "1.0", "Database for storing classes", 1000000);
-
-        db.transaction(
-            function(tx) {
-                // Create the database if it doesn't already exist
-                tx.executeSql('CREATE TABLE IF NOT EXISTS Classes(coordx TEXT, coordy TEXT, name TEXT, methods TEXT, attributes TEXT)');
-
-                // Get all added classes
-                var rs = tx.executeSql('SELECT * FROM Classes');
-
-//                //look for the class
-//                for(var i = 0; i < rs.rows.length; i++) {
-//                    drawClass(rs.rows.item(i).coordx, rs.rows.item(i).coordy, rs.rows.item(i).name, rs.rows.item(i).methods, rs.rows.item(i).attributes)
-//                }
-//                drawClass(2, 2, "name", "methods", "attributes")
-            }
-         )
     }
 
 }

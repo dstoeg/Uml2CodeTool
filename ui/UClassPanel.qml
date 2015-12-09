@@ -156,10 +156,15 @@ ColumnLayout {
                 var parent = parentField.text
                 var methods = methodField.text
                 var attributes = attributeField.text
-                dispatcher.createClass(name, parent, methods, attributes)
-                gridLayout.addClass(parseInt(coordX), parseInt(coordY), name)
-                //drawingCanvas.insertClass(coordX,coordY,name, methods,attributes)
-                drawingCanvas.requestPaint()
+
+                if (!gridLayout.contains(name) && gridLayout.isEmpty(parseInt(coordX), parseInt(coordY))) {
+                    gridLayout.addClass(parseInt(coordX), parseInt(coordY), name)
+                    dispatcher.createClass(name, parent, methods, attributes)
+                    drawingCanvas.requestPaint()
+                }
+                else {
+                    // TODO add error handling (change x,y coordinates to red)
+                }
             }
 
         }
