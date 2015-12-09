@@ -1,6 +1,6 @@
 #include "UiEventDispatcher.h"
-#include "uClassFactory.h"
 #include "uDebugPrinter.h"
+#include "uClassType.h"
 
 
 using namespace std;
@@ -9,6 +9,7 @@ UiEventDispatcher::UiEventDispatcher(QObject *parent) : QObject(parent)
 {
     mCodeGenerator = &uCodeGenerationVisitor::getInstance();
     mClassDiagram = new uClassDiagram();
+    mFactory = &uClassFactory::getInstance();
 }
 
 void UiEventDispatcher::createClass(QString name)
@@ -18,6 +19,7 @@ void UiEventDispatcher::createClass(QString name)
 
 void UiEventDispatcher::createClass(QString name, QString parent, QString methods, QString attributes)
 {
+    uInheritable * obj;
     // convert method string to uMethod objects
     TMethods methodObjects = uStringConverter::parseMethods(methods.toStdString());
 
@@ -26,10 +28,14 @@ void UiEventDispatcher::createClass(QString name, QString parent, QString method
 
     TReferences refs;
 
-    // call factory to create object
-    uInheritable * obj = new uBaseClass(uPublic, name.toStdString(), attributeObjects, methodObjects, refs);
+    // TODO find parent given name
+    // TODO replace with found parent class
+    uInheritable * testBase;
 
-    uDebugPrinter::printClass(obj);
+    // call factory to create object
+    obj = mFactory->createClass(eBaseClass, uPublic, name.toStdString(), attributeObjects, methodObjects, refs, testBase);
+
+//    uDebugPrinter::printClass(obj);
 
     // do something with object
     mClassDiagram->addClass(obj);

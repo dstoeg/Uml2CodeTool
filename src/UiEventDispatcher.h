@@ -10,6 +10,7 @@
 #include "uCodeGenerationVisitor.h"
 #include "uClassDiagram.h"
 #include "uCodeGenerationVisitor.h"
+#include "uClassFactory.h"
 
 
 class UiEventDispatcher : public QObject
@@ -39,6 +40,7 @@ private:
     uClassType mSelectedClassState;
     uClassDiagram * mClassDiagram;
     uCodeGenerationVisitor * mCodeGenerator;
+    uClassFactory * mFactory;
 
 };
 
