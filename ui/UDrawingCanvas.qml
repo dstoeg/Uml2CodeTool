@@ -81,7 +81,7 @@ Canvas {
          )
     }
 
-    function drawClass(coordX, coordY, name, methods, attributes) {
+    function drawClass(coordX, coordY, name, methods, attributes, parent, referenced) {
 
         var x = (Number(coordX)%8) * Number(width)/9
         var y = (Number(coordY)%5) * Number(height)*2/9
@@ -137,6 +137,12 @@ Canvas {
         context.beginPath();
         context.fillText(methods, x+textOffset, y+methodsOffset);
         context.stroke();
+
+        // draw inheritance
+        if(!parent === undefined)
+        {
+            drawInheritance(x+classWidth/2, y, 1,1)
+        }
 
     }
 

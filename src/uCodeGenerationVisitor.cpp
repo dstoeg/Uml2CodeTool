@@ -66,10 +66,10 @@ void uCodeGenerationVisitor::visit(uInterface *interfaceClass)
     cout << "    " << interfaceClass->getName() + mLanguage->getDeclarationFileExtension() << endl;
 }
 
-bool uCodeGenerationVisitor::createFile(string const& name, string const& author, string const& date, string const& content, string const& lineComment)
+bool uCodeGenerationVisitor::createFile(string const& name, string const& author, string const& date, string const& content, string const& lineComment, string const& path)
 {
     ofstream myfile;
-    myfile.open(name.c_str());
+    myfile.open(path+name.c_str());
     if (!myfile.is_open())
         return false;
 
