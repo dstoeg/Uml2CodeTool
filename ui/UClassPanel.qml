@@ -157,7 +157,8 @@ ColumnLayout {
                 var methods = methodField.text
                 var attributes = attributeField.text
                 dispatcher.createClass(name, parent, methods, attributes)
-                drawingCanvas.insertClass(coordX,coordY,name, methods,attributes)
+                gridLayout.addClass(parseInt(coordX), parseInt(coordY), name)
+                //drawingCanvas.insertClass(coordX,coordY,name, methods,attributes)
                 drawingCanvas.requestPaint()
             }
 

@@ -105,6 +105,7 @@ int main()
 #include "UiEventDispatcher.h"
 #include "uClassDiagram.h"
 #include "uStringConverter.h"
+#include "uGridLayout.h"
 
 int main(int argc, char *argv[])
 {
@@ -112,6 +113,7 @@ int main(int argc, char *argv[])
 
     UiEventDispatcher dispatcher;
     uStringConverter converter;
+    uGridLayout layout(8, 5);
 
     QQmlApplicationEngine engine;
     qmlRegisterType<uClassDiagram>("com.uCode.demo", 1, 0, "uClassDiagram");
@@ -121,7 +123,9 @@ int main(int argc, char *argv[])
     //qmlRegisterType<uParameter>("com.uCode.demo", 1, 0, "uParameter");
     //qmlRegisterType<std::vector<uMethod>>("com.uCode.demo", 1, 0, "TMethods");
     //qmlRegisterType<TParameters>("com.uCode.demo", 1, 0, "TParameters");
+    qmlRegisterType<uGridLayout>("com.uCode.demo", 1, 0, "uGridLayout");
 
+    engine.rootContext()->setContextProperty("gridLayout", &layout);
     engine.rootContext()->setContextProperty("dispatcher", &dispatcher);
     engine.rootContext()->setContextProperty("stringConverter", &converter);
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
