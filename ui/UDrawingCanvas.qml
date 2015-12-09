@@ -67,7 +67,7 @@ Canvas {
         context.strokeStyle = "black"
         var letterFont = width < height ? Number(width)/90: Number(height)/60;
         //console.log("LetterFont: " + letterFont)
-        context.font = letterFont + "px sans-serif";
+        context.font = parseInt(letterFont) + "px sans-serif";
 
         // draw frame
         context.rect(x, y, classWidth, classHeight);
@@ -86,21 +86,51 @@ Canvas {
         // draw class name
         context.moveTo(x+textOffset, y+nameOffset);
         context.beginPath();
-        context.fillText(name, x+textOffset, y+nameOffset)
+        wrapText(context, name, x+textOffset, y+nameOffset, classWidth, classHeight * 0.1)
         context.stroke();
 
         // draw attributes
         context.moveTo(x+textOffset, y+attributesOffset);
         context.beginPath();
-        context.fillText("attributes \r more attributes", x+textOffset, y+attributesOffset);
+        wrapText(context, attributes, x+textOffset, y+attributesOffset, classWidth, classHeight * 0.1)
         context.stroke();
 
         // draw methods
         context.moveTo(x+textOffset, y+methodsOffset);
         context.beginPath();
-        context.fillText(methods, x+textOffset, y+methodsOffset);
+        wrapText(context, methods, x+textOffset, y+methodsOffset, classWidth, classHeight * 0.1)
         context.stroke();
 
+    }
+
+    function wrapText(context, text, x, y, maxWidth, lineHeight) {
+        console.log(text)
+
+        var finalText = text.split("\n");
+
+        for (var ii = 0; ii < finalText.length; ii++) {
+
+            var line = "";
+            var words = finalText[ii].split(" ");
+
+            for (var n = 0; n < words.length; n++) {
+                var testLine = line + words[n] + " ";
+                var metrics = context.measureText(testLine);
+                var testWidth = metrics.width;
+
+                if (testWidth > maxWidth) {
+                    context.fillText(line, x, y);
+                    line = words[n] + " ";
+                    y += lineHeight;
+                }
+                else {
+                    line = testLine;
+                }
+            }
+
+            context.fillText(line, x, y);
+            y += lineHeight;
+        }
     }
 
     function drawInheritance(x, y, x_to, y_to) {
