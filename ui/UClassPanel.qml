@@ -161,10 +161,14 @@ ColumnLayout {
                     gridLayout.addClass(parseInt(coordX), parseInt(coordY), name)
                     dispatcher.createClass(name, parent, methods, attributes)
                     drawingCanvas.requestPaint()
+                    clearTextFields()
+                    drawingCanvas.selectedClass = ""
                 }
                 else {
                     // TODO add error handling (change x,y coordinates to red)
                 }
+
+
             }
 
         }
@@ -175,13 +179,37 @@ ColumnLayout {
             Layout.fillHeight: true
             Layout.fillWidth: true
             onClicked: {
-                var name = nameField.text
-                var parent = parentField.text
-                var methods = methodField.text
-                var attributes = attributeField.text
-                dispatcher.createClass(name, parent, methods, attributes)
-                drawingCanvas.requestPaint()
+
+                if (drawingCanvas.selectedClass != "") {
+                    var name = nameField.text
+                    var parent = parentField.text
+                    var methods = methodField.text
+                    var attributes = attributeField.text
+
+                    var diagram = dispatcher.getClassDiagram()
+                    var obj = diagram.find(name)
+                    diagram.removeClass(obj)
+
+                    dispatcher.createClass(name, parent, methods, attributes)
+                    drawingCanvas.requestPaint()
+                    clearTextFields()
+                    drawingCanvas.selectedClass = ""
+                }
             }
         }
+    }
+
+    function clearTextFields() {
+        nameField.text = ""
+        parentField.text = ""
+        methodField.text = ""
+        attributeField.text = ""
+    }
+
+    function setInformation(name, parent, methods, attributes) {
+        nameField.text = name
+        parentField.text = parent
+        methodField.text = methods
+        attributeField.text = attributes
     }
 }

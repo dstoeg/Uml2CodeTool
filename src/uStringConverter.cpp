@@ -152,7 +152,10 @@ std::string uStringConverter::createMethodString(const TMethods &methods)
         text << ") : ";
 
         // return type
-        text << (*iter)->getReturnType() << '\n';
+        text << (*iter)->getReturnType();
+        if (iter + 1 != methods.end())
+            text << '\n';
+
     }
 
     return text.str();
@@ -187,7 +190,10 @@ std::string uStringConverter::createAttributeString(const TParameters &attribute
         text << " " << (*iter)->getName() << " : ";
 
         //  type
-        text << (*iter)->getType() << '\n';
+        text << (*iter)->getType();
+
+        if (iter + 1 != attributes.end())
+            text << '\n';
     }
 
     return text.str();

@@ -9,6 +9,8 @@ Canvas {
     Layout.fillWidth: true
     Layout.margins: 5
 
+    property string selectedClass: ""
+
     onPaint: {
         // Get drawing context
         var context = getContext("2d");
@@ -187,19 +189,22 @@ Canvas {
         if (!gridLayout.isEmpty(parseInt(i), parseInt(j))) {
 
             var name = gridLayout.getString(parseInt(i), parseInt(j))
+
             uDebugger.qPrintText("name: " + name)
             var diagram = dispatcher.getClassDiagram()
             var uClass = diagram.find(name);
-
+            selectedClass = name
             uDebugger.printClass(uClass)
 
-            // TODO do something with uClass
-
-
+            var methods = stringConverter.qCreateMethodStringFromClass(diagram.get(i));
+            var attributes = stringConverter.qCreateAttributeStringFromClass(diagram.get(i));
+            // TODO add parent
+            uClassPanel.setInformation(name, "", methods, attributes)
         }
-
-
-
+        else {
+            uClassPanel.clearTextFields()
+            selectedClass = ""
+        }
     }
 
 }
