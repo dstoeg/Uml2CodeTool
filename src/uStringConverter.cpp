@@ -132,7 +132,7 @@ std::string uStringConverter::createMethodString(const TMethods &methods)
     for (TMethodsConstIter iter = methods.begin(); iter < methods.end(); ++iter) {
 
         // access
-        text << getAccessUmlString((*iter)->getAccess()) << endl;
+        text << getAccessUmlString((*iter)->getAccess());
 
         // method name
         text << " " << (*iter)->getName() << "(";
@@ -181,7 +181,7 @@ std::string uStringConverter::createAttributeString(const TParameters &attribute
     for (TParametersConstIter iter = attributes.begin(); iter < attributes.end(); ++iter) {
 
         // access
-        text << getAccessUmlString((*iter)->getAccess()) << endl;
+        text << getAccessUmlString((*iter)->getAccess());
 
         // attribute name
         text << " " << (*iter)->getName() << " : ";
