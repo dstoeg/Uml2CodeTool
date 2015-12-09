@@ -1,4 +1,7 @@
 #include "uGridLayout.h"
+#include "uDebugPrinter.h"
+
+#include <string>
 
 using namespace std;
 
@@ -13,22 +16,26 @@ uGridLayout::uGridLayout(int width, int height) : QObject(0)
     mHeight = height;
 
     for(size_t i=0; i<mWidth; ++i) {
+        std::vector<QString> vec;
         for (size_t j=0; j<mHeight; ++j) {
-            mTable[i][j] = "";
+            vec.push_back("");
         }
+        mTable.push_back(vec);
     }
 
 }
 
-bool uGridLayout::addClass(int i, int j, const string &name)
+bool uGridLayout::addClass(int i, int j, const QString &name)
 {
+    uDebugPrinter::printText("adding class: " + name.toStdString() + " index i: " + to_string(i) + " index j: " + to_string(j));
     if (!checkBounds(i,j)) return false;
 
     mTable[i][j] = name;
     return true;
 }
 
-bool uGridLayout::removeClass(const string &name)
+
+bool uGridLayout::removeClass(const QString &name)
 {
     for(size_t i=0; i<mWidth; ++i) {
         for (size_t j=0; j<mHeight; ++j) {
@@ -49,7 +56,7 @@ bool uGridLayout::removeClass(int i, int j)
     return true;
 }
 
-bool uGridLayout::moveClass(const string &name, int newI, int newJ)
+bool uGridLayout::moveClass(const QString &name, int newI, int newJ)
 {
     if (!checkBounds(newI,newJ)) return false;
 
@@ -71,9 +78,9 @@ bool uGridLayout::moveClass(int i, int j, int newI, int newJ)
     return ret;
 }
 
-const string &uGridLayout::getString(int i, int j) const
+const QString &uGridLayout::getString(int i, int j) const
 {
-    if (!checkBounds(newI,newJ)) return "";
+    if (!checkBounds(i,j)) return "";
 
     return mTable[i][j];
 }
@@ -102,7 +109,7 @@ bool uGridLayout::setHeight(int height)
     return true;
 }
 
-int uGridLayout::getI(const string &name) const
+int uGridLayout::getI(const QString &name) const
 {
     for(size_t i=0; i<mWidth; ++i) {
         for (size_t j=0; j<mHeight; ++j) {
@@ -114,7 +121,7 @@ int uGridLayout::getI(const string &name) const
     return -1;
 }
 
-int uGridLayout::getJ(const string &name) const
+int uGridLayout::getJ(const QString &name) const
 {
     for(size_t i=0; i<mWidth; ++i) {
         for (size_t j=0; j<mHeight; ++j) {
@@ -128,11 +135,11 @@ int uGridLayout::getJ(const string &name) const
 
 bool uGridLayout::isEmpty(int i, int j) const
 {
-    if (!checkBounds(newI,newJ)) return false;
+    if (!checkBounds(i,j)) return false;
     return mTable[i][j] == "";
 }
 
-bool uGridLayout::contains(const string &name) const
+bool uGridLayout::contains(const QString &name) const
 {
     for(size_t i=0; i<mWidth; ++i) {
         for (size_t j=0; j<mHeight; ++j) {

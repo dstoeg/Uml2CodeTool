@@ -19,22 +19,26 @@ Canvas {
         context.clearRect(0, 0, width, height);
         context.fill();
 
-        drawClasses()
+        //drawClasses()
 
-//        var classDiagram = dispatcher.getClassDiagram();
+        var classDiagram = dispatcher.getClassDiagram();
 
-//        var diagramSize;
-//        if(classDiagram === null)
-//            diagramSize = 0
-//        else
-//            diagramSize = classDiagram.size()
+        var diagramSize;
+        if(classDiagram === null)
+            diagramSize = 0
+        else
+            diagramSize = classDiagram.size()
 
-//        for(var i = 0; i < diagramSize; i++) {
-//            var name = classDiagram.get(i).qGetName();
-//            //var methods = stringConverter.qCreateMethodString(classDiagram.get(i).getMethods());
-//            //var attributes = stringConverter.qCreateAttributeString(classDiagram.get(i).getAttributes());
-//            //drawClass(100, 100, name, methods, attributes);
-//        }
+
+        for(var i = 0; i < diagramSize; i++) {
+            var name = classDiagram.get(i).qGetName();
+            //var methods = stringConverter.qCreateMethodString(classDiagram.get(i).getMethods());
+            //var attributes = stringConverter.qCreateAttributeString(classDiagram.get(i).getAttributes());
+            var x = gridLayout.getI(name);
+            var y = gridLayout.getJ(name);
+
+            drawClass(x, y, name, "", "");
+        }
     }
 
     function clearData(){
@@ -83,8 +87,8 @@ Canvas {
 
     function drawClass(coordX, coordY, name, methods, attributes) {
 
-        var x = (Number(coordX)%8) * Number(width)/9
-        var y = (Number(coordY)%5) * Number(height)*2/9
+        var x = (Number(coordX)%gridLayout.getWidth()) * Number(width)/9
+        var y = (Number(coordY)%gridLayout.getHeight()) * Number(height)*2/9
 
         //console.log("Drawing class: "+name +", "+ methods +", "+ attributes)
         var classWidth = Number(width)/10;
