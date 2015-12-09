@@ -106,6 +106,7 @@ int main()
 #include "uClassDiagram.h"
 #include "uStringConverter.h"
 #include "uGridLayout.h"
+#include "uDebugPrinter.h"
 
 int main(int argc, char *argv[])
 {
@@ -114,20 +115,21 @@ int main(int argc, char *argv[])
     UiEventDispatcher dispatcher;
     uStringConverter converter;
     uGridLayout layout(8, 5);
+    uDebugPrinter debugger;
 
     QQmlApplicationEngine engine;
     qmlRegisterType<uClassDiagram>("com.uCode.demo", 1, 0, "uClassDiagram");
     qmlRegisterType<uInheritable>("com.uCode.demo", 1, 0, "uInheritable");
     qmlRegisterType<uStringConverter>("com.uCode.demo", 1, 0, "uStringConverter");
-    //qmlRegisterType<uMethod>("com.uCode.demo", 1, 0, "uMethod");
-    //qmlRegisterType<uParameter>("com.uCode.demo", 1, 0, "uParameter");
-    //qmlRegisterType<std::vector<uMethod>>("com.uCode.demo", 1, 0, "TMethods");
-    //qmlRegisterType<TParameters>("com.uCode.demo", 1, 0, "TParameters");
+    qmlRegisterType<uMethod>("com.uCode.demo", 1, 0, "uMethod");
+    qmlRegisterType<uParameter>("com.uCode.demo", 1, 0, "uParameter");
+    //qmlRegisterType<uDebugPrinter>("com.uCode.demo", 1, 0, "uDebugPrinter");
     qmlRegisterType<uGridLayout>("com.uCode.demo", 1, 0, "uGridLayout");
 
     engine.rootContext()->setContextProperty("gridLayout", &layout);
     engine.rootContext()->setContextProperty("dispatcher", &dispatcher);
     engine.rootContext()->setContextProperty("stringConverter", &converter);
+    engine.rootContext()->setContextProperty("uDebugger", &debugger);
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
     return app.exec();

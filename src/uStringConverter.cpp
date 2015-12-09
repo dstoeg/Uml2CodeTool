@@ -1,6 +1,5 @@
 
 #include <sstream>
-#include <iostream>
 
 #include "uStringConverter.h"
 #include "uLanguageCpp.h"
@@ -133,7 +132,7 @@ std::string uStringConverter::createMethodString(const TMethods &methods)
     for (TMethodsConstIter iter = methods.begin(); iter < methods.end(); ++iter) {
 
         // access
-        text << getAccessUmlString((*iter)->getAccess()) << endl;
+        text << getAccessUmlString((*iter)->getAccess());
 
         // method name
         text << " " << (*iter)->getName() << "(";
@@ -153,7 +152,10 @@ std::string uStringConverter::createMethodString(const TMethods &methods)
         text << ") : ";
 
         // return type
-        text << (*iter)->getReturnType() << endl;
+        text << (*iter)->getReturnType();
+        if (iter + 1 != methods.end())
+            text << '\n';
+
     }
 
     return text.str();
@@ -178,9 +180,23 @@ bool uStringConverter::isAccessChar(char c) {
 
 std::string uStringConverter::createAttributeString(const TParameters &attributes)
 {
-    // TODO
+    stringstream text;
+    for (TParametersConstIter iter = attributes.begin(); iter < attributes.end(); ++iter) {
 
-    return "";
+        // access
+        text << getAccessUmlString((*iter)->getAccess());
+
+        // attribute name
+        text << " " << (*iter)->getName() << " : ";
+
+        //  type
+        text << (*iter)->getType();
+
+        if (iter + 1 != attributes.end())
+            text << '\n';
+    }
+
+    return text.str();
 }
 
 QString uStringConverter::qCreateMethodString(const TMethods &methods)
@@ -188,8 +204,18 @@ QString uStringConverter::qCreateMethodString(const TMethods &methods)
     return QString::fromStdString(createMethodString(methods));
 }
 
+QString uStringConverter::qCreateMethodStringFromClass(uInheritable * obj)
+{
+    return qCreateMethodString(obj->getMethods());
+}
+
 QString uStringConverter::qCreateAttributeString(const TParameters &attributes)
 {
     return QString::fromStdString(createAttributeString(attributes));
+}
+
+QString uStringConverter::qCreateAttributeStringFromClass(uInheritable *obj)
+{
+    return qCreateAttributeString(obj->getAttributes());
 }
 

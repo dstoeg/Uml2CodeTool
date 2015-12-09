@@ -10,6 +10,8 @@ ApplicationWindow {
     height: 900
     minimumWidth: 300
     minimumHeight: 300
+    //maximumHeight: 900
+    //maximumWidth: 1600
     title: "uCode"
     color:  "white"
 
@@ -32,7 +34,6 @@ ApplicationWindow {
             id: drawingCanvas
             Layout.preferredWidth: parent.width * 0.75
             Layout.preferredHeight: parent.height
-            Component.onCompleted: clearData() //delete the data from the local Storage
             MouseArea {
                 anchors.fill: parent
                 acceptedButtons: Qt.LeftButton
@@ -59,6 +60,7 @@ ApplicationWindow {
 
             //Boxes and buttons Create and Update
             UClassPanel {
+                id : uClassPanel
                 Layout.preferredWidth: parent.width
                 Layout.preferredHeight: parent.height * 0.95
             }

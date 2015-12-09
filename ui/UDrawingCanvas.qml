@@ -9,6 +9,8 @@ Canvas {
     Layout.fillWidth: true
     Layout.margins: 5
 
+    property string selectedClass: ""
+
     onPaint: {
         // Get drawing context
         var context = getContext("2d");
@@ -19,8 +21,10 @@ Canvas {
         context.clearRect(0, 0, width, height);
         context.fill();
 
-        //drawClasses()
+        drawClasses()
+    }
 
+    function drawClasses(){
         var classDiagram = dispatcher.getClassDiagram();
 
         var diagramSize;
@@ -32,57 +36,14 @@ Canvas {
 
         for(var i = 0; i < diagramSize; i++) {
             var name = classDiagram.get(i).qGetName();
-            //var methods = stringConverter.qCreateMethodString(classDiagram.get(i).getMethods());
-            //var attributes = stringConverter.qCreateAttributeString(classDiagram.get(i).getAttributes());
+            var methods = stringConverter.qCreateMethodStringFromClass(classDiagram.get(i));
+            var attributes = stringConverter.qCreateAttributeStringFromClass(classDiagram.get(i));
             var x = gridLayout.getI(name);
             var y = gridLayout.getJ(name);
 
-            drawClass(x, y, name, "", "");
+            drawClass(x, y, name, methods, attributes);
         }
-    }
 
-    function clearData(){
-        var db = LocalStorage.openDatabaseSync("classesDB", "1.0", "Database for storing classes", 1000000);
-        db.transaction(
-            function(tx) {
-                tx.executeSql('DROP TABLE IF EXISTS Classes');
-            }
-        )
-    }
-
-    function insertClass(coordX, coordY, newName, newMethods, newAttributes) {
-        var db = LocalStorage.openDatabaseSync("classesDB", "1.0", "Database for storing classes", 1000000);
-
-        db.transaction(
-            function(tx) {
-                // Create the database if it doesn't already exist
-                tx.executeSql('CREATE TABLE IF NOT EXISTS Classes(coordx TEXT, coordy TEXT, name TEXT, methods TEXT, attributes TEXT)');
-
-                // Add (another) class row
-                tx.executeSql('INSERT INTO Classes VALUES(?, ?, ?, ?, ?)', [ coordX, coordY, newName, newMethods, newAttributes ]);
-            }
-        )
-    }
-
-    function drawClasses(){
-        //Open the database
-        var db = LocalStorage.openDatabaseSync("classesDB", "1.0", "Database for storing classes", 1000000);
-
-        db.transaction(
-            function(tx) {
-                // Create the database if it doesn't already exist
-                tx.executeSql('CREATE TABLE IF NOT EXISTS Classes(coordx TEXT, coordy TEXT, name TEXT, methods TEXT, attributes TEXT)');
-
-                // Get all added classes
-                var rs = tx.executeSql('SELECT * FROM Classes');
-
-                //Draw each class
-                for(var i = 0; i < rs.rows.length; i++) {
-                    drawClass(rs.rows.item(i).coordx, rs.rows.item(i).coordy, rs.rows.item(i).name, rs.rows.item(i).methods, rs.rows.item(i).attributes)
-                }
-                //drawClass(2, 2, "name", "methods", "attributes")
-            }
-         )
     }
 
     function drawClass(coordX, coordY, name, methods, attributes, parent, referenced) {
@@ -108,7 +69,7 @@ Canvas {
         context.strokeStyle = "black"
         var letterFont = width < height ? Number(width)/90: Number(height)/60;
         //console.log("LetterFont: " + letterFont)
-        context.font = letterFont + "px sans-serif";
+        context.font = parseInt(letterFont) + "px sans-serif";
 
         // draw frame
         context.rect(x, y, classWidth, classHeight);
@@ -127,19 +88,19 @@ Canvas {
         // draw class name
         context.moveTo(x+textOffset, y+nameOffset);
         context.beginPath();
-        context.fillText(name, x+textOffset, y+nameOffset)
+        wrapText(context, name, x+textOffset, y+nameOffset, classWidth, classHeight * 0.1)
         context.stroke();
 
         // draw attributes
         context.moveTo(x+textOffset, y+attributesOffset);
         context.beginPath();
-        context.fillText(attributes, x+textOffset, y+attributesOffset);
+        wrapText(context, attributes, x+textOffset, y+attributesOffset, classWidth, classHeight * 0.1)
         context.stroke();
 
         // draw methods
         context.moveTo(x+textOffset, y+methodsOffset);
         context.beginPath();
-        context.fillText(methods, x+textOffset, y+methodsOffset);
+        wrapText(context, methods, x+textOffset, y+methodsOffset, classWidth, classHeight * 0.1)
         context.stroke();
 
         // draw inheritance
@@ -148,6 +109,36 @@ Canvas {
             drawInheritance(x+classWidth/2, y, 1,1)
         }
 
+    }
+
+    function wrapText(context, text, x, y, maxWidth, lineHeight) {
+        console.log(text)
+
+        var finalText = text.split("\n");
+
+        for (var ii = 0; ii < finalText.length; ii++) {
+
+            var line = "";
+            var words = finalText[ii].split(" ");
+
+            for (var n = 0; n < words.length; n++) {
+                var testLine = line + words[n] + " ";
+                var metrics = context.measureText(testLine);
+                var testWidth = metrics.width;
+
+                if (testWidth > maxWidth) {
+                    context.fillText(line, x, y);
+                    line = words[n] + " ";
+                    y += lineHeight;
+                }
+                else {
+                    line = testLine;
+                }
+            }
+
+            context.fillText(line, x, y);
+            y += lineHeight;
+        }
     }
 
     function drawInheritance(x, y, x_to, y_to) {
@@ -196,26 +187,30 @@ Canvas {
 
 
     function selectClass(x, y){
-        //console.log("Selected area in (" + x +"," + y + ")")
+        uDebugger.qPrintText("Selected area in (" + x +"," + y + ")");
 
-        //Open the database
-        var db = LocalStorage.openDatabaseSync("classesDB", "1.0", "Database for storing classes", 1000000);
+        var i = parseInt((Number(x) / (Number(width)/gridLayout.getWidth())))
+        var j = parseInt((Number(y) / (Number(height)/gridLayout.getHeight())))
 
-        db.transaction(
-            function(tx) {
-                // Create the database if it doesn't already exist
-                tx.executeSql('CREATE TABLE IF NOT EXISTS Classes(coordx TEXT, coordy TEXT, name TEXT, methods TEXT, attributes TEXT)');
+        if (!gridLayout.isEmpty(parseInt(i), parseInt(j))) {
 
-                // Get all added classes
-                var rs = tx.executeSql('SELECT * FROM Classes');
+            var name = gridLayout.getString(parseInt(i), parseInt(j))
 
-//                //look for the class
-//                for(var i = 0; i < rs.rows.length; i++) {
-//                    drawClass(rs.rows.item(i).coordx, rs.rows.item(i).coordy, rs.rows.item(i).name, rs.rows.item(i).methods, rs.rows.item(i).attributes)
-//                }
-//                drawClass(2, 2, "name", "methods", "attributes")
-            }
-         )
+            uDebugger.qPrintText("name: " + name)
+            var diagram = dispatcher.getClassDiagram()
+            var uClass = diagram.find(name);
+            selectedClass = name
+            uDebugger.printClass(uClass)
+
+            var methods = stringConverter.qCreateMethodStringFromClass(diagram.get(i));
+            var attributes = stringConverter.qCreateAttributeStringFromClass(diagram.get(i));
+            // TODO add parent
+            uClassPanel.setInformation(name, "", methods, attributes)
+        }
+        else {
+            uClassPanel.clearTextFields()
+            selectedClass = ""
+        }
     }
 
 }

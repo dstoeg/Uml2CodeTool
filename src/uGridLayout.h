@@ -18,7 +18,7 @@ public:
     Q_INVOKABLE bool moveClass(QString const& name, int newI, int newJ);
     Q_INVOKABLE bool moveClass(int i, int j, int newI, int newJ);
 
-    Q_INVOKABLE QString const& getString(int i, int j) const;
+    Q_INVOKABLE QString getString(int i, int j) const;
 
     Q_INVOKABLE int getWidth() const;
     Q_INVOKABLE int getHeight() const;
@@ -29,8 +29,8 @@ public:
     Q_INVOKABLE int getI(QString const& name) const;
     Q_INVOKABLE int getJ(QString const& name) const;
 
-    bool isEmpty(int i, int j) const;
-    bool contains(QString const& name) const;
+    Q_INVOKABLE bool isEmpty(int i, int j) const;
+    Q_INVOKABLE bool contains(QString const& name) const;
 
 signals:
 

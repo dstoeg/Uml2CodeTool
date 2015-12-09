@@ -23,8 +23,12 @@ bool uClassDiagram::contains(uInheritable *uClass) const
     return std::find(mClasses.begin(), mClasses.end(), uClass) != mClasses.end();
 }
 
-uInheritable *uClassDiagram::find(const std::string &name) const
+uInheritable *uClassDiagram::find(QString const &name) const
 {
+    for(TClassesConstIter iter = mClasses.begin(); iter < mClasses.end(); iter++){
+        if ((*iter)->getName() == name.toStdString())
+            return (*iter);
+    }
     return 0;
 }
 
