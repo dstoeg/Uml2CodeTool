@@ -126,6 +126,14 @@ QString UiEventDispatcher::getClassName(int index)
     return QString::fromStdString(obj->getName());
 }
 
+QString UiEventDispatcher::getParentName(int index)
+{
+    uInheritable * obj = getClass(index);
+    if (obj == NULL) return "";
+
+    return QString::fromStdString(obj->getParent());
+}
+
 QString UiEventDispatcher::getClassMethods(int index)
 {
     uInheritable * obj = getClass(index);

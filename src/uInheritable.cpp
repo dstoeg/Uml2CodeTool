@@ -61,6 +61,10 @@ std::string uInheritable::getName() const
 {
     return mName;
 }
+std::string uInheritable::getParent() const
+{
+
+}
 
 QString uInheritable::qGetName() const
 {
