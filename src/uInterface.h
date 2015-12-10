@@ -9,6 +9,7 @@ public:
     uInterface(std::string const& name);
     uInterface(uAccess access, std::string const& name, TParameters & attributes, TMethods & methods, TReferences & references);
     virtual void accept(uVisitor * visitor);
+    virtual std::string getParent() const;
 
 private:
 

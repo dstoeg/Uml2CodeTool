@@ -13,6 +13,7 @@ public:
 
     uInheritable * getBaseClass() const;
     virtual void accept(uVisitor * visitor);
+    virtual std::string getParent() const;
 
 private:
     uInheritable * mBaseClass;

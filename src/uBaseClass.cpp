@@ -23,4 +23,8 @@ void uBaseClass::accept(uVisitor *visitor)
     visitor->visit(this);
 }
 
+std::string uBaseClass::getParent() const
+{
+    return "";
+}
 
