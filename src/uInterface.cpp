@@ -15,4 +15,3 @@ void uInterface::accept(uVisitor *visitor)
 {
     visitor->visit(this);
 }
-

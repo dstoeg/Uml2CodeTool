@@ -35,17 +35,16 @@ Canvas {
             var y = gridLayout.getJ(name);
             drawClass(x, y, name, methods, attributes, parent, referenced);
         }
-        uDebugger.qPrintText("done drawing classes")
     }
 
     function drawClass(coordX, coordY, name, methods, attributes, parent, referenced) {
 
-        var x = (Number(coordX)%gridLayout.getWidth()) * Number(width)/9
-        var y = (Number(coordY)%gridLayout.getHeight()) * Number(height)*2/9
+        var x = (Number(coordX)%gridLayout.getWidth()) * Number(width)/(9*gridLayout.getWidth()/9)
+        var y = (Number(coordY)%gridLayout.getHeight()) * Number(height)*(1.65)/(8*gridLayout.getHeight()/5)
 
         //console.log("Drawing class: "+name +", "+ methods +", "+ attributes)
-        var classWidth = Number(width)/10;
-        var classHeight = Number(height)/5;
+        var classWidth = Number(width)/(9*gridLayout.getWidth()/8);
+        var classHeight = (1.5)*Number(height)/(9*gridLayout.getHeight()/5);
 
         var firstDelimiter1 = classHeight * 0.15;
         var firstDelimiter2 = classHeight * 0.16;
@@ -99,11 +98,7 @@ Canvas {
         uDebugger.qPrintText("parent: " + parent)
         if(!(parent == ""))
         {
-            uDebugger.qPrintText("calling drawInheritance")
             drawInheritance(name, parent)
-        }
-        else {
-            uDebugger.qPrintText("not calling drawInheritance")
         }
     }
 
@@ -168,7 +163,7 @@ Canvas {
         context.moveTo(x,y);
         context.strokeStyle = "black";
         // draw projection of arrow, then rotate
-        context.lineTo(cx, y_to-triangleY);
+        context.lineTo(cx, y_to+triangleY);
         drawTriangle(cx,y_to,triangleX,triangleY,false);
         context.stroke();
     }
@@ -178,12 +173,13 @@ Canvas {
         var triangleY = Number(height)/50;
         // relies on classWidth, from drawClass function
         var classWidth = Number(width)/10;
+        var classHeight = Number(height)/5;
         var offset = classWidth/2;
         var cx = x_to+offset; // x cord for center of destination class
         context.moveTo(x,y);
         context.strokeStyle = "black";
         // draw projection of arrow, then rotate
-        context.lineTo(cx, y_to-triangleY);
+        context.lineTo(cx, y_to+triangleY);
         drawTriangle(cx,y_to,triangleX,triangleY,true);
         context.stroke();
     }
@@ -191,9 +187,9 @@ Canvas {
     function drawTriangle(x,y,triangleWidth, triangleHeight, isFilled){
         context.strokeStyle = "black";
 
-        // draw the rectangle
-        context.moveTo(x-triangleWidth,y-triangleHeight);
-        context.lineTo(x+triangleWidth, y-triangleHeight);
+        // draw the triangle
+        context.moveTo(x-triangleWidth,y+triangleHeight);
+        context.lineTo(x+triangleWidth, y+triangleHeight);
         context.lineTo(x,y);
         context.closePath();
         if (isFilled)
