@@ -25,19 +25,12 @@ Canvas {
     }
 
     function drawClasses(){
-        var classDiagram = dispatcher.getClassDiagram();
 
-        var diagramSize;
-        if(classDiagram === null)
-            diagramSize = 0
-        else
-            diagramSize = classDiagram.size()
-
-
-        for(var i = 0; i < diagramSize; i++) {
-            var name = classDiagram.get(i).qGetName();
-            var methods = stringConverter.qCreateMethodStringFromClass(classDiagram.get(i));
-            var attributes = stringConverter.qCreateAttributeStringFromClass(classDiagram.get(i));
+        for(var i = 0; i < dispatcher.getDiagramSize(); i++) {
+            var obj = dispatcher.getClass(i);
+            var name = obj.qGetName();
+            var methods = stringConverter.qCreateMethodStringFromClass(obj);
+            var attributes = stringConverter.qCreateAttributeStringFromClass(obj);
             var x = gridLayout.getI(name);
             var y = gridLayout.getJ(name);
 
@@ -197,13 +190,12 @@ Canvas {
             var name = gridLayout.getString(parseInt(i), parseInt(j))
 
             uDebugger.qPrintText("name: " + name)
-            var diagram = dispatcher.getClassDiagram()
-            var uClass = diagram.find(name);
+            var uClass = dispatcher.findClass(name);
             selectedClass = name
             uDebugger.printClass(uClass)
 
-            var methods = stringConverter.qCreateMethodStringFromClass(diagram.get(i));
-            var attributes = stringConverter.qCreateAttributeStringFromClass(diagram.get(i));
+            var methods = stringConverter.qCreateMethodStringFromClass(dispatcher.getClass(i));
+            var attributes = stringConverter.qCreateAttributeStringFromClass(dispatcher.getClass(i));
             // TODO add parent
             uClassPanel.setInformation(name, "", methods, attributes)
         }

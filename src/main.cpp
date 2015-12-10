@@ -123,7 +123,6 @@ int main(int argc, char *argv[])
     qmlRegisterType<uStringConverter>("com.uCode.demo", 1, 0, "uStringConverter");
     qmlRegisterType<uMethod>("com.uCode.demo", 1, 0, "uMethod");
     qmlRegisterType<uParameter>("com.uCode.demo", 1, 0, "uParameter");
-    qmlRegisterType<uClassDiagram>("com.uCode.demo", 1, 0, "uClassDiagram");
     qmlRegisterType<uGridLayout>("com.uCode.demo", 1, 0, "uGridLayout");
 
     engine.rootContext()->setContextProperty("gridLayout", &layout);

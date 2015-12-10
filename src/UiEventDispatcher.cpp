@@ -14,12 +14,7 @@ using namespace std;
 UiEventDispatcher::UiEventDispatcher(QObject *parent) : QObject(parent)
 {
     mCodeGenerator = &uCodeGenerationVisitor::getInstance();
-<<<<<<< HEAD
     mClassDiagram = &uClassDiagram::getInstance();
-    mFactory = &uClassFactory::getInstance();
-=======
-    mClassDiagram = new uClassDiagram();
->>>>>>> 20ba91d0e9fd39f1989cb5ea85163adfa2943ba0
     mClassButton = &uClassButton::getInstance();
 }
 
@@ -97,5 +92,26 @@ void UiEventDispatcher::generateCode()
 uClassDiagram * UiEventDispatcher::getClassDiagram()
 {
     return mClassDiagram;
+}
+
+int UiEventDispatcher::getDiagramSize()
+{
+    return mClassDiagram->size();
+}
+
+uInheritable *UiEventDispatcher::getClass(int index)
+{
+    if (!(index < mClassDiagram->size())) return NULL;
+    return mClassDiagram->get(index);
+}
+
+uInheritable *UiEventDispatcher::findClass(QString name)
+{
+    return mClassDiagram->find(name);
+}
+
+void UiEventDispatcher::removeClass(uInheritable *obj)
+{
+    mClassDiagram->removeClass(obj);
 }
 
