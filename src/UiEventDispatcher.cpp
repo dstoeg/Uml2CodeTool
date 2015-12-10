@@ -30,12 +30,11 @@ void UiEventDispatcher::createClass(QString name, QString parent, QString method
     // TODO
     TReferences referenceObjects;
 
-    // TODO find parent given name
-    // TODO replace with found parent class
-    uInheritable * testBase;
+    // find parent given name
+    uInheritable * parentObj = mClassDiagram->find(parent);
 
     // call factory to create object
-    mClassButton->create(uPublic, name.toStdString(), attributeObjects, methodObjects, referenceObjects, testBase);
+    mClassButton->create(uPublic, name.toStdString(), attributeObjects, methodObjects, referenceObjects, parentObj);
 }
 
 void UiEventDispatcher::updateClass(QString oldName, QString newName, QString parent, QString methods, QString attributes)
@@ -49,12 +48,11 @@ void UiEventDispatcher::updateClass(QString oldName, QString newName, QString pa
     // TODO
     TReferences referenceObjects;
 
-    // TODO find parent given name
-    // TODO replace with found parent class
-    uInheritable * testBase;
+    // find parent given name
+    uInheritable * parentObj = mClassDiagram->find(parent);
 
     // call factory to create object
-    mClassButton->update(oldName.toStdString(), uPublic, newName.toStdString(), attributeObjects, methodObjects, referenceObjects, testBase);
+    mClassButton->update(oldName.toStdString(), uPublic, newName.toStdString(), attributeObjects, methodObjects, referenceObjects, parentObj);
 }
 
 void UiEventDispatcher::setClassState(int type)
