@@ -24,5 +24,6 @@ uInheritable *uChildButton::create(uAccess access, const std::string &name, TPar
 {
     uDebugPrinter::printText("creating new uChildclass");
     uInheritable * newClass = uClassFactory::getInstance().createClass(uClassType::eChildClass ,access, name, attributes, methods, references, base);
+    uClassDiagram::getInstance().addClass(newClass);
     return newClass;
 }

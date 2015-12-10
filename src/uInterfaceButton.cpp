@@ -25,6 +25,7 @@ uInheritable* uInterfaceButton::create(uAccess access, std::string const& name, 
 {
     uDebugPrinter::printText("creating new uInterface");
     uInheritable * newClass = uClassFactory::getInstance().createClass(uClassType::eInterface,access, name, attributes, methods, references, base);
+    uClassDiagram::getInstance().addClass(newClass);
     return newClass;
 }
 
