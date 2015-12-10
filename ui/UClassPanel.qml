@@ -164,7 +164,10 @@ ColumnLayout {
                     drawingCanvas.selectedClass = ""
                 }
                 else if (!gridLayout.isEmpty(parseInt(coordX), parseInt(coordY))){
-
+                    xField.textColor = "red"
+                    yField.textColor = "red"
+                }else{
+                    nameField.textColor = "red"
                 }
 
 
@@ -235,5 +238,11 @@ ColumnLayout {
         parentField.text = parent
         methodField.text = methods
         attributeField.text = attributes
+    }
+
+    function setFieldsBlack(){
+        xField.textColor = "black"
+        yField.textColor = "black"
+        nameField.textColor = "black"
     }
 }
