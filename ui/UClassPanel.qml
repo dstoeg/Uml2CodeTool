@@ -189,9 +189,8 @@ ColumnLayout {
                     var methods = methodField.text
                     var attributes = attributeField.text
 
-                    var diagram = dispatcher.getClassDiagram()
-                    var obj = diagram.find(name)
-                    diagram.removeClass(obj)
+                    var obj = dispatcher.findClass(name)
+                    dispatcher.removeClass(obj)
 
                     dispatcher.createClass(name, parent, methods, attributes)
 
@@ -212,9 +211,8 @@ ColumnLayout {
                 var name = nameField.text
                 if (name != "") {
                     if (gridLayout.contains(name)) {
-                        var diagram = dispatcher.getClassDiagram()
-                        var obj = diagram.find(name)
-                        diagram.removeClass(obj)
+                        var obj = dispatcher.findClass(name)
+                        dispatcher.removeClass(obj)
                         gridLayout.removeClass(name)
 
                         drawingCanvas.requestPaint()

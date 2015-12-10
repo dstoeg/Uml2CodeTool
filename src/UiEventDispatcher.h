@@ -12,6 +12,7 @@
 #include "uCodeGenerationVisitor.h"
 #include "uClassFactory.h"
 #include "uButton.h"
+#include "uInheritable.h"
 
 
 class UiEventDispatcher : public QObject
@@ -28,6 +29,11 @@ public:
     Q_INVOKABLE void setLanguage(QString language);
     Q_INVOKABLE void generateCode();
     Q_INVOKABLE uClassDiagram * getClassDiagram();
+
+    Q_INVOKABLE int getDiagramSize();
+    Q_INVOKABLE uInheritable * getClass(int index);
+    Q_INVOKABLE uInheritable * findClass(QString name);
+    Q_INVOKABLE void removeClass(uInheritable * obj);
 
 signals:
 

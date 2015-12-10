@@ -13,7 +13,7 @@ RowLayout {
     //base button
     Rectangle {
         id: uBaseClassButton
-        color: "white"
+        color: "grey"
         Layout.preferredWidth:  parent.width /3
         Layout.preferredHeight: parent.height
 

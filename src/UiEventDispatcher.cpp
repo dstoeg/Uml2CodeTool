@@ -113,3 +113,24 @@ uClassDiagram * UiEventDispatcher::getClassDiagram()
     return mClassDiagram;
 }
 
+int UiEventDispatcher::getDiagramSize()
+{
+    return mClassDiagram->size();
+}
+
+uInheritable *UiEventDispatcher::getClass(int index)
+{
+    if (!(index < mClassDiagram->size())) return NULL;
+    return mClassDiagram->get(index);
+}
+
+uInheritable *UiEventDispatcher::findClass(QString name)
+{
+    return mClassDiagram->find(name);
+}
+
+void UiEventDispatcher::removeClass(uInheritable *obj)
+{
+    mClassDiagram->removeClass(obj);
+}
+
