@@ -8,6 +8,12 @@ uClassDiagram::uClassDiagram(QObject *parent) : QObject(parent)
 {
 }
 
+uClassDiagram &uClassDiagram::getInstance()
+{
+    static uClassDiagram mInstance;
+    return mInstance;
+}
+
 void uClassDiagram::addClass(uInheritable *uClass)
 {
     mClasses.push_back(uClass);
@@ -16,6 +22,18 @@ void uClassDiagram::addClass(uInheritable *uClass)
 void uClassDiagram::removeClass(uInheritable *uClass)
 {
     mClasses.erase(std::remove(mClasses.begin(), mClasses.end(), uClass), mClasses.end());
+}
+
+bool uClassDiagram::removeClass(QString const &name)
+{
+    for(TClassesConstIter iter = mClasses.begin(); iter < mClasses.end(); iter++){
+        if ((*iter)->getName() == name.toStdString())
+            mClasses.erase(std::remove(mClasses.begin(), mClasses.end(), (*iter)), mClasses.end());
+            return true;
+    }
+
+    return false;
+
 }
 
 bool uClassDiagram::contains(uInheritable *uClass) const

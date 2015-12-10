@@ -12,7 +12,7 @@ using namespace std;
 UiEventDispatcher::UiEventDispatcher(QObject *parent) : QObject(parent)
 {
     mCodeGenerator = &uCodeGenerationVisitor::getInstance();
-    mClassDiagram = new uClassDiagram();
+    mClassDiagram = &uClassDiagram::getInstance();
     mFactory = &uClassFactory::getInstance();
     mClassButton = &uClassButton::getInstance();
 }

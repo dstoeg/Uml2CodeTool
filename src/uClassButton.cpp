@@ -1,7 +1,7 @@
 #include "uClassButton.h"
-#include "uDrawVisitor.h"
 #include "uClassFactory.h"
 #include "uDebugPrinter.h"
+#include "uClassDiagram.h"
 
 uClassButton &uClassButton::getInstance()
 {
@@ -9,12 +9,14 @@ uClassButton &uClassButton::getInstance()
     return mInstance;
 }
 
-void uClassButton::update(uInheritable* inheritable)
+void uClassButton::update(const std::string &oldName, uAccess access, const std::string &newName, TParameters &attributes, TMethods &methods, TReferences &references, uInheritable *base)
 {
-    //Need the boxes to implement this class
-
-    //inheritable = uClassFactory.getInstance()->createClass(information from the boxes)
-    uDrawVisitor::getInstance().repaint();
+    uDebugPrinter::printText("updating uBaseClass");
+    if (uClassDiagram::getInstance().find(QString::fromStdString(oldName)) != 0){
+        uClassDiagram::getInstance().removeClass(QString::fromStdString(oldName));
+        uClassDiagram::getInstance().addClass(uClassFactory::getInstance().createClass(uClassType::eBaseClass ,access, newName, attributes, methods, references, base));
+    }else
+        uDebugPrinter::printText("updating ERROR: Class "+ oldName + " not found");
 }
 
 uInheritable* uClassButton::create(uAccess access, const std::string &name, TParameters &attributes, TMethods &methods, TReferences &references, uInheritable *base)

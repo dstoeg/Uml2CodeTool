@@ -7,7 +7,7 @@ class uClassButton : public uButton
 {
 public:
     static uClassButton &getInstance();
-    void update(uInheritable* inheritable);
+    void update(const std::string &oldName, uAccess access, const std::string &newName, TParameters &attributes, TMethods &methods, TReferences &references, uInheritable* base);
     uInheritable* create(uAccess access, std::string const& name, TParameters & attributes, TMethods & methods, TReferences & references, uInheritable *base = NULL);
 
 protected:
