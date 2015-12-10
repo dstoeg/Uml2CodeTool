@@ -1,11 +1,20 @@
 #include "uClassDiagram.h"
 
 #include <algorithm>
+#include "uDebugPrinter.h"
+#include "uBaseClass.h"
 
 using namespace std;
 
-uClassDiagram::uClassDiagram(QObject *parent) : QObject(parent)
+uClassDiagram::uClassDiagram()
 {
+
+}
+
+uClassDiagram &uClassDiagram::getInstance()
+{
+    static uClassDiagram mInstance;
+    return mInstance;
 }
 
 void uClassDiagram::addClass(uInheritable *uClass)
@@ -16,6 +25,16 @@ void uClassDiagram::addClass(uInheritable *uClass)
 void uClassDiagram::removeClass(uInheritable *uClass)
 {
     mClasses.erase(std::remove(mClasses.begin(), mClasses.end(), uClass), mClasses.end());
+}
+
+bool uClassDiagram::removeClass(QString const &name)
+{
+    for(TClassesConstIter iter = mClasses.begin(); iter < mClasses.end(); iter++){
+        if ((*iter)->getName() == name.toStdString())
+            mClasses.erase(std::remove(mClasses.begin(), mClasses.end(), (*iter)), mClasses.end());
+            return true;
+    }
+    return false;
 }
 
 bool uClassDiagram::contains(uInheritable *uClass) const
@@ -29,12 +48,16 @@ uInheritable *uClassDiagram::find(QString const &name) const
         if ((*iter)->getName() == name.toStdString())
             return (*iter);
     }
-    return 0;
+    return NULL;
 }
 
 void uClassDiagram::applyVisitor(uVisitor *visitor)
 {
+    if (visitor == NULL)
+        uDebugPrinter::printText("NULL POINTER");
+
     for(TClassesIter iter = mClasses.begin(); iter < mClasses.end(); iter++){
+        uDebugPrinter::printClass(*iter);
         (*iter)->accept(visitor);
     }
 }
@@ -50,4 +73,10 @@ int uClassDiagram::size() const
     return mClasses.size();
 }
 
-
+int uClassDiagram::getIndex(const QString &name) const
+{
+    for (size_t i=0; i<mClasses.size(); i++) {
+        if (mClasses[i]->qGetName() == name) return i;
+    }
+    return -1;
+}

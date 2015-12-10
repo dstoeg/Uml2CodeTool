@@ -3,12 +3,12 @@
 
 using namespace std;
 
-uParameter::uParameter(QObject *parent) : QObject(parent)
+uParameter::uParameter()
 {
 
 }
 
-uParameter::uParameter(uAccess access, std::string const&type, std::string const& name) : QObject(0)
+uParameter::uParameter(uAccess access, std::string const&type, std::string const& name)
 {
     mName = name;
     mType = type;

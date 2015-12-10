@@ -4,27 +4,23 @@
 #include "uClassButton.h"
 #include "uInterfaceButton.h"
 #include "uChildButton.h"
+#include "uStringConverter.h"
+
+#include <iostream>
 
 
 using namespace std;
 
 
-UiEventDispatcher::UiEventDispatcher(QObject *parent) : QObject(parent)
+UiEventDispatcher::UiEventDispatcher(QObject *parent) : QObject(0)
 {
     mCodeGenerator = &uCodeGenerationVisitor::getInstance();
-    mClassDiagram = new uClassDiagram();
-    mFactory = &uClassFactory::getInstance();
+    mClassDiagram = &uClassDiagram::getInstance();
     mClassButton = &uClassButton::getInstance();
-}
-
-void UiEventDispatcher::createClass(QString name)
-{
-
 }
 
 void UiEventDispatcher::createClass(QString name, QString parent, QString methods, QString attributes)
 {
-    uInheritable * obj;
     // convert method string to uMethod objects
     TMethods methodObjects = uStringConverter::parseMethods(methods.toStdString());
 
@@ -34,17 +30,29 @@ void UiEventDispatcher::createClass(QString name, QString parent, QString method
     // TODO
     TReferences referenceObjects;
 
-    // TODO find parent given name
-    // TODO replace with found parent class
-    uInheritable * testBase;
+    // find parent given name
+    uInheritable * parentObj = mClassDiagram->find(parent);
 
     // call factory to create object
-    obj = mClassButton->create(uPublic, name.toStdString(), attributeObjects, methodObjects, referenceObjects, testBase);
+    mClassButton->create(uPublic, name.toStdString(), attributeObjects, methodObjects, referenceObjects, parentObj);
+}
 
-    uDebugPrinter::printClass(obj);
+void UiEventDispatcher::updateClass(QString oldName, QString newName, QString parent, QString methods, QString attributes)
+{
+    // convert method string to uMethod objects
+    TMethods methodObjects = uStringConverter::parseMethods(methods.toStdString());
 
-    // do something with object
-    mClassDiagram->addClass(obj);
+    // convert attribute string to uParameter objects
+    TParameters attributeObjects = uStringConverter::parseAttributes(attributes.toStdString());
+
+    // TODO
+    TReferences referenceObjects;
+
+    // find parent given name
+    uInheritable * parentObj = mClassDiagram->find(parent);
+
+    // call factory to create object
+    mClassButton->update(oldName.toStdString(), uPublic, newName.toStdString(), attributeObjects, methodObjects, referenceObjects, parentObj);
 }
 
 void UiEventDispatcher::setClassState(int type)
@@ -80,10 +88,66 @@ void UiEventDispatcher::generateCode()
     mCodeGenerator->setFileAttributes("", "");
 
     mClassDiagram->applyVisitor(mCodeGenerator);
+    uDebugPrinter::printText("done generating code");
 }
 
-uClassDiagram * UiEventDispatcher::getClassDiagram()
+int UiEventDispatcher::getDiagramSize()
 {
-    return mClassDiagram;
+    return mClassDiagram->size();
+}
+
+uInheritable *UiEventDispatcher::getClass(int index)
+{
+    cout << "index : " << index << endl;
+    cout << "size: " << mClassDiagram->size() << endl;
+
+    if (!(index < mClassDiagram->size())) return NULL;
+    return mClassDiagram->get(index);
+}
+
+void UiEventDispatcher::removeClass(uInheritable *obj)
+{
+    mClassDiagram->removeClass(obj);
+}
+
+void UiEventDispatcher::removeClass(QString name)
+{
+    uInheritable * obj = mClassDiagram->find(name);
+    if (obj != NULL) {
+        mClassDiagram->removeClass(obj);
+    }
+}
+
+QString UiEventDispatcher::getClassName(int index)
+{
+    uInheritable * obj = getClass(index);
+    if (obj == NULL) return "";
+
+    return QString::fromStdString(obj->getName());
+}
+
+QString UiEventDispatcher::getClassMethods(int index)
+{
+    uInheritable * obj = getClass(index);
+    if (obj == NULL) return "";
+
+    return uStringConverter::qCreateMethodStringFromClass(obj);
+}
+
+QString UiEventDispatcher::getClassAttributes(int index)
+{
+    uInheritable * obj = getClass(index);
+    if (obj == NULL) return "";
+
+    return uStringConverter::qCreateAttributeStringFromClass(obj);
+}
+
+int UiEventDispatcher::getClassIndex(QString name)
+{
+    uInheritable * obj = mClassDiagram->find(name);
+    if (obj == NULL) return -1;
+
+    return mClassDiagram->getIndex(name);
+
 }
 

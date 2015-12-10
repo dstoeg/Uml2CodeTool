@@ -2,10 +2,10 @@ import QtQuick 2.3
 import QtQuick.Window 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.1
+import QtQuick.Controls.Styles 1.4
 
 ColumnLayout {
     id: classPanel
-    spacing : 0
 
     Label {
         Layout.fillHeight: true
@@ -18,6 +18,13 @@ ColumnLayout {
     }
 
     TextField {
+//        style: TextFieldStyle {
+//                textColor: "black"
+//                background: Rectangle {
+//                    id: parentFieldBackground
+//                    border.color: "black"
+//                }
+//            }
         id: parentField
         Layout.fillHeight: true
         Layout.fillWidth: true
@@ -46,7 +53,7 @@ ColumnLayout {
             Layout.fillWidth: true
             //anchors.centerIn: xField
             StyledText {
-                text: "X (0-7)"
+                text: "X (0-"+(gridLayout.getWidth()-1)+")"
                 horizontalAlignment: xField.Top
             }
         }
@@ -56,7 +63,7 @@ ColumnLayout {
             Layout.fillWidth: true
             //anchors.centerIn: yField
             StyledText {
-                text: "Y (0-4)"
+                text: "Y (0-" + (gridLayout.getHeight()-1) + ")"
                 horizontalAlignment: yField.Top
             }
         }
@@ -157,23 +164,26 @@ ColumnLayout {
                 var methods = methodField.text
                 var attributes = attributeField.text
 
-                if (!gridLayout.contains(name) && gridLayout.isEmpty(parseInt(coordX), parseInt(coordY))) {
-                    gridLayout.addClass(parseInt(coordX), parseInt(coordY), name)
-
-
-                    dispatcher.createClass(name, parent, methods, attributes)
-
-                    drawingCanvas.requestPaint()
-                    clearTextFields()
-                    drawingCanvas.selectedClass = ""
+                if (parent != "" && dispatcher.getClassIndex(parent) === -1) {
+                    parentField.textColor = "red"
                 }
                 else {
-                    // TODO add error handling (change x,y coordinates to red)
+                    if (!gridLayout.contains(name) && gridLayout.isEmpty(parseInt(coordX), parseInt(coordY))) {
+                        gridLayout.addClass(parseInt(coordX), parseInt(coordY), name)
+                        dispatcher.createClass(name, parent, methods, attributes)
+                        drawingCanvas.requestPaint()
+                        clearTextFields()
+                        drawingCanvas.selectedClass = ""
+                    }
+                    else if (!gridLayout.isEmpty(parseInt(coordX), parseInt(coordY))){
+                        xField.textColor = "red"
+                        yField.textColor = "red"
+                    }
+                    else{
+                        nameField.textColor = "red"
+                    }
                 }
-
-
             }
-
         }
         Button {
             StyledText {
@@ -184,16 +194,15 @@ ColumnLayout {
             onClicked: {
 
                 if (drawingCanvas.selectedClass != "") {
+                    var i = xField.text
+                    var j = yField.text
                     var name = nameField.text
                     var parent = parentField.text
                     var methods = methodField.text
                     var attributes = attributeField.text
 
-                    var diagram = dispatcher.getClassDiagram()
-                    var obj = diagram.find(name)
-                    diagram.removeClass(obj)
-
-                    dispatcher.createClass(name, parent, methods, attributes)
+                    gridLayout.moveClass(drawingCanvas.selectedClass, i, j)
+                    dispatcher.updateClass(drawingCanvas.selectedClass, name, parent, methods, attributes)
 
                     drawingCanvas.requestPaint()
                     clearTextFields()
@@ -201,19 +210,63 @@ ColumnLayout {
                 }
             }
         }
+        Button {
+            StyledText {
+                text: "Delete"
+            }
+
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            onClicked: {
+                var name = nameField.text
+                if (name != "") {
+                    if (gridLayout.contains(name)) {
+
+                        dispatcher.removeClass(name)
+                        gridLayout.removeClass(name)
+
+                        drawingCanvas.requestPaint()
+                        clearTextFields()
+                        drawingCanvas.selectedClass = ""
+                    }
+                }
+            }
+
+        }
     }
 
     function clearTextFields() {
+        xField.text = ""
+        yField.text = ""
         nameField.text = ""
         parentField.text = ""
         methodField.text = ""
         attributeField.text = ""
     }
 
-    function setInformation(name, parent, methods, attributes) {
+    function setInformation(x, y, name, parent, methods, attributes) {
+        xField.text = x
+        yField.text = y
         nameField.text = name
         parentField.text = parent
         methodField.text = methods
         attributeField.text = attributes
+    }
+
+    function setFieldsBlack(){
+        xField.textColor = "black"
+        yField.textColor = "black"
+        nameField.textColor = "black"
+        parentField.textColor = "black"
+    }
+
+    function disableParentField() {
+        parentField.enabled = false
+        //parentField.style.color = "grey"
+    }
+
+    function enableParentField() {
+        parentField.enabled = true
+        //parentFieldBackground.color = "white"
     }
 }

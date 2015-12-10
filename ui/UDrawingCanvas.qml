@@ -25,20 +25,11 @@ Canvas {
     }
 
     function drawClasses(){
-        var classDiagram = dispatcher.getClassDiagram();
 
-        var diagramSize;
-        if(classDiagram === null)
-            diagramSize = 0
-        else
-            diagramSize = classDiagram.size()
-
-
-        for(var i = 0; i < diagramSize; i++) {
-            var name = classDiagram.get(i).qGetName();
-            var methods = stringConverter.qCreateMethodStringFromClass(classDiagram.get(i));
-            var attributes = stringConverter.qCreateAttributeStringFromClass(classDiagram.get(i));
-            var parent = classDiagram.get(i).qGetParent();
+        for(var i = 0; i < dispatcher.getDiagramSize(); i++) {
+            var name = dispatcher.getClassName(i);
+            var methods = dispatcher.getClassMethods(i); //stringConverter.qCreateMethodStringFromClass(obj);
+            var attributes = dispatcher.getClassAttributes(i); //stringConverter.qCreateAttributeStringFromClass(obj);
             var x = gridLayout.getI(name);
             var y = gridLayout.getJ(name);
 
@@ -50,12 +41,12 @@ Canvas {
 
     function drawClass(coordX, coordY, name, methods, attributes, parent, referenced) {
 
-        var x = (Number(coordX)%gridLayout.getWidth()) * Number(width)/9
-        var y = (Number(coordY)%gridLayout.getHeight()) * Number(height)*2/9
+        var x = (Number(coordX)%gridLayout.getWidth()) * Number(width)/(9*gridLayout.getWidth()/9)
+        var y = (Number(coordY)%gridLayout.getHeight()) * Number(height)*(1.65)/(8*gridLayout.getHeight()/5)
 
         //console.log("Drawing class: "+name +", "+ methods +", "+ attributes)
-        var classWidth = Number(width)/10;
-        var classHeight = Number(height)/5;
+        var classWidth = Number(width)/(9*gridLayout.getWidth()/8);
+        var classHeight = (1.5)*Number(height)/(9*gridLayout.getHeight()/5);
 
         var firstDelimiter1 = classHeight * 0.15;
         var firstDelimiter2 = classHeight * 0.16;
@@ -200,25 +191,28 @@ Canvas {
         var i = parseInt((Number(x) / (Number(width)/gridLayout.getWidth())))
         var j = parseInt((Number(y) / (Number(height)/gridLayout.getHeight())))
 
+        uClassPanel.setFieldsBlack()
+
         if (!gridLayout.isEmpty(parseInt(i), parseInt(j))) {
 
             var name = gridLayout.getString(parseInt(i), parseInt(j))
-
-            uDebugger.qPrintText("name: " + name)
-            var diagram = dispatcher.getClassDiagram()
-            var uClass = diagram.find(name);
             selectedClass = name
-            uDebugger.printClass(uClass)
+            uDebugger.qPrintText("name: " + name)
 
-            var methods = stringConverter.qCreateMethodStringFromClass(diagram.get(i));
-            var attributes = stringConverter.qCreateAttributeStringFromClass(diagram.get(i));
+            var idx = dispatcher.getClassIndex(name);
+            var methods = dispatcher.getClassMethods(idx);
+            var attributes = dispatcher.getClassAttributes(idx);
+
             // TODO add parent
-            uClassPanel.setInformation(name, "", methods, attributes)
+            uClassPanel.setInformation(i,j,name, "", methods, attributes)
+
         }
         else {
             uClassPanel.clearTextFields()
             selectedClass = ""
         }
     }
+
+
 
 }

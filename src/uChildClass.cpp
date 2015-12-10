@@ -1,5 +1,6 @@
 #include "uChildClass.h"
 #include "uVisitor.h"
+#include "uDebugPrinter.h"
 
 
 uChildClass::uChildClass(std::string const& name) : uInheritable(name)
@@ -18,6 +19,11 @@ uChildClass::uChildClass(uAccess access, const std::string &name, TParameters &a
 {
     mHasParent = true;
     mBaseClass = base;
+}
+
+uChildClass::~uChildClass()
+{
+    uDebugPrinter::printText("UChildClass DTor called");
 }
 
 uInheritable *uChildClass::getBaseClass() const

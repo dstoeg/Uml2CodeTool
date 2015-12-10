@@ -4,7 +4,7 @@
 
 using namespace std;
 
-uDebugPrinter::uDebugPrinter(QObject * parent) : QObject(parent)
+uDebugPrinter::uDebugPrinter(QObject * parent) : QObject(0)
 {
 
 }
@@ -55,7 +55,11 @@ void uDebugPrinter::printAttributes(const TParameters &params)
 
 void uDebugPrinter::printClass(uInheritable * obj)
 {
-    debug_print("Object type: " + string(typeid(obj).name()));
+    if (obj == NULL) {
+        debug_print("ERROR : NULL POINTER");
+        return;
+    }
+
     debug_print("Name: " + obj->getName());
     debug_print("Methods: ");
     printMethods(obj->getMethods());

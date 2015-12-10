@@ -1,17 +1,18 @@
 #include "uInheritable.h"
 
+#include "uDebugPrinter.h"
 
-uInheritable::uInheritable(QObject *parent) : QObject(parent)
+uInheritable::uInheritable()
 {
 
 }
 
-uInheritable::uInheritable(const std::string &name)  : QObject(0)
+uInheritable::uInheritable(const std::string &name)
 {
     mName = name;
 }
 
-uInheritable::uInheritable(uAccess access, const std::string &name, TParameters &attributes, TMethods &methods, TReferences &references) : QObject(0)
+uInheritable::uInheritable(uAccess access, const std::string &name, TParameters &attributes, TMethods &methods, TReferences &references)
 {
     mAccess = access;
     mName = name;
@@ -19,6 +20,11 @@ uInheritable::uInheritable(uAccess access, const std::string &name, TParameters 
     mMethods = methods;
     mReferences = references;
     mHasParent = false;
+}
+
+uInheritable::~uInheritable()
+{
+    //uDebugPrinter::printText("uInheritable: DTor called");
 }
 
 void uInheritable::accept(uVisitor *visitor)

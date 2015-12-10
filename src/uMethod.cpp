@@ -1,17 +1,23 @@
 #include "uMethod.h"
+#include "uDebugPrinter.h"
 
 
-uMethod::uMethod(QObject *parent) : QObject(parent)
+uMethod::uMethod()
 {
 
 }
 
-uMethod::uMethod(uAccess access, std::string const& returnType, std::string const& name, TParameters const& params) : QObject(0)
+uMethod::uMethod(uAccess access, std::string const& returnType, std::string const& name, TParameters const& params)
 {
     mName = name;
     mReturnType = returnType;
     mAccess = access;
     mParameters = params;
+}
+
+uMethod::~uMethod()
+{
+    uDebugPrinter::printText("uMethod: DTOR called");
 }
 
 std::string uMethod::getName() const

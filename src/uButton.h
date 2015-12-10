@@ -17,8 +17,8 @@ class uButton : public QObject
     Q_OBJECT
 public:
 
-    Q_INVOKABLE virtual void update(uInheritable* inheritable) {}
-    Q_INVOKABLE virtual uInheritable* create(uAccess access, std::string const& name, TParameters & attributes, TMethods & methods, TReferences & references, uInheritable *base = NULL) {}
+    Q_INVOKABLE virtual void update(const std::string &oldName, uAccess access, const std::string &newName, TParameters &attributes, TMethods &methods, TReferences &references, uInheritable* base) {}
+    Q_INVOKABLE virtual void create(uAccess access, std::string const& name, TParameters & attributes, TMethods & methods, TReferences & references, uInheritable *base = NULL) {}
     static uButton &getInstance();
 
 protected:

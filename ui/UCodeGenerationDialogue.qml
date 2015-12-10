@@ -5,7 +5,7 @@ import QtQuick.Layouts 1.1
 import QtQuick.Dialogs 1.0
 
 ApplicationWindow {
-    id: generationDialog
+    id: root
     visible: true
     width: 700
     height: 500

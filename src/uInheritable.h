@@ -5,23 +5,23 @@
 #include "uParameter.h"
 #include "uReference.h"
 
-#include <QObject>
 #include <QString>
 
 #include <vector>
 
 class uVisitor;
 
-class uInheritable : public QObject
+class uInheritable
 {
-    Q_OBJECT
 public:
-    explicit uInheritable(QObject *parent = 0);
+    explicit uInheritable();
     uInheritable(std::string const& name);
     uInheritable(uAccess access, std::string const& name, TParameters & attributes, TMethods & methods, TReferences & references);
+    virtual ~uInheritable();
+
     virtual void accept(uVisitor * visitor);
-    Q_INVOKABLE std::vector<uMethod *> getMethods() const;
-    Q_INVOKABLE std::vector<uParameter *> getAttributes() const;
+    std::vector<uMethod *> getMethods() const;
+    std::vector<uParameter *> getAttributes() const;
     std::vector<uReference*> getReferences() const;
     uAccess getAccess() const;
     void setAccess(uAccess access);
@@ -35,8 +35,7 @@ public:
     void addAttribute(uParameter * attribute);
     void addReference(uReference * reference);
 
-    // QML function
-    Q_INVOKABLE QString qGetName() const;
+    QString qGetName() const;
 
 protected:
     std::string mName;

@@ -6,7 +6,7 @@
 
 using namespace std;
 
-uGridLayout::uGridLayout(QObject *parent) : QObject(parent)
+uGridLayout::uGridLayout(QObject *parent) : QObject(0)
 {
 
 }
