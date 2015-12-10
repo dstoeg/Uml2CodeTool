@@ -153,8 +153,8 @@ Canvas {
 
     function drawInheritanceArrow(x, y, x_to, y_to) {
 
-        var triangleX = Number(width)/65;
-        var triangleY = Number(height)/50;
+        var triangleX = Number(width)/65
+        var triangleY = Number(height)/50
         // relies on classWidth, from drawClass function
         var classWidth = Number(width)/10;
         var offset = classWidth/2;
