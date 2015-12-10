@@ -19,11 +19,12 @@ void uClassButton::update(const std::string &oldName, uAccess access, const std:
         uDebugPrinter::printText("updating ERROR: Class "+ oldName + " not found");
 }
 
-uInheritable* uClassButton::create(uAccess access, const std::string &name, TParameters &attributes, TMethods &methods, TReferences &references, uInheritable *base)
+void uClassButton::create(uAccess access, const std::string &name, TParameters &attributes, TMethods &methods, TReferences &references, uInheritable *base)
 {
     uDebugPrinter::printText("creating new uBaseClass");
+    uDebugPrinter::printText(" - name: " + name);
+    std::string n = name;
+    uInheritable * newClass = uClassFactory::getInstance().createClass(uClassType::eBaseClass ,access, n, attributes, methods, references, base);
 
-    uInheritable * newClass = uClassFactory::getInstance().createClass(uClassType::eBaseClass ,access, name, attributes, methods, references, base);
     uClassDiagram::getInstance().addClass(newClass);
-    return newClass;
 }

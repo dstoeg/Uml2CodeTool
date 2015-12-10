@@ -3,7 +3,7 @@
 
 using namespace std;
 
-uParameter::uParameter(QObject *parent) : QObject(parent)
+uParameter::uParameter(QObject *parent) : QObject(0)
 {
 
 }

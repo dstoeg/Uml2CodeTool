@@ -5,7 +5,6 @@ import QtQuick.Layouts 1.1
 
 ColumnLayout {
     id: classPanel
-    spacing : 0
 
     Label {
         Layout.fillHeight: true
@@ -159,8 +158,6 @@ ColumnLayout {
 
                 if (!gridLayout.contains(name) && gridLayout.isEmpty(parseInt(coordX), parseInt(coordY))) {
                     gridLayout.addClass(parseInt(coordX), parseInt(coordY), name)
-
-
                     dispatcher.createClass(name, parent, methods, attributes)
 
                     drawingCanvas.requestPaint()
@@ -189,9 +186,7 @@ ColumnLayout {
                     var methods = methodField.text
                     var attributes = attributeField.text
 
-                    var obj = dispatcher.findClass(name)
-                    dispatcher.removeClass(obj)
-
+                    dispatcher.removeClass(name)
                     dispatcher.createClass(name, parent, methods, attributes)
 
                     drawingCanvas.requestPaint()
@@ -211,8 +206,7 @@ ColumnLayout {
                 var name = nameField.text
                 if (name != "") {
                     if (gridLayout.contains(name)) {
-                        var obj = dispatcher.findClass(name)
-                        dispatcher.removeClass(obj)
+                        dispatcher.removeClass(name)
                         gridLayout.removeClass(name)
 
                         drawingCanvas.requestPaint()

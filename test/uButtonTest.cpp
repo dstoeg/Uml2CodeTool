@@ -13,7 +13,6 @@ void uButtonTest::initTestCase()
 
 void uButtonTest::cleanupTestCase()
 {
-    delete mObject; mObject = NULL;
 }
 
 void uButtonTest::getInstanceTest()

@@ -28,12 +28,16 @@ public:
 
     Q_INVOKABLE void setLanguage(QString language);
     Q_INVOKABLE void generateCode();
-    Q_INVOKABLE uClassDiagram * getClassDiagram();
 
     Q_INVOKABLE int getDiagramSize();
     Q_INVOKABLE uInheritable * getClass(int index);
     Q_INVOKABLE uInheritable * findClass(QString name);
     Q_INVOKABLE void removeClass(uInheritable * obj);
+    Q_INVOKABLE void removeClass(QString name);
+
+    Q_INVOKABLE QString getClassName(int index);
+    Q_INVOKABLE QString getClassMethods(int index);
+    Q_INVOKABLE QString getClassAttributes(int index);
 
 signals:
 

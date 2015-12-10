@@ -27,10 +27,9 @@ Canvas {
     function drawClasses(){
 
         for(var i = 0; i < dispatcher.getDiagramSize(); i++) {
-            var obj = dispatcher.getClass(i);
-            var name = obj.qGetName();
-            var methods = stringConverter.qCreateMethodStringFromClass(obj);
-            var attributes = stringConverter.qCreateAttributeStringFromClass(obj);
+            var name = dispatcher.getClassName(i);
+            var methods = dispatcher.getClassMethods(i); //stringConverter.qCreateMethodStringFromClass(obj);
+            var attributes = dispatcher.getClassAttributes(i); //stringConverter.qCreateAttributeStringFromClass(obj);
             var x = gridLayout.getI(name);
             var y = gridLayout.getJ(name);
 
@@ -190,14 +189,15 @@ Canvas {
             var name = gridLayout.getString(parseInt(i), parseInt(j))
 
             uDebugger.qPrintText("name: " + name)
-            var uClass = dispatcher.findClass(name);
+            var obj = dispatcher.findClass(name);
             selectedClass = name
-            uDebugger.printClass(uClass)
 
-            var methods = stringConverter.qCreateMethodStringFromClass(dispatcher.getClass(i));
-            var attributes = stringConverter.qCreateAttributeStringFromClass(dispatcher.getClass(i));
+            var methods = stringConverter.qCreateMethodStringFromClass(obj);
+            var attributes = stringConverter.qCreateAttributeStringFromClass(obj);
+
             // TODO add parent
             uClassPanel.setInformation(name, "", methods, attributes)
+
         }
         else {
             uClassPanel.clearTextFields()

@@ -9,7 +9,6 @@ class uClassDiagram : public QObject
     Q_OBJECT
 public:
     static uClassDiagram &getInstance();
-    //explicit uClassDiagram(QObject *parent = 0);
     Q_INVOKABLE void addClass(uInheritable * uClass);
     Q_INVOKABLE void removeClass(uInheritable * uClass);
     bool removeClass(QString const &name);
@@ -26,6 +25,8 @@ protected:
     uClassDiagram(QObject * parent = 0);
     uClassDiagram(uClassDiagram const&);
     void operator = (uClassDiagram const&);
+    uInheritable * mObj;
+
 };
 
 

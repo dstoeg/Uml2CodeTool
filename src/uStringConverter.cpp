@@ -10,7 +10,7 @@ using namespace std;
 
 uAccess uStringConverter::dAccess = uPublic;
 
-uStringConverter::uStringConverter(QObject *parent) : QObject(parent)
+uStringConverter::uStringConverter()
 {
 
 }

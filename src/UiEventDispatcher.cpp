@@ -4,6 +4,7 @@
 #include "uClassButton.h"
 #include "uInterfaceButton.h"
 #include "uChildButton.h"
+#include "uStringConverter.h"
 
 #include <iostream>
 
@@ -11,7 +12,7 @@
 using namespace std;
 
 
-UiEventDispatcher::UiEventDispatcher(QObject *parent) : QObject(parent)
+UiEventDispatcher::UiEventDispatcher(QObject *parent) : QObject(0)
 {
     mCodeGenerator = &uCodeGenerationVisitor::getInstance();
     mClassDiagram = &uClassDiagram::getInstance();
@@ -20,7 +21,6 @@ UiEventDispatcher::UiEventDispatcher(QObject *parent) : QObject(parent)
 
 void UiEventDispatcher::createClass(QString name, QString parent, QString methods, QString attributes)
 {
-    uInheritable * obj;
     // convert method string to uMethod objects
     TMethods methodObjects = uStringConverter::parseMethods(methods.toStdString());
 
@@ -35,13 +35,7 @@ void UiEventDispatcher::createClass(QString name, QString parent, QString method
     uInheritable * testBase;
 
     // call factory to create object
-    obj = mClassButton->create(uPublic, name.toStdString(), attributeObjects, methodObjects, referenceObjects, testBase);
-
-    uDebugPrinter::printClass(obj);
-
-    // do something with object
-    cout << "diagram size before: " << mClassDiagram->size() << endl;
-    cout << "diagram size after: " << mClassDiagram->size() << endl;
+    mClassButton->create(uPublic, name.toStdString(), attributeObjects, methodObjects, referenceObjects, testBase);
 }
 
 void UiEventDispatcher::updateClass(QString oldName, QString newName, QString parent, QString methods, QString attributes)
@@ -61,12 +55,6 @@ void UiEventDispatcher::updateClass(QString oldName, QString newName, QString pa
 
     // call factory to create object
     mClassButton->update(oldName.toStdString(), uPublic, newName.toStdString(), attributeObjects, methodObjects, referenceObjects, testBase);
-
-    uDebugPrinter::printText("Updated: " + oldName.toStdString());
-
-    // do something with object
-    cout << "Updating: diagram size before: " << mClassDiagram->size() << endl;
-    cout << "Updating: diagram size after: " << mClassDiagram->size() << endl;
 }
 
 void UiEventDispatcher::setClassState(int type)
@@ -95,22 +83,14 @@ void UiEventDispatcher::setLanguage(QString language)
 
 void UiEventDispatcher::generateCode()
 {
-     cout << "diagram size: " << mClassDiagram->size() << endl;
-
     uDebugPrinter::printText("generating code");
     uDebugPrinter::printText("language: " + mCodeGenerator->getLanguage()->getName());
 
     // TODO
     mCodeGenerator->setFileAttributes("", "");
 
-
-
     mClassDiagram->applyVisitor(mCodeGenerator);
-}
-
-uClassDiagram * UiEventDispatcher::getClassDiagram()
-{
-    return mClassDiagram;
+    uDebugPrinter::printText("done generating code");
 }
 
 int UiEventDispatcher::getDiagramSize()
@@ -120,6 +100,9 @@ int UiEventDispatcher::getDiagramSize()
 
 uInheritable *UiEventDispatcher::getClass(int index)
 {
+    cout << "index : " << index << endl;
+    cout << "size: " << mClassDiagram->size() << endl;
+
     if (!(index < mClassDiagram->size())) return NULL;
     return mClassDiagram->get(index);
 }
@@ -132,5 +115,37 @@ uInheritable *UiEventDispatcher::findClass(QString name)
 void UiEventDispatcher::removeClass(uInheritable *obj)
 {
     mClassDiagram->removeClass(obj);
+}
+
+void UiEventDispatcher::removeClass(QString name)
+{
+    uInheritable * obj = mClassDiagram->find(name);
+    if (obj != NULL) {
+        mClassDiagram->removeClass(obj);
+    }
+}
+
+QString UiEventDispatcher::getClassName(int index)
+{
+    uInheritable * obj = getClass(index);
+    if (obj == NULL) return "";
+
+    return QString::fromStdString(obj->getName());
+}
+
+QString UiEventDispatcher::getClassMethods(int index)
+{
+    uInheritable * obj = getClass(index);
+    if (obj == NULL) return "";
+
+    return uStringConverter::qCreateMethodStringFromClass(obj);
+}
+
+QString UiEventDispatcher::getClassAttributes(int index)
+{
+    uInheritable * obj = getClass(index);
+    if (obj == NULL) return "";
+
+    return uStringConverter::qCreateAttributeStringFromClass(obj);
 }
 

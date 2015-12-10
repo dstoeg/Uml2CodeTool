@@ -5,6 +5,7 @@ import QtQuick.Layouts 1.1
 
 
 ApplicationWindow {
+    id: root
     visible: true
     width: 1600
     height: 1600

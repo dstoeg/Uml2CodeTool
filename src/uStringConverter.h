@@ -3,17 +3,15 @@
 
 #include <string>
 #include <vector>
-#include <QObject>
 #include <QString>
 
 #include "uInheritable.h"
 #include "uLanguageStrategy.h"
 
-class uStringConverter : public QObject
+class uStringConverter
 {
-    Q_OBJECT
 public:
-    explicit uStringConverter(QObject *parent = 0);
+    explicit uStringConverter();
 
     static TMethods parseMethods(std::string const& text);
     static TParameters parseAttributes(std::string const& text);
@@ -23,10 +21,10 @@ public:
     static uAccess dAccess;
 
     // qml functions
-    Q_INVOKABLE QString qCreateMethodString(TMethods const& methods);
-    Q_INVOKABLE QString qCreateMethodStringFromClass(uInheritable * obj);
-    Q_INVOKABLE QString qCreateAttributeString(TParameters const& attributes);
-    Q_INVOKABLE QString qCreateAttributeStringFromClass(uInheritable * obj);
+    static QString qCreateMethodString(TMethods const& methods);
+    static QString qCreateMethodStringFromClass(uInheritable * obj);
+    static QString qCreateAttributeString(TParameters const& attributes);
+    static QString qCreateAttributeStringFromClass(uInheritable * obj);
 
 private:
     static std::vector<std::string> splitString(std::string const& text);

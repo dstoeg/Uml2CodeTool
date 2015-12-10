@@ -119,15 +119,15 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
-    qmlRegisterType<uInheritable>("com.uCode.demo", 1, 0, "uInheritable");
-    qmlRegisterType<uStringConverter>("com.uCode.demo", 1, 0, "uStringConverter");
+    //qmlRegisterType<uInheritable>("com.uCode.demo", 1, 0, "uInheritable");
+    //qmlRegisterType<uStringConverter>("com.uCode.demo", 1, 0, "uStringConverter");
     qmlRegisterType<uMethod>("com.uCode.demo", 1, 0, "uMethod");
     qmlRegisterType<uParameter>("com.uCode.demo", 1, 0, "uParameter");
     qmlRegisterType<uGridLayout>("com.uCode.demo", 1, 0, "uGridLayout");
 
     engine.rootContext()->setContextProperty("gridLayout", &layout);
     engine.rootContext()->setContextProperty("dispatcher", &dispatcher);
-    engine.rootContext()->setContextProperty("stringConverter", &converter);
+    //engine.rootContext()->setContextProperty("stringConverter", &converter);
     engine.rootContext()->setContextProperty("uDebugger", &debugger);
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
