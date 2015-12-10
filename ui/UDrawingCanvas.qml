@@ -38,11 +38,12 @@ Canvas {
             var name = classDiagram.get(i).qGetName();
             var methods = stringConverter.qCreateMethodStringFromClass(classDiagram.get(i));
             var attributes = stringConverter.qCreateAttributeStringFromClass(classDiagram.get(i));
+            var parent = classDiagram.get(i).qGetParent();
             var x = gridLayout.getI(name);
             var y = gridLayout.getJ(name);
 
             // TODO remove test
-            drawClass(x, y, name, methods, attributes, "");
+            drawClass(x, y, name, methods, attributes, parent);
         }
 
     }
@@ -105,10 +106,13 @@ Canvas {
         context.stroke();
 
         // draw inheritance
-        if(!(parent === undefined || parent === null))
+        if(!parent.length == 0)
         {
-            var px = gridLayout.getI(parent);
-            var py = gridLayout.getJ(parent);
+            var pi = gridLayout.getI(parent);
+            var px = (Number(pi)%gridLayout.getWidth()) * Number(width)/9
+            var pj = gridLayout.getJ(parent);
+            var py = (Number(pj)%gridLayout.getHeight()) * Number(height)*2/9
+
             drawInheritance(x+(classWidth/2), y, px,py+classHeight)
         }
 
@@ -155,7 +159,7 @@ Canvas {
         context.moveTo(x,y);
         context.strokeStyle = "black";
         // draw projection of arrow, then rotate
-        context.lineTo(cx, y_to-triangleY);
+        context.lineTo(cx, y_to+triangleY);
         drawTriangle(cx,y_to,triangleX,triangleY,false);
         context.stroke();
     }
@@ -171,7 +175,7 @@ Canvas {
         context.moveTo(x,y);
         context.strokeStyle = "black";
         // draw projection of arrow, then rotate
-        context.lineTo(cx, y_to-triangleY);
+        context.lineTo(cx, y_to+triangleY);
         drawTriangle(cx,y_to,triangleX,triangleY,true);
         context.stroke();
     }
@@ -179,9 +183,9 @@ Canvas {
     function drawTriangle(x,y,triangleWidth, triangleHeight, isFilled){
         context.strokeStyle = "black";
 
-        // draw the rectangle
-        context.moveTo(x-triangleWidth,y-triangleHeight);
-        context.lineTo(x+triangleWidth, y-triangleHeight);
+        // draw the triangle
+        context.moveTo(x-triangleWidth,y+triangleHeight);
+        context.lineTo(x+triangleWidth, y+triangleHeight);
         context.lineTo(x,y);
         context.closePath();
         if (isFilled)
