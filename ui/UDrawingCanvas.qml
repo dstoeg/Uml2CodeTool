@@ -102,7 +102,7 @@ Canvas {
         for (var i=0; i<referenceCount; i++) {
             var referenceName = dispatcher.getClassReference(name, i);
             if (referenceName != "") {
-                uDebugger.qPrintText("reference from " + name + " to " + referenceName)
+                drawAggregation(name, referenceName)
             }
         }
     }
@@ -154,7 +154,6 @@ Canvas {
         var parentY = (Number(parentJ)%gridLayout.getHeight()) * Number(height)*2/9
 
         drawInheritanceArrow(objX, objY, parentX, parentY)
-
     }
 
     function drawInheritanceArrow(x, y, x_to, y_to) {
@@ -173,7 +172,24 @@ Canvas {
         context.stroke();
     }
 
-    function drawAggregation(x, y, x_to, y_to) {
+    function drawAggregation(name, reference) {
+
+        uDebugger.qPrintText("reference from " + name + " to " + reference)
+
+        var objI = gridLayout.getI(name)
+        var objJ = gridLayout.getJ(name)
+        var referenceI = gridLayout.getI(reference)
+        var referenceJ = gridLayout.getJ(reference)
+
+        var objX = (Number(objI)%gridLayout.getWidth()) * Number(width)/9
+        var objY = (Number(objJ)%gridLayout.getHeight()) * Number(height)*2/9
+        var referenceX = (Number(referenceI)%gridLayout.getWidth()) * Number(width)/9
+        var referenceY = (Number(referenceJ)%gridLayout.getHeight()) * Number(height)*2/9
+
+        drawAggregationArrow(objX, objY, referenceX, referenceY)
+    }
+
+    function drawAggregationArrow(x, y, x_to, y_to) {
         var triangleX = Number(width)/65;
         var triangleY = Number(height)/50;
         // relies on classWidth, from drawClass function
