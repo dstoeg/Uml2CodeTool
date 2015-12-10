@@ -38,6 +38,7 @@ public:
     Q_INVOKABLE QString getClassName(int index);
     Q_INVOKABLE QString getClassMethods(int index);
     Q_INVOKABLE QString getClassAttributes(int index);
+    Q_INVOKABLE int getClassIndex(QString name);
 
 signals:
 

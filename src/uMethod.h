@@ -1,19 +1,15 @@
 #ifndef UMETHOD_H
 #define UMETHOD_H
 
-#include <QObject>
-
 #include "uParameter.h"
 #include <vector>
 #include <iterator>
 
 
-class uMethod : public QObject
+class uMethod
 {
-   Q_OBJECT
 public:
-    explicit uMethod(QObject *parent = 0);
-    //uMethod(uMethod &&) = default;
+    explicit uMethod();
     uMethod(uAccess access, std::string const& returnType, std::string const& name, const TParameters &params);
     ~uMethod();
 
@@ -29,7 +25,6 @@ private:
     std::string mReturnType;
     uAccess mAccess;
     std::vector<uParameter*> mParameters;
-    Q_DISABLE_COPY(uMethod)
 };
 
 

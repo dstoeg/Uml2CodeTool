@@ -187,13 +187,12 @@ Canvas {
         if (!gridLayout.isEmpty(parseInt(i), parseInt(j))) {
 
             var name = gridLayout.getString(parseInt(i), parseInt(j))
-
-            uDebugger.qPrintText("name: " + name)
-            var obj = dispatcher.findClass(name);
             selectedClass = name
+            uDebugger.qPrintText("name: " + name)
 
-            var methods = stringConverter.qCreateMethodStringFromClass(obj);
-            var attributes = stringConverter.qCreateAttributeStringFromClass(obj);
+            var idx = dispatcher.getClassIndex(name);
+            var methods = dispatcher.getClassMethods(idx);
+            var attributes = dispatcher.getClassAttributes(idx);
 
             // TODO add parent
             uClassPanel.setInformation(name, "", methods, attributes)

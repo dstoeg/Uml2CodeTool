@@ -149,3 +149,12 @@ QString UiEventDispatcher::getClassAttributes(int index)
     return uStringConverter::qCreateAttributeStringFromClass(obj);
 }
 
+int UiEventDispatcher::getClassIndex(QString name)
+{
+    uInheritable * obj = mClassDiagram->find(name);
+    if (obj == NULL) return -1;
+
+    return mClassDiagram->getIndex(name);
+
+}
+

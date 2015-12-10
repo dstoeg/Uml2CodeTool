@@ -6,7 +6,7 @@
 
 using namespace std;
 
-uClassDiagram::uClassDiagram(QObject *parent) : QObject(0)
+uClassDiagram::uClassDiagram()
 {
 
 }
@@ -88,4 +88,12 @@ int uClassDiagram::size() const
 {
     uDebugPrinter::printText("class diagram : get size called");
     return mClasses.size();
+}
+
+int uClassDiagram::getIndex(const QString &name)
+{
+    for (size_t i=0; i<mClasses.size(); i++) {
+        if (mClasses[i]->qGetName() == name) return i;
+    }
+    return -1;
 }

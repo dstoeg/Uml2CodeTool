@@ -2,12 +2,12 @@
 #include "uDebugPrinter.h"
 
 
-uMethod::uMethod(QObject *parent) : QObject(0)
+uMethod::uMethod()
 {
 
 }
 
-uMethod::uMethod(uAccess access, std::string const& returnType, std::string const& name, TParameters const& params) : QObject(0)
+uMethod::uMethod(uAccess access, std::string const& returnType, std::string const& name, TParameters const& params)
 {
     mName = name;
     mReturnType = returnType;
