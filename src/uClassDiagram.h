@@ -2,8 +2,6 @@
 #define UCLASSDIAGRAM_H
 
 #include <QObject>
-#include <QString>
-
 #include "uInheritable.h"
 
 class uClassDiagram : public QObject
@@ -22,5 +20,7 @@ public:
 private:
     TClasses mClasses;
 };
+
+
 
 #endif // UCLASSDIAGRAM_H

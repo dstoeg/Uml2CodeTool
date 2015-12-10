@@ -99,7 +99,7 @@ int main()
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-#include <QQmlEngine>
+
 #include <QObject>
 #include <QQmlComponent>
 #include "UiEventDispatcher.h"
@@ -118,12 +118,12 @@ int main(int argc, char *argv[])
     uDebugPrinter debugger;
 
     QQmlApplicationEngine engine;
-    qmlRegisterType<uClassDiagram>("com.uCode.demo", 1, 0, "uClassDiagram");
+
     qmlRegisterType<uInheritable>("com.uCode.demo", 1, 0, "uInheritable");
     qmlRegisterType<uStringConverter>("com.uCode.demo", 1, 0, "uStringConverter");
     qmlRegisterType<uMethod>("com.uCode.demo", 1, 0, "uMethod");
     qmlRegisterType<uParameter>("com.uCode.demo", 1, 0, "uParameter");
-    //qmlRegisterType<uDebugPrinter>("com.uCode.demo", 1, 0, "uDebugPrinter");
+    qmlRegisterType<uClassDiagram>("com.uCode.demo", 1, 0, "uClassDiagram");
     qmlRegisterType<uGridLayout>("com.uCode.demo", 1, 0, "uGridLayout");
 
     engine.rootContext()->setContextProperty("gridLayout", &layout);

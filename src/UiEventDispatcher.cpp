@@ -5,6 +5,8 @@
 #include "uInterfaceButton.h"
 #include "uChildButton.h"
 
+#include <iostream>
+
 
 using namespace std;
 
@@ -13,7 +15,6 @@ UiEventDispatcher::UiEventDispatcher(QObject *parent) : QObject(parent)
 {
     mCodeGenerator = &uCodeGenerationVisitor::getInstance();
     mClassDiagram = new uClassDiagram();
-    mFactory = &uClassFactory::getInstance();
     mClassButton = &uClassButton::getInstance();
 }
 
@@ -44,7 +45,9 @@ void UiEventDispatcher::createClass(QString name, QString parent, QString method
     uDebugPrinter::printClass(obj);
 
     // do something with object
+    cout << "diagram size before: " << mClassDiagram->size() << endl;
     mClassDiagram->addClass(obj);
+    cout << "diagram size after: " << mClassDiagram->size() << endl;
 }
 
 void UiEventDispatcher::setClassState(int type)
@@ -73,11 +76,15 @@ void UiEventDispatcher::setLanguage(QString language)
 
 void UiEventDispatcher::generateCode()
 {
+     cout << "diagram size: " << mClassDiagram->size() << endl;
+
     uDebugPrinter::printText("generating code");
     uDebugPrinter::printText("language: " + mCodeGenerator->getLanguage()->getName());
 
     // TODO
     mCodeGenerator->setFileAttributes("", "");
+
+
 
     mClassDiagram->applyVisitor(mCodeGenerator);
 }

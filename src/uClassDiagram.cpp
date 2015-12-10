@@ -1,6 +1,7 @@
 #include "uClassDiagram.h"
 
 #include <algorithm>
+#include "uDebugPrinter.h"
 
 using namespace std;
 
@@ -34,6 +35,7 @@ uInheritable *uClassDiagram::find(QString const &name) const
 
 void uClassDiagram::applyVisitor(uVisitor *visitor)
 {
+        uDebugPrinter::printText("applying visitor");
     for(TClassesIter iter = mClasses.begin(); iter < mClasses.end(); iter++){
         (*iter)->accept(visitor);
     }

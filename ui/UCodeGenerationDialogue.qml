@@ -116,7 +116,7 @@ ApplicationWindow {
                 onClicked: {
                     //TODO
                     dispatcher.generateCode()
-                    close()
+                    //close()
                 }
             }
         }
