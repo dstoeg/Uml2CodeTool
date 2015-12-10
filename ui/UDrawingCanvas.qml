@@ -195,7 +195,7 @@ Canvas {
             var attributes = dispatcher.getClassAttributes(idx);
 
             // TODO add parent
-            uClassPanel.setInformation(name, "", methods, attributes)
+            uClassPanel.setInformation(i,j,name, "", methods, attributes)
 
         }
         else {

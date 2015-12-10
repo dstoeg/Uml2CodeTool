@@ -164,8 +164,8 @@ ColumnLayout {
                     clearTextFields()
                     drawingCanvas.selectedClass = ""
                 }
-                else {
-                    // TODO add error handling (change x,y coordinates to red)
+                else if (!gridLayout.isEmpty(parseInt(coordX), parseInt(coordY))){
+
                 }
 
 
@@ -181,13 +181,15 @@ ColumnLayout {
             onClicked: {
 
                 if (drawingCanvas.selectedClass != "") {
+                    var i = xField.text
+                    var j = yField.text
                     var name = nameField.text
                     var parent = parentField.text
                     var methods = methodField.text
                     var attributes = attributeField.text
 
-                    dispatcher.removeClass(name)
-                    dispatcher.createClass(name, parent, methods, attributes)
+                    gridLayout.moveClass(drawingCanvas.selectedClass, i, j)
+                    dispatcher.updateClass(drawingCanvas.selectedClass, name, parent, methods, attributes)
 
                     drawingCanvas.requestPaint()
                     clearTextFields()
@@ -228,7 +230,9 @@ ColumnLayout {
         attributeField.text = ""
     }
 
-    function setInformation(name, parent, methods, attributes) {
+    function setInformation(x, y, name, parent, methods, attributes) {
+        xField.text = x
+        yField.text = y
         nameField.text = name
         parentField.text = parent
         methodField.text = methods
