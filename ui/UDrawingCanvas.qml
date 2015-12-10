@@ -30,6 +30,8 @@ Canvas {
             var name = dispatcher.getClassName(i);
             var methods = dispatcher.getClassMethods(i); //stringConverter.qCreateMethodStringFromClass(obj);
             var attributes = dispatcher.getClassAttributes(i); //stringConverter.qCreateAttributeStringFromClass(obj);
+            var parent = dispatcher.getParentName(i);
+//            var parent = "";
             var x = gridLayout.getI(name);
             var y = gridLayout.getJ(name);
 
@@ -100,9 +102,9 @@ Canvas {
         if(!parent.length == 0)
         {
             var pi = gridLayout.getI(parent);
-            var px = (Number(pi)%gridLayout.getWidth()) * Number(width)/9
+            var px = (Number(pi)%gridLayout.getWidth()) * Number(width)/(9*gridLayout.getWidth()/9)
             var pj = gridLayout.getJ(parent);
-            var py = (Number(pj)%gridLayout.getHeight()) * Number(height)*2/9
+            var py = (Number(pj)%gridLayout.getHeight()) * Number(height)*(1.65)/(8*gridLayout.getHeight()/5)
 
             drawInheritance(x+(classWidth/2), y, px,py+classHeight)
         }
