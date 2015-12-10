@@ -5,6 +5,7 @@
 #include <sstream>
 #include <algorithm>
 
+#include "uDebugPrinter.h"
 
 using namespace std;
 
@@ -23,10 +24,13 @@ std::string uLanguageCPP::createMethodDeclaration(uMethod * method)
     string methodStr = "";
     TParameters params = method->getParameters();
     methodStr += method->getReturnType() + " " + method->getName() + "(";
-    for (TParametersIter iter = params.begin(); iter < params.end(); ++iter) {
-        methodStr += (*iter)->getType() + " " + (*iter)->getName() + ", ";
+    if (params.size() > 0) {
+        for (TParametersIter iter = params.begin(); iter < params.end()-1; ++iter) {
+            methodStr += (*iter)->getType() + " " + (*iter)->getName() + ", ";
+        }
+        methodStr += params[params.size()-1]->getType() + " " + params[params.size()-1]->getName();
     }
-    methodStr += params[params.size()-1]->getType() + " " + params[params.size()-1]->getName() + ");";
+    methodStr += ");";
 
     return methodStr;
 }
@@ -48,10 +52,13 @@ string uLanguageCPP::createMethodImplementation(uMethod * method, std::string aC
     string methodStr = "";
     TParameters params = method->getParameters();
     methodStr += method->getReturnType() + " " + aClass + "::" + method->getName() + "(";
-    for (TParametersIter iter = params.begin(); iter < params.end(); ++iter) {
-        methodStr += (*iter)->getType() + " " + (*iter)->getName() + ", ";
+    if (params.size() > 0) {
+        for (TParametersIter iter = params.begin(); iter < params.end()-1; ++iter) {
+            methodStr += (*iter)->getType() + " " + (*iter)->getName() + ", ";
+        }
+        methodStr += params[params.size()-1]->getType() + " " + params[params.size()-1]->getName();
     }
-    methodStr += params[params.size()-1]->getType() + " " + params[params.size()-1]->getName() + ") {\n\t//TODO\n}\n\n";
+    methodStr += ") {\n\t//TODO\n}\n\n";
 
     return methodStr;
 }
@@ -60,7 +67,6 @@ string uLanguageCPP::createMethodImplementation(uMethod * method, std::string aC
 string uLanguageCPP::createDeclarationFileContent(uInheritable * aClass, std::string const& base)
 {
     stringstream fileContent;
-
 
     // start with multiple inclusion protection
     string includeGuard = aClass->getName() + "_H";

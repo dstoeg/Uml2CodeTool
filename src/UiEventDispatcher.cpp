@@ -107,11 +107,6 @@ uInheritable *UiEventDispatcher::getClass(int index)
     return mClassDiagram->get(index);
 }
 
-uInheritable *UiEventDispatcher::findClass(QString name)
-{
-    return mClassDiagram->find(name);
-}
-
 void UiEventDispatcher::removeClass(uInheritable *obj)
 {
     mClassDiagram->removeClass(obj);

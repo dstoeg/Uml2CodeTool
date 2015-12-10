@@ -20,7 +20,6 @@ class UiEventDispatcher : public QObject
     Q_OBJECT
 public:
     explicit UiEventDispatcher(QObject *parent = 0);
-    //Q_INVOKABLE void createClass(QString name);
     Q_INVOKABLE void createClass(QString name, QString parent, QString methods, QString attributes);
     Q_INVOKABLE void updateClass(QString oldName, QString newName, QString parent, QString methods, QString attributes);
 
@@ -31,7 +30,6 @@ public:
 
     Q_INVOKABLE int getDiagramSize();
     Q_INVOKABLE uInheritable * getClass(int index);
-    Q_INVOKABLE uInheritable * findClass(QString name);
     Q_INVOKABLE void removeClass(uInheritable * obj);
     Q_INVOKABLE void removeClass(QString name);
 
