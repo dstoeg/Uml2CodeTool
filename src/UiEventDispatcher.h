@@ -21,7 +21,6 @@ public:
     explicit UiEventDispatcher(QObject *parent = 0);
     Q_INVOKABLE void createClass(QString name);
     Q_INVOKABLE void createClass(QString name, QString parent, QString methods, QString attributes);
-//    Q_INVOKABLE void createClass(type, QString name, QString parent, QString methods, QString attributes);
 
     Q_INVOKABLE void setClassState(int type);
 
@@ -42,7 +41,6 @@ private:
     uButton * mClassButton;
     uClassDiagram * mClassDiagram;
     uCodeGenerationVisitor * mCodeGenerator;
-    uClassFactory * mFactory;
 
 };
 

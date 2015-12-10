@@ -2,8 +2,6 @@
 #define UCLASSDIAGRAM_H
 
 #include <QObject>
-#include <QString>
-
 #include "uInheritable.h"
 
 class uClassDiagram : public QObject
@@ -29,5 +27,7 @@ protected:
     uClassDiagram(uClassDiagram const&);
     void operator = (uClassDiagram const&);
 };
+
+
 
 #endif // UCLASSDIAGRAM_H

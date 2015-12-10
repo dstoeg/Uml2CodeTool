@@ -201,6 +201,30 @@ ColumnLayout {
                 }
             }
         }
+        Button {
+            StyledText {
+                text: "Delete"
+            }
+
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            onClicked: {
+                var name = nameField.text
+                if (name != "") {
+                    if (gridLayout.contains(name)) {
+                        var diagram = dispatcher.getClassDiagram()
+                        var obj = diagram.find(name)
+                        diagram.removeClass(obj)
+                        gridLayout.removeClass(name)
+
+                        drawingCanvas.requestPaint()
+                        clearTextFields()
+                        drawingCanvas.selectedClass = ""
+                    }
+                }
+            }
+
+        }
     }
 
     function clearTextFields() {
