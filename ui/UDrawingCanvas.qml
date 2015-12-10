@@ -184,6 +184,8 @@ Canvas {
         var i = parseInt((Number(x) / (Number(width)/gridLayout.getWidth())))
         var j = parseInt((Number(y) / (Number(height)/gridLayout.getHeight())))
 
+        uClassPanel.setFieldsBlack()
+
         if (!gridLayout.isEmpty(parseInt(i), parseInt(j))) {
 
             var name = gridLayout.getString(parseInt(i), parseInt(j))

@@ -156,7 +156,7 @@ ColumnLayout {
                 var methods = methodField.text
                 var attributes = attributeField.text
 
-                if (parent != "" && dispatcher.findClass(parent) === -1) {
+                if (parent != "" && dispatcher.getClassIndex(parent) === -1) {
                     parentField.textColor = "red"
                 }
                 else {
@@ -168,11 +168,13 @@ ColumnLayout {
                         drawingCanvas.selectedClass = ""
                     }
                     else if (!gridLayout.isEmpty(parseInt(coordX), parseInt(coordY))){
-
+                        xField.textColor = "red"
+                        yField.textColor = "red"
+                    }
+                    else{
+                        nameField.textColor = "red"
                     }
                 }
-
-
             }
 
         }
@@ -240,5 +242,20 @@ ColumnLayout {
         parentField.text = parent
         methodField.text = methods
         attributeField.text = attributes
+    }
+
+    function setFieldsBlack(){
+        xField.textColor = "black"
+        yField.textColor = "black"
+        nameField.textColor = "black"
+        parentField.textColor = "black"
+    }
+
+    function disableParentField() {
+        parentField.enabled = false
+    }
+
+    function enableParentField() {
+        parentField.enabled = true
     }
 }

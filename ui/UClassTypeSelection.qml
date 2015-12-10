@@ -28,6 +28,7 @@ RowLayout {
                 uInterfaceClassButton.color = 'white'
                 uChildClassButton.color = "white"
                 dispatcher.setClassState(0)
+                uClassPanel.disableParentField()
             }
         }
     }
@@ -50,6 +51,7 @@ RowLayout {
                 uBaseClassButton.color = 'white'
                 uChildClassButton.color = "white"
                 dispatcher.setClassState(1)
+                uClassPanel.disableParentField()
             }
         }
     }
@@ -72,6 +74,7 @@ RowLayout {
                 uBaseClassButton.color = 'white'
                 uInterfaceClassButton.color = "white"
                 dispatcher.setClassState(2)
+                uClassPanel.enableParentField()
             }
         }
     }
