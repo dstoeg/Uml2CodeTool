@@ -162,3 +162,33 @@ QString UiEventDispatcher::getClassParent(int index)
     return QString::fromStdString(parent->getName());
 }
 
+int UiEventDispatcher::getClassReferenceCount(QString name)
+{
+    uInheritable * obj = mClassDiagram->find(name);
+    if (obj == NULL) return 0;
+    return generateReferences(obj).size();
+}
+
+QString UiEventDispatcher::getClassReference(QString name, int index)
+{
+    uInheritable * obj = mClassDiagram->find(name);
+    if (obj == NULL) return "";
+
+    std::vector<QString> references = generateReferences(obj);
+    if (index >= references.size()) return "";
+
+    return references[index];
+}
+
+std::vector<QString> UiEventDispatcher::generateReferences(uInheritable * obj)
+{
+    std::vector<QString> references;
+    TParameters attributes = obj->getAttributes();
+    for (TParametersIter iter = attributes.begin(); iter != attributes.end(); ++iter) {
+        if (mClassDiagram->contains((*iter)->getType())) {
+            references.push_back(QString::fromStdString((*iter)->getType()));
+        }
+    }
+    return references;
+}
+

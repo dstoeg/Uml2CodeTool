@@ -11,6 +11,7 @@ public:
     void removeClass(uInheritable * uClass);
     bool removeClass(QString const &name);
     bool contains(uInheritable * uClass) const;
+    bool contains (std::string const& name) const;
     uInheritable * find(QString const& name) const;
     void applyVisitor(uVisitor* visitor);
     uInheritable * get(int index) const;

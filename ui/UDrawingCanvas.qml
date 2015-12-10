@@ -30,15 +30,13 @@ Canvas {
             var methods = dispatcher.getClassMethods(i);
             var attributes = dispatcher.getClassAttributes(i);
             var parent = dispatcher.getClassParent(i);
-            var referenced = "" //dispatcher.getClassReferenced(i);
             var x = gridLayout.getI(name);
             var y = gridLayout.getJ(name);
-            drawClass(x, y, name, methods, attributes, parent, referenced);
+            drawClass(x, y, name, methods, attributes, parent);
         }
     }
 
-    function drawClass(coordX, coordY, name, methods, attributes, parent, referenced) {
-
+    function drawClass(coordX, coordY, name, methods, attributes, parent) {
         var x = (Number(coordX)%gridLayout.getWidth()) * Number(width)/(9*gridLayout.getWidth()/9)
         var y = (Number(coordY)%gridLayout.getHeight()) * Number(height)*(1.65)/(8*gridLayout.getHeight()/5)
 
@@ -95,10 +93,17 @@ Canvas {
         context.stroke();
 
         // draw inheritance
-        uDebugger.qPrintText("parent: " + parent)
-        if(!(parent == ""))
-        {
+        if(parent != "") {
             drawInheritance(name, parent)
+        }
+
+        // draw references
+        var referenceCount = dispatcher.getClassReferenceCount(name);
+        for (var i=0; i<referenceCount; i++) {
+            var referenceName = dispatcher.getClassReference(name, i);
+            if (referenceName != "") {
+                uDebugger.qPrintText("reference from " + name + " to " + referenceName)
+            }
         }
     }
 
