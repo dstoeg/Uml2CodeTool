@@ -2,7 +2,6 @@
 #include "uDebugPrinter.h"
 
 #include <string>
-#include <iostream>
 
 using namespace std;
 
@@ -28,7 +27,7 @@ uGridLayout::uGridLayout(int width, int height) : QObject(0)
 
 bool uGridLayout::addClass(int i, int j, const QString &name)
 {
-    uDebugPrinter::printText("adding class: " + name.toStdString() + " index i: " + to_string(i) + " index j: " + to_string(j));
+    //uDebugPrinter::printText("adding class: " + name.toStdString() + " index i: " + to_string(i) + " index j: " + to_string(j));
     if (!checkBounds(i,j)) return false;
 
     mTable[i][j] = name;

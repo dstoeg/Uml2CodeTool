@@ -6,7 +6,6 @@
 #include "uChildButton.h"
 #include "uStringConverter.h"
 
-#include <iostream>
 
 
 using namespace std;
@@ -98,15 +97,13 @@ int UiEventDispatcher::getDiagramSize()
 
 uInheritable *UiEventDispatcher::getClass(int index)
 {
-    cout << "index : " << index << endl;
-    cout << "size: " << mClassDiagram->size() << endl;
-
     if (!(index < mClassDiagram->size())) return NULL;
     return mClassDiagram->get(index);
 }
 
 void UiEventDispatcher::removeClass(uInheritable *obj)
 {
+    if (obj == NULL) return;
     mClassDiagram->removeClass(obj);
 }
 
@@ -149,5 +146,19 @@ int UiEventDispatcher::getClassIndex(QString name)
 
     return mClassDiagram->getIndex(name);
 
+}
+
+QString UiEventDispatcher::getClassParent(int index)
+{
+    uInheritable * obj = getClass(index);
+    if (obj == NULL || !obj->hasParent()) {
+        return "";
+    }
+    uInheritable * parent = obj->getParent();
+    if (parent == NULL) {
+        return "";
+    }
+
+    return QString::fromStdString(parent->getName());
 }
 

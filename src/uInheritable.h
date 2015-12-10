@@ -26,6 +26,7 @@ public:
     uAccess getAccess() const;
     void setAccess(uAccess access);
     std::string getName() const;
+    uInheritable * getParent() const;
 
     bool hasParent();
     inline bool operator==(const uInheritable &class1) const;
@@ -39,6 +40,7 @@ public:
 
 protected:
     std::string mName;
+    uInheritable * mBaseClass;
     std::vector<uMethod*> mMethods;
     std::vector<uParameter*> mAttributes;
     std::vector<uReference*> mReferences;

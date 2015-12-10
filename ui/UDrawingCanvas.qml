@@ -25,17 +25,17 @@ Canvas {
     }
 
     function drawClasses(){
-
         for(var i = 0; i < dispatcher.getDiagramSize(); i++) {
             var name = dispatcher.getClassName(i);
-            var methods = dispatcher.getClassMethods(i); //stringConverter.qCreateMethodStringFromClass(obj);
-            var attributes = dispatcher.getClassAttributes(i); //stringConverter.qCreateAttributeStringFromClass(obj);
+            var methods = dispatcher.getClassMethods(i);
+            var attributes = dispatcher.getClassAttributes(i);
+            var parent = dispatcher.getClassParent(i);
+            var referenced = "" //dispatcher.getClassReferenced(i);
             var x = gridLayout.getI(name);
             var y = gridLayout.getJ(name);
-
-            drawClass(x, y, name, methods, attributes);
+            drawClass(x, y, name, methods, attributes, parent, referenced);
         }
-
+        uDebugger.qPrintText("done drawing classes")
     }
 
     function drawClass(coordX, coordY, name, methods, attributes, parent, referenced) {
@@ -96,11 +96,15 @@ Canvas {
         context.stroke();
 
         // draw inheritance
-        if(!parent === undefined)
+        uDebugger.qPrintText("parent: " + parent)
+        if(!(parent == ""))
         {
-            drawInheritance(x+classWidth/2, y, 1,1)
+            uDebugger.qPrintText("calling drawInheritance")
+            drawInheritance(name, parent)
         }
-
+        else {
+            uDebugger.qPrintText("not calling drawInheritance")
+        }
     }
 
     function wrapText(context, text, x, y, maxWidth, lineHeight) {
@@ -133,7 +137,27 @@ Canvas {
         }
     }
 
-    function drawInheritance(x, y, x_to, y_to) {
+    function drawInheritance(name, parent) {
+        var objI = gridLayout.getI(name)
+        var objJ = gridLayout.getJ(name)
+
+        var parentI = gridLayout.getI(parent)
+        var parentJ = gridLayout.getJ(parent)
+
+        uDebugger.qPrintText("obj i: " + objI + ", j: " + objJ)
+        uDebugger.qPrintText("parent i: " + parentI + ", j: " + parentJ)
+
+        var objX = (Number(objI)%gridLayout.getWidth()) * Number(width)/9
+        var objY = (Number(objJ)%gridLayout.getHeight()) * Number(height)*2/9
+
+        var parentX = (Number(parentI)%gridLayout.getWidth()) * Number(width)/9
+        var parentY = (Number(parentJ)%gridLayout.getHeight()) * Number(height)*2/9
+
+        drawInheritanceArrow(objX, objY, parentX, parentY)
+
+    }
+
+    function drawInheritanceArrow(x, y, x_to, y_to) {
 
         var triangleX = Number(width)/65;
         var triangleY = Number(height)/50;

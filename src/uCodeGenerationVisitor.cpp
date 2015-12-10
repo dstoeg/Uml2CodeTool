@@ -41,10 +41,10 @@ void uCodeGenerationVisitor::setFileAttributes(const string &author, const strin
 void uCodeGenerationVisitor::visit(uChildClass *childClass)
 {
     if (mLanguage->hasSeparateFiles()) {
-        createFile(childClass->getName() + mLanguage->getImplementationFileExtension(), mAuthor, mDate, mLanguage->createImplementationFileContent(childClass, childClass->getBaseClass()->getName()), mLanguage->getLineComment());
+        createFile(childClass->getName() + mLanguage->getImplementationFileExtension(), mAuthor, mDate, mLanguage->createImplementationFileContent(childClass, childClass->getParent()->getName()), mLanguage->getLineComment());
         cout << "    " << childClass->getName() + mLanguage->getImplementationFileExtension() << endl;
     }
-    createFile(childClass->getName() + mLanguage->getDeclarationFileExtension(), mAuthor, mDate, mLanguage->createDeclarationFileContent(childClass, childClass->getBaseClass()->getName()), mLanguage->getLineComment());
+    createFile(childClass->getName() + mLanguage->getDeclarationFileExtension(), mAuthor, mDate, mLanguage->createDeclarationFileContent(childClass, childClass->getParent()->getName()), mLanguage->getLineComment());
     cout << "    " << childClass->getName() + mLanguage->getDeclarationFileExtension() << endl;
 }
 

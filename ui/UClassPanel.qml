@@ -156,6 +156,7 @@ ColumnLayout {
                 var methods = methodField.text
                 var attributes = attributeField.text
 
+
                 if (parent != "" && dispatcher.getClassIndex(parent) === -1) {
                     parentField.textColor = "red"
                 }
@@ -176,8 +177,8 @@ ColumnLayout {
                     }
                 }
             }
-
         }
+
         Button {
             StyledText {
                 text: "Update"
@@ -195,7 +196,7 @@ ColumnLayout {
                     var attributes = attributeField.text
 
                     gridLayout.moveClass(drawingCanvas.selectedClass, i, j)
-                    dispatcher.updateClass(drawingCanvas.selectedClass, name, parent, methods, attributes)
+                    dispatcher.updateClass(drawingCanvas.selectedClass, name, "parent", methods, attributes)
 
                     drawingCanvas.requestPaint()
                     clearTextFields()

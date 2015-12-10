@@ -26,11 +26,6 @@ uChildClass::~uChildClass()
     uDebugPrinter::printText("UChildClass DTor called");
 }
 
-uInheritable *uChildClass::getBaseClass() const
-{
-    return mBaseClass;
-}
-
 void uChildClass::accept(uVisitor *visitor)
 {
     visitor->visit(this);
