@@ -41,7 +41,8 @@ Canvas {
             var x = gridLayout.getI(name);
             var y = gridLayout.getJ(name);
 
-            drawClass(x, y, name, methods, attributes);
+            // TODO remove test
+            drawClass(x, y, name, methods, attributes, "");
         }
 
     }
@@ -104,9 +105,11 @@ Canvas {
         context.stroke();
 
         // draw inheritance
-        if(!parent === undefined)
+        if(!(parent === undefined || parent === null))
         {
-            drawInheritance(x+classWidth/2, y, 1,1)
+            var px = gridLayout.getI(parent);
+            var py = gridLayout.getJ(parent);
+            drawInheritance(x+(classWidth/2), y, px,py+classHeight)
         }
 
     }
@@ -162,6 +165,7 @@ Canvas {
         var triangleY = Number(height)/50;
         // relies on classWidth, from drawClass function
         var classWidth = Number(width)/10;
+        var classHeight = Number(height)/5;
         var offset = classWidth/2;
         var cx = x_to+offset; // x cord for center of destination class
         context.moveTo(x,y);
