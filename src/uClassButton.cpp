@@ -11,7 +11,6 @@ uClassButton &uClassButton::getInstance()
 
 void uClassButton::update(const std::string &oldName, uAccess access, const std::string &newName, TParameters &attributes, TMethods &methods, TReferences &references, uInheritable *base)
 {
-    uDebugPrinter::printText("updating uBaseClass");
     if (uClassDiagram::getInstance().find(QString::fromStdString(oldName)) != 0){
         uClassDiagram::getInstance().removeClass(QString::fromStdString(oldName));
         uClassDiagram::getInstance().addClass(uClassFactory::getInstance().createClass(uClassType::eBaseClass ,access, newName, attributes, methods, references, base));
@@ -21,10 +20,5 @@ void uClassButton::update(const std::string &oldName, uAccess access, const std:
 
 void uClassButton::create(uAccess access, const std::string &name, TParameters &attributes, TMethods &methods, TReferences &references, uInheritable *base)
 {
-    uDebugPrinter::printText("creating new uBaseClass");
-    uDebugPrinter::printText(" - name: " + name);
-    std::string n = name;
-    uInheritable * newClass = uClassFactory::getInstance().createClass(uClassType::eBaseClass ,access, n, attributes, methods, references, base);
-
-    uClassDiagram::getInstance().addClass(newClass);
+    uClassDiagram::getInstance().addClass(uClassFactory::getInstance().createClass(uClassType::eBaseClass ,access, name, attributes, methods, references, base));
 }

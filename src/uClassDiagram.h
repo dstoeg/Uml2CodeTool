@@ -15,7 +15,7 @@ public:
     void applyVisitor(uVisitor* visitor);
     uInheritable * get(int index) const;
     int size() const;
-    int getIndex(QString const& name);
+    int getIndex(QString const& name) const;
 
 private:
     TClasses mClasses;
@@ -24,8 +24,6 @@ protected:
     uClassDiagram();
     uClassDiagram(uClassDiagram const&);
     void operator = (uClassDiagram const&);
-    uInheritable * mObj;
-
 };
 
 

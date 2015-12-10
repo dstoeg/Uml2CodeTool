@@ -18,10 +18,13 @@ std::string uLanguageJava::createMethodDeclaration(uMethod * method)
     string methodStr = "";
     TParameters params = method->getParameters();
     methodStr += getAccessString(method->getAccess()) + " " + method->getReturnType() + " " + method->getName() + "(";
-    for (TParametersIter iter = params.begin(); iter < params.end(); ++iter) {
-        methodStr += (*iter)->getType() + " " + (*iter)->getName() + ", ";
+    if (params.size() > 0) {
+        for (TParametersIter iter = params.begin(); iter < params.end()-1; ++iter) {
+            methodStr += (*iter)->getType() + " " + (*iter)->getName() + ", ";
+        }
+        methodStr += params[params.size()-1]->getType() + " " + params[params.size()-1]->getName();
     }
-    methodStr += params[params.size()-1]->getType() + " " + params[params.size()-1]->getName() + ") \n\t{\n\t\t// TODO\n\t}\n\n";
+    methodStr += ") \n\t{\n\t\t// TODO\n\t}\n\n";
 
     return methodStr;
 }
