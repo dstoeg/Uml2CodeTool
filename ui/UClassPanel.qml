@@ -228,6 +228,8 @@ ColumnLayout {
     }
 
     function clearTextFields() {
+        xField.text = ""
+        yField.text = ""
         nameField.text = ""
         parentField.text = ""
         methodField.text = ""
