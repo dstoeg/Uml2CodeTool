@@ -40,12 +40,12 @@ Canvas {
 
     function drawClass(coordX, coordY, name, methods, attributes, parent, referenced) {
 
-        var x = (Number(coordX)%gridLayout.getWidth()) * Number(width)/9
-        var y = (Number(coordY)%gridLayout.getHeight()) * Number(height)*2/9
+        var x = (Number(coordX)%gridLayout.getWidth()) * Number(width)/(9*gridLayout.getWidth()/9)
+        var y = (Number(coordY)%gridLayout.getHeight()) * Number(height)*(1.65)/(8*gridLayout.getHeight()/5)
 
         //console.log("Drawing class: "+name +", "+ methods +", "+ attributes)
-        var classWidth = Number(width)/10;
-        var classHeight = Number(height)/5;
+        var classWidth = Number(width)/(9*gridLayout.getWidth()/8);
+        var classHeight = (1.5)*Number(height)/(9*gridLayout.getHeight()/5);
 
         var firstDelimiter1 = classHeight * 0.15;
         var firstDelimiter2 = classHeight * 0.16;

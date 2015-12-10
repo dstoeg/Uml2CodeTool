@@ -2,6 +2,7 @@ import QtQuick 2.3
 import QtQuick.Window 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.1
+import QtQuick.Controls.Styles 1.4
 
 ColumnLayout {
     id: classPanel
@@ -17,6 +18,13 @@ ColumnLayout {
     }
 
     TextField {
+//        style: TextFieldStyle {
+//                textColor: "black"
+//                background: Rectangle {
+//                    id: parentFieldBackground
+//                    border.color: "black"
+//                }
+//            }
         id: parentField
         Layout.fillHeight: true
         Layout.fillWidth: true
@@ -45,7 +53,7 @@ ColumnLayout {
             Layout.fillWidth: true
             //anchors.centerIn: xField
             StyledText {
-                text: "X (0-7)"
+                text: "X (0-"+(gridLayout.getWidth()-1)+")"
                 horizontalAlignment: xField.Top
             }
         }
@@ -55,7 +63,7 @@ ColumnLayout {
             Layout.fillWidth: true
             //anchors.centerIn: yField
             StyledText {
-                text: "Y (0-4)"
+                text: "Y (0-" + (gridLayout.getHeight()-1) + ")"
                 horizontalAlignment: yField.Top
             }
         }
@@ -176,7 +184,6 @@ ColumnLayout {
                     }
                 }
             }
-
         }
         Button {
             StyledText {
@@ -214,8 +221,10 @@ ColumnLayout {
                 var name = nameField.text
                 if (name != "") {
                     if (gridLayout.contains(name)) {
+
                         dispatcher.removeClass(name)
                         gridLayout.removeClass(name)
+
                         drawingCanvas.requestPaint()
                         clearTextFields()
                         drawingCanvas.selectedClass = ""
@@ -253,9 +262,11 @@ ColumnLayout {
 
     function disableParentField() {
         parentField.enabled = false
+        //parentField.style.color = "grey"
     }
 
     function enableParentField() {
         parentField.enabled = true
+        //parentFieldBackground.color = "white"
     }
 }
