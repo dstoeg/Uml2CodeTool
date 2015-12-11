@@ -40,7 +40,10 @@ SOURCES += src/main.cpp \
     src/uStringConverter.cpp \
     src/uDebugPrinter.cpp \
     src/uGridLayout.cpp \
-    src/uChildButton.cpp
+    src/uChildButton.cpp \
+    src/uProjectFileCreator.cpp \
+    src/uProjectFile.cpp \
+    src/uProjectFileQT.cpp
 
 RESOURCES += ui/qml.qrc
 
@@ -90,5 +93,8 @@ HEADERS += \
     src/uStringConverter.h \
     src/uDebugPrinter.h \
     src/uGridLayout.h \
-    src/uChildButton.h
+    src/uChildButton.h \
+    src/uProjectFileCreator.h \
+    src/uProjectFile.h \
+    src/uProjectFileQT.h
 

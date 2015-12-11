@@ -13,6 +13,7 @@
 #include "uClassFactory.h"
 #include "uButton.h"
 #include "uInheritable.h"
+#include "uProjectFileCreator.h"
 
 
 class UiEventDispatcher : public QObject
@@ -26,7 +27,9 @@ public:
     Q_INVOKABLE void setClassState(int type);
 
     Q_INVOKABLE void setLanguage(QString language);
+    Q_INVOKABLE void setDevEnv(QString devenv);
     Q_INVOKABLE void generateCode();
+    Q_INVOKABLE void generateProjectFile();
 
     Q_INVOKABLE int getDiagramSize();
     Q_INVOKABLE uInheritable * getClass(int index);
@@ -54,6 +57,7 @@ private:
     uButton * mClassButton;
     uClassDiagram * mClassDiagram;
     uCodeGenerationVisitor * mCodeGenerator;
+    uProjectFileCreator mProjectGenerator;
     std::vector<QString> generateReferences(uInheritable * obj);
 
 };

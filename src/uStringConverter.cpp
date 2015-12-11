@@ -5,6 +5,10 @@
 #include "uLanguageCpp.h"
 #include "uLanguageJava.h"
 #include "uLanguagePython.h"
+#include "uProjectFile.h"
+#include "uProjectFileQT.h"
+
+#include "uDebugPrinter.h"
 
 using namespace std;
 
@@ -234,3 +238,16 @@ QString uStringConverter::qCreateAttributeStringFromClass(uInheritable *obj)
     return qCreateAttributeString(obj->getAttributes());
 }
 
+
+uProjectFile *uStringConverter::parseDevEnv(const std::string &devenv)
+{
+    uProjectFile * file;
+    if (devenv == "QtCreator") {
+        file = new uProjectFileQT();
+    }
+    else {
+        file = NULL;
+    }
+
+    return file;
+}
