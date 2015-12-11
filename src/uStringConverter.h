@@ -7,6 +7,7 @@
 
 #include "uInheritable.h"
 #include "uLanguageStrategy.h"
+#include "uProjectFile.h"
 
 class uStringConverter
 {
@@ -16,6 +17,7 @@ public:
     static TMethods parseMethods(std::string const& text);
     static TParameters parseAttributes(std::string const& text);
     static uLanguageStrategy * parseLanguage(std::string const& language);
+    static uProjectFile * parseDevEnv(std::string const& devenv);
     static std::string createMethodString(TMethods const& methods);
     static std::string createAttributeString(TParameters const& attributes);
     static uAccess dAccess;

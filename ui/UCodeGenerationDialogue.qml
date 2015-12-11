@@ -75,7 +75,11 @@ ApplicationWindow {
                 }
             }
             ComboBox {
+                id: projectCB
                 model: [ "None", "Visual Studio", "QtCreator" ]
+                onCurrentIndexChanged: {
+                    dispatcher.setDevEnv(projectCB.currentText);
+                }
             }
         }
 
@@ -116,6 +120,7 @@ ApplicationWindow {
                 onClicked: {
                     //TODO
                     dispatcher.generateCode()
+                    dispatcher.generateProjectFile()
                     close()
                 }
             }

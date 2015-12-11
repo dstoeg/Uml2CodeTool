@@ -78,6 +78,11 @@ void UiEventDispatcher::setLanguage(QString language)
     mCodeGenerator->setLanguage(uStringConverter::parseLanguage(language.toStdString()));
 }
 
+void UiEventDispatcher::setDevEnv(QString devenv)
+{
+    mProjectGenerator.setDevEnv(uStringConverter::parseDevEnv(devenv.toStdString()));
+}
+
 void UiEventDispatcher::generateCode()
 {
     uDebugPrinter::printText("generating code");
@@ -192,3 +197,8 @@ std::vector<QString> UiEventDispatcher::generateReferences(uInheritable * obj)
     return references;
 }
 
+
+void UiEventDispatcher::generateProjectFile()
+{
+    mProjectGenerator.createFile(mClassDiagram);
+}
