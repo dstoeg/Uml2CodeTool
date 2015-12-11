@@ -31,12 +31,12 @@ Canvas {
             var methods = dispatcher.getClassMethods(i);
             var attributes = dispatcher.getClassAttributes(i);
             var parent = dispatcher.getClassParent(i);
-            var referenced = "" //dispatcher.getClassReferenced(i);
             var x = gridLayout.getI(name);
             var y = gridLayout.getJ(name);
-            drawClass(x, y, name, methods, attributes, parent, referenced);
+            drawClass(x, y, name, methods, attributes, parent);
         }
     }
+
 
     function drawClass(coordX, coordY, name, methods, attributes, parent, referenced) {
 
@@ -96,10 +96,17 @@ Canvas {
         context.stroke();
 
         // draw inheritance
-        uDebugger.qPrintText("parent: " + parent)
-        if(!(parent == ""))
-        {
+        if(parent != "") {
             drawInheritance(name, parent)
+        }
+
+        // draw references
+        var referenceCount = dispatcher.getClassReferenceCount(name);
+        for (var i=0; i<referenceCount; i++) {
+            var referenceName = dispatcher.getClassReference(name, i);
+            if (referenceName != "") {
+                drawAggregation(name, referenceName)
+            }
         }
     }
 
@@ -152,7 +159,6 @@ Canvas {
 
 
         drawInheritanceArrow(objX, objY, parentX, parentY)
-
     }
 
     function drawInheritanceArrow(x, y, x_to, y_to) {
@@ -195,7 +201,24 @@ Canvas {
         context.stroke();
     }
 
-    function drawAggregation(x, y, x_to, y_to) {
+    function drawAggregation(name, reference) {
+
+        uDebugger.qPrintText("reference from " + name + " to " + reference)
+
+        var objI = gridLayout.getI(name)
+        var objJ = gridLayout.getJ(name)
+        var referenceI = gridLayout.getI(reference)
+        var referenceJ = gridLayout.getJ(reference)
+
+        var objX = (Number(objI)%gridLayout.getWidth()) * Number(width)/9
+        var objY = (Number(objJ)%gridLayout.getHeight()) * Number(height)*2/9
+        var referenceX = (Number(referenceI)%gridLayout.getWidth()) * Number(width)/9
+        var referenceY = (Number(referenceJ)%gridLayout.getHeight()) * Number(height)*2/9
+
+        drawAggregationArrow(objX, objY, referenceX, referenceY)
+    }
+
+    function drawAggregationArrow(x, y, x_to, y_to) {
         var triangleX = Number(width)/65;
         var triangleY = Number(height)/50;
         // relies on classWidth, from drawClass function
