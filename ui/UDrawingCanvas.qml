@@ -210,29 +210,113 @@ Canvas {
         var referenceI = gridLayout.getI(reference)
         var referenceJ = gridLayout.getJ(reference)
 
-        var objX = (Number(objI)%gridLayout.getWidth()) * Number(width)/9
-        var objY = (Number(objJ)%gridLayout.getHeight()) * Number(height)*2/9
-        var referenceX = (Number(referenceI)%gridLayout.getWidth()) * Number(width)/9
-        var referenceY = (Number(referenceJ)%gridLayout.getHeight()) * Number(height)*2/9
+        var objX = getXfromCoord(objI)
+        var objY = getYfromCoord(objJ)
+        var referenceX = getXfromCoord(referenceI)
+        var referenceY = getYfromCoord(referenceJ)
 
         drawAggregationArrow(objX, objY, referenceX, referenceY)
     }
 
     function drawAggregationArrow(x, y, x_to, y_to) {
-        var triangleX = Number(width)/65;
-        var triangleY = Number(height)/50;
-        // relies on classWidth, from drawClass function
-        var classWidth = Number(width)/10;
-        var classHeight = Number(height)/5;
-        var offset = classWidth/2;
-        var cx = x_to+offset; // x cord for center of destination class
-        context.moveTo(x,y);
+
+        var paddingX = Number(offsetX()) - Number(getClassWidth())
+        var paddingY = Number(offsetY()) - Number(getClassHeight())
+
         context.strokeStyle = "black";
-        // draw projection of arrow, then rotate
-        context.lineTo(cx, y_to+triangleY);
-        drawTriangle(cx,y_to,triangleX,triangleY,true);
+        //Line1 right/left from child class
+        var newX;
+        if(x_to<x){
+            newX = x
+            context.moveTo(newX, y + getClassHeight()/2)
+            context.lineTo(x - paddingX/2, y + getClassHeight()/2)
+            newX = x - paddingX/2
+        }
+        else{
+            newX = x + getClassWidth()
+            context.moveTo(newX, y + getClassHeight()/2)
+            context.lineTo(newX + paddingX/2, y + getClassHeight()/2)
+            newX = newX + paddingX/2
+        }
+
+        //Line2 up/down
+        context.moveTo(newX, y + getClassHeight()/2)
+        var newY
+        if(y_to<y){
+            context.lineTo(newX, y_to + getClassHeight() + paddingY/3)
+            newY = y_to + getClassHeight() + paddingY/3
+        }
+        else{
+            context.lineTo(newX, y_to - paddingY/3)
+            newY = y_to - paddingY/3
+        }
+
+        //Line3 left/right
+        context.moveTo(newX, newY)
+        if(x_to<x){
+            context.lineTo(x_to + getClassWidth() + paddingX/2, newY)
+            newX = x_to + getClassWidth() + paddingX/2
+        }
+        else{
+            context.lineTo(x_to - paddingX/2, newY)
+            newX = x_to - paddingX/2
+        }
+
+        //Line4 up/down
+        context.moveTo(newX ,newY)
+        context.lineTo(newX, y_to + getClassHeight()/2)
+        newY = y_to + getClassHeight()/2
+
+        //Line5 up Parent
+        context.moveTo(newX ,newY)
+        if(x_to<x){
+            //context.lineTo(x_to + getClassWidth(), newY)
+            newX = x_to + getClassWidth()
+        }
+        else{
+            //context.lineTo(x_to, newY)
+            newX = x_to
+        }
+
+        var diamondW = paddingX/2
+        var diamondH = paddingY/7
+        if(x_to<x)
+            drawDiamond(newX,newY, diamondW ,diamondH ,false);
+        else
+            drawDiamond(newX-diamondW,newY, diamondW ,diamondH ,false);
         context.stroke();
     }
+
+//    //TODO complete - May be needed in the future and DashLine is not implemented in QML Canvas
+//    function dashLine(){
+//        var dashLen = stipple_length;
+//        var dX = end_x - start_x;
+//        var dY = end_y - start_y;
+//        var dashes = Math.floor(Math.sqrt(dX * dX + dY * dY) / dashLen);
+//        if (dashes == 0)
+//        {
+//            dashes = 1;
+//        }
+//        var dash_to_length = dash_length/dashLen
+//        var space_to_length = 1 - dash_to_length
+//        var dashX = dX / dashes;
+//        var dashY = dY / dashes;
+//        var x1 = start_x;
+//        var y1 = start_y;
+
+//        ctx.moveTo(x1,y1);
+
+//        var q = 0;
+//        while (q++ < dashes) {
+//            x1 += dashX*dash_to_length;
+//            y1 += dashY*dash_to_length;
+//            ctx.lineTo(x1, y1);
+//            x1 += dashX*space_to_length;
+//            y1 += dashY*space_to_length;
+//            ctx.moveTo(x1, y1);
+
+//        }
+//    }
 
     function drawTriangle(x,y,triangleWidth, triangleHeight, isFilled){
         context.strokeStyle = "black";
@@ -246,6 +330,21 @@ Canvas {
             context.fill();
     }
 
+    function drawDiamond( x , y , diamondWidth, diamondHeight, isFilled){
+        context.strokeStyle = "black";
+
+        // draw the diamond
+        context.moveTo(x,y);
+        context.lineTo(x+diamondWidth/2, y+diamondHeight/2);
+        context.moveTo(x+diamondWidth/2, y+diamondHeight/2)
+        context.lineTo(x+diamondWidth, y);
+        context.moveTo(x+diamondWidth, y)
+        context.lineTo(x+diamondWidth/2, y-diamondHeight/2)
+        context.moveTo(x+diamondWidth/2, y-diamondHeight/2)
+        context.lineTo(x,y)
+        if (isFilled)
+            context.fill();
+    }
 
 
     function selectClass(x, y){
