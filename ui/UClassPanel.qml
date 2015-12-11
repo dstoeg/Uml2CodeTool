@@ -205,7 +205,7 @@ ColumnLayout {
                     var attributes = attributeField.text
 
                     gridLayout.moveClass(drawingCanvas.selectedClass, i, j)
-                    dispatcher.updateClass(drawingCanvas.selectedClass, name, "parent", methods, attributes)
+                    dispatcher.updateClass(drawingCanvas.selectedClass, name, parent, methods, attributes)
 
                     drawingCanvas.requestPaint()
                     clearTextFields()
