@@ -34,10 +34,10 @@ public:
     Q_INVOKABLE void removeClass(QString name);
 
     Q_INVOKABLE QString getClassName(int index);
-    Q_INVOKABLE QString getParentName(int index);
     Q_INVOKABLE QString getClassMethods(int index);
     Q_INVOKABLE QString getClassAttributes(int index);
     Q_INVOKABLE int getClassIndex(QString name);
+    Q_INVOKABLE QString getClassParent(int index);
 
 signals:
 

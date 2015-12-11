@@ -12,6 +12,7 @@ Canvas {
     property string selectedClass: ""
 
     onPaint: {
+        uClassPanel.setFieldsBlack()
         // Get drawing context
         var context = getContext("2d");
         //context.fillStyle = "white"
@@ -25,29 +26,26 @@ Canvas {
     }
 
     function drawClasses(){
-        uDebugger.qPrintText("SOMETHING")
         for(var i = 0; i < dispatcher.getDiagramSize(); i++) {
             var name = dispatcher.getClassName(i);
-            var methods = dispatcher.getClassMethods(i); //stringConverter.qCreateMethodStringFromClass(obj);
-            var attributes = dispatcher.getClassAttributes(i); //stringConverter.qCreateAttributeStringFromClass(obj);
-            var parent = dispatcher.getParentName(i);
-//            var parent = "";
+            var methods = dispatcher.getClassMethods(i);
+            var attributes = dispatcher.getClassAttributes(i);
+            var parent = dispatcher.getClassParent(i);
+            var referenced = "" //dispatcher.getClassReferenced(i);
             var x = gridLayout.getI(name);
             var y = gridLayout.getJ(name);
-
-            // TODO remove test
-            drawClass(x, y, name, methods, attributes, parent);
+            drawClass(x, y, name, methods, attributes, parent, referenced);
         }
     }
 
     function drawClass(coordX, coordY, name, methods, attributes, parent, referenced) {
 
-        var x = (Number(coordX)%gridLayout.getWidth()) * Number(width)/(9*gridLayout.getWidth()/9)
-        var y = (Number(coordY)%gridLayout.getHeight()) * Number(height)*(1.65)/(8*gridLayout.getHeight()/5)
+        var x = getXfromCoord(coordX)
+        var y = getYfromCoord(coordY)
 
         //console.log("Drawing class: "+name +", "+ methods +", "+ attributes)
-        var classWidth = Number(width)/(9*gridLayout.getWidth()/8);
-        var classHeight = (1.5)*Number(height)/(9*gridLayout.getHeight()/5);
+        var classWidth = getClassWidth()
+        var classHeight = getClassHeight()
 
         var firstDelimiter1 = classHeight * 0.15;
         var firstDelimiter2 = classHeight * 0.16;
@@ -98,16 +96,11 @@ Canvas {
         context.stroke();
 
         // draw inheritance
-        if(!parent.length == 0)
+        uDebugger.qPrintText("parent: " + parent)
+        if(!(parent == ""))
         {
-            var pi = gridLayout.getI(parent);
-            var px = (Number(pi)%gridLayout.getWidth()) * Number(width)/(9*gridLayout.getWidth()/9)
-            var pj = gridLayout.getJ(parent);
-            var py = (Number(pj)%gridLayout.getHeight()) * Number(height)*(1.65)/(8*gridLayout.getHeight()/5)
-
-            drawInheritance(x+(classWidth/2), y, px,py+classHeight)
+            drawInheritance(name, parent)
         }
-
     }
 
     function wrapText(context, text, x, y, maxWidth, lineHeight) {
@@ -141,37 +134,64 @@ Canvas {
     }
 
     function drawInheritance(name, parent) {
+
         var objI = gridLayout.getI(name)
         var objJ = gridLayout.getJ(name)
 
         var parentI = gridLayout.getI(parent)
         var parentJ = gridLayout.getJ(parent)
 
-        uDebugger.printText("obj i: " + objI + ", j: " + objJ)
-        uDebugger.printText("parent i: " + parentI + ", j: " + parentJ)
+        uDebugger.qPrintText("obj i: " + objI + ", j: " + objJ)
+        uDebugger.qPrintText("parent i: " + parentI + ", j: " + parentJ)
 
-        var objX = (Number(coordX)%gridLayout.getWidth()) * Number(width)/(9*gridLayout.getWidth()/9)
-        var objY = (Number(coordY)%gridLayout.getHeight()) * Number(height)*(1.65)/(8*gridLayout.getHeight()/5)
+        var objX = getXfromCoord(objI);
+        var objY = getYfromCoord(objJ)
 
-        var parentX = (Number(parentI)%gridLayout.getWidth()) * Number(width)/9
-        var parentY = (Number(parentJ)%gridLayout.getHeight()) * Number(height)*2/9
+        var parentX = getXfromCoord(parentI)
+        var parentY = getYfromCoord(parentJ)
+
 
         drawInheritanceArrow(objX, objY, parentX, parentY)
+
     }
 
     function drawInheritanceArrow(x, y, x_to, y_to) {
 
-        var triangleX = Number(width)/65;
-        var triangleY = Number(height)/50;
-        // relies on classWidth, from drawClass function
-        var classWidth = Number(width)/10;
-        var offset = classWidth/2;
-        var cx = x_to+offset; // x cord for center of destination class
-        context.moveTo(x,y);
+        var paddingX = Number(offsetX()) - Number(getClassWidth())
+        var paddingY = Number(offsetY()) - Number(getClassHeight())
+
         context.strokeStyle = "black";
-        // draw projection of arrow, then rotate
-        context.lineTo(cx, y_to+triangleY);
-        drawTriangle(cx,y_to,triangleX,triangleY,false);
+        //Line1 up from child class
+        context.moveTo(x+getClassWidth()/2, y)
+        context.lineTo(x+getClassWidth()/2, y - paddingY/4)
+        //Line2 right/left
+        context.moveTo(x+getClassWidth()/2, y - paddingY/4)
+        var newX;
+        if(x_to<x)
+        {
+            context.lineTo(x - Number(paddingX)/3 ,y - paddingY/4)
+            newX = Number(x- Number(paddingX)/3)
+        }
+        else{
+            context.lineTo(x + Number(getClassWidth()) + paddingX/3 ,y - paddingY/4)
+            newX = Number(x + Number(getClassWidth()) + paddingX/3)
+        }
+
+        //Line3 up/down
+        context.moveTo(newX ,y - paddingY/4)
+        context.lineTo(newX, y_to + getClassHeight() + paddingY/4)
+
+        //Line4 left/rght
+        context.moveTo(newX ,y_to + getClassHeight() + paddingY/4)
+        context.lineTo(x_to + getClassWidth()/2 ,y_to + getClassHeight() + paddingY/4)
+
+        //Line5 up Parent
+        context.moveTo(x_to + getClassWidth()/2 ,y_to + getClassHeight() + paddingY/4)
+        context.lineTo(x_to + getClassWidth()/2 ,y_to + getClassHeight())
+
+        var triangleW = getClassWidth()/10
+        var triangleH = paddingY/5
+        drawTriangle(x_to + getClassWidth()/2,y_to + getClassHeight(), triangleW ,triangleH ,true);
         context.stroke();
     }
 
@@ -195,9 +215,9 @@ Canvas {
         context.strokeStyle = "black";
 
         // draw the triangle
-        context.moveTo(x-triangleWidth,y+triangleHeight);
-        context.lineTo(x+triangleWidth, y+triangleHeight);
-        context.lineTo(x,y);
+        context.moveTo(x,y);
+        context.lineTo(x-triangleWidth/2, y+triangleHeight);
+        context.lineTo(x+triangleWidth/2, y+triangleHeight);
         context.closePath();
         if (isFilled)
             context.fill();
@@ -235,12 +255,12 @@ Canvas {
 
     function getXfromCoord(coordX)
     {
-        return (Number(coordX)%gridLayout.getWidth()) * Number(width)/(9*gridLayout.getWidth()/9)
+        return (Number(coordX)%gridLayout.getWidth()) * offsetX()
     }
 
     function getYfromCoord(coordY)
     {
-        return (Number(coordY)%gridLayout.getHeight()) * Number(height)*(1.65)/(8*gridLayout.getHeight()/5)
+        return (Number(coordY)%gridLayout.getHeight()) * offsetY() + Number(height)/45
     }
 
     function getCoordFromX(x)
@@ -260,6 +280,16 @@ Canvas {
 
     function getClassHeight()
     {
-        return (1.5)*Number(height)/(9*gridLayout.getHeight()/5)
+        return (1.5)*Number(height)/(2*gridLayout.getHeight())
+    }
+
+    //Class width + right padding
+    function offsetX(){
+        return Number(width)/(9*gridLayout.getWidth()/9)
+    }
+
+    //Class height + bottom padding
+    function offsetY(){
+        return Number(height)*(1.65)/(8*gridLayout.getHeight()/5)
     }
 }

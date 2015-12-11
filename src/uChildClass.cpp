@@ -26,21 +26,6 @@ uChildClass::~uChildClass()
     uDebugPrinter::printText("UChildClass DTor called");
 }
 
-uInheritable *uChildClass::getBaseClass() const
-{
-    return mBaseClass;
-}
-
-std::string uChildClass::getParent() const
-{
-    if(mHasParent){
-        return mBaseClass->getName();
-    }
-    else {
-        return "";
-    }
-}
-
 void uChildClass::accept(uVisitor *visitor)
 {
     visitor->visit(this);

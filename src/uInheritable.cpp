@@ -10,6 +10,7 @@ uInheritable::uInheritable()
 uInheritable::uInheritable(const std::string &name)
 {
     mName = name;
+    mBaseClass = NULL;
 }
 
 uInheritable::uInheritable(uAccess access, const std::string &name, TParameters &attributes, TMethods &methods, TReferences &references)
@@ -20,6 +21,7 @@ uInheritable::uInheritable(uAccess access, const std::string &name, TParameters 
     mMethods = methods;
     mReferences = references;
     mHasParent = false;
+    mBaseClass = NULL;
 }
 
 uInheritable::~uInheritable()
@@ -61,9 +63,10 @@ std::string uInheritable::getName() const
 {
     return mName;
 }
-std::string uInheritable::getParent() const
-{
 
+uInheritable * uInheritable::getParent() const
+{
+    return mBaseClass;
 }
 
 QString uInheritable::qGetName() const
@@ -73,7 +76,7 @@ QString uInheritable::qGetName() const
 
 bool uInheritable::hasParent()
 {
-    return hasParent();
+    return mHasParent;
 }
 
 bool uInheritable::operator==(const uInheritable &class1) const

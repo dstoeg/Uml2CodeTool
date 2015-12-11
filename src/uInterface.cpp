@@ -15,8 +15,3 @@ void uInterface::accept(uVisitor *visitor)
 {
     visitor->visit(this);
 }
-
-std::string uInterface::getParent() const
-{
-    return "";
-}

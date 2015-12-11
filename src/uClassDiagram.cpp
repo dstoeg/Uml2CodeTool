@@ -19,11 +19,15 @@ uClassDiagram &uClassDiagram::getInstance()
 
 void uClassDiagram::addClass(uInheritable *uClass)
 {
+    if (uClass == NULL)
+        uDebugPrinter::printText("error: null pointer");
     mClasses.push_back(uClass);
 }
 
 void uClassDiagram::removeClass(uInheritable *uClass)
 {
+    if (uClass == NULL)
+        uDebugPrinter::printText("error: null pointer");
     mClasses.erase(std::remove(mClasses.begin(), mClasses.end(), uClass), mClasses.end());
 }
 
@@ -39,11 +43,15 @@ bool uClassDiagram::removeClass(QString const &name)
 
 bool uClassDiagram::contains(uInheritable *uClass) const
 {
+    if (uClass == NULL)
+        uDebugPrinter::printText("error: null pointer");
     return std::find(mClasses.begin(), mClasses.end(), uClass) != mClasses.end();
 }
 
 uInheritable *uClassDiagram::find(QString const &name) const
 {
+    if (name == "") return NULL;
+
     for(TClassesConstIter iter = mClasses.begin(); iter < mClasses.end(); iter++){
         if ((*iter)->getName() == name.toStdString())
             return (*iter);
