@@ -22,8 +22,8 @@ std::string uProjectFileQT::createFile(uClassDiagram const * const diagram)
 
     for (size_t i =0; i<diagram->size(); i++) {
         string name = diagram->get(i)->getName();
-        sources += name + ".cpp \ \n";
-        headers += name + ".h \ \n";
+        sources += name + ".cpp \\ \n";
+        headers += name + ".h \\ \n";
     }
 
     content << headers << endl << endl;

@@ -105,7 +105,7 @@ Canvas {
         for (var i=0; i<referenceCount; i++) {
             var referenceName = dispatcher.getClassReference(name, i);
             if (referenceName != "") {
-                drawAggregation(name, referenceName)
+                drawAggregation(referenceName, name)
             }
         }
     }
