@@ -34,9 +34,10 @@ void uClassDiagram::removeClass(uInheritable *uClass)
 bool uClassDiagram::removeClass(QString const &name)
 {
     for(TClassesConstIter iter = mClasses.begin(); iter < mClasses.end(); iter++){
-        if ((*iter)->getName() == name.toStdString())
+        if ((*iter)->getName() == name.toStdString()){
             mClasses.erase(std::remove(mClasses.begin(), mClasses.end(), (*iter)), mClasses.end());
             return true;
+        }
     }
     return false;
 }
