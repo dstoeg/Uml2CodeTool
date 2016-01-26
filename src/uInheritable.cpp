@@ -74,7 +74,7 @@ QString uInheritable::qGetName() const
     return QString::fromStdString(mName);
 }
 
-bool uInheritable::hasParent()
+bool uInheritable::hasParent() const
 {
     return mHasParent;
 }

@@ -3,11 +3,22 @@
 
 #include <string>
 
+/**
+ * @brief The uAccess enum specifies whether a class, method or function is public, private or protected.
+ */
+
+
 enum uAccess {
     uPublic,
     uPrivate,
     uProtected
 };
+
+/**
+ * @brief This function is called from the code generation methods
+ * @param access
+ * @return a string specifying the access.
+ */
 
 static std::string getAccessString(uAccess access) {
     switch (access) {
@@ -26,6 +37,13 @@ static std::string getAccessString(uAccess access) {
     }
 }
 
+/**
+ * @brief getAccessUmlString
+ * @param access
+ * @return A string with a symbol related to the access:
+ * "+" for public, "-" for private, "#" for protected and nothing in any other situation.
+ */
+
 static std::string getAccessUmlString(uAccess access) {
     switch (access) {
         case uPublic:
@@ -42,6 +60,12 @@ static std::string getAccessUmlString(uAccess access) {
             break;
     }
 }
+
+/**
+ * @brief This function is used to read from the graphic diagram and create the class, method or attribute in the logic.
+ * @param c
+ * @return the uAccess (public, private or protected) depending on the char (+, - or # respectively)
+ */
 
 static uAccess getAccessFromChar(char c) {
     switch (c) {
