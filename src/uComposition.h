@@ -3,6 +3,10 @@
 
 #include "uReference.h"
 
+/**
+ * @brief The uComposition class
+ */
+
 class uComposition : public uReference
 {
 public:

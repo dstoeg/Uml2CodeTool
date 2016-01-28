@@ -3,6 +3,10 @@
 
 #include "uInheritable.h"
 
+/**
+ * @brief The uChildClass class it is a uInheritable which represents classes that inherits from another
+ */
+
 class uChildClass : public uInheritable
 {
 public:

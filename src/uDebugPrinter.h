@@ -6,6 +6,11 @@
 #include <QObject>
 #include <QString>
 
+/**
+ * @brief The uDebugPrinter class helps debugging UI and logic at the same time as long as it can be called in any class in the UI or the logic.
+ * It has methods for any different parameter that could be checked.
+ */
+
 class uDebugPrinter : public QObject
 {
     Q_OBJECT

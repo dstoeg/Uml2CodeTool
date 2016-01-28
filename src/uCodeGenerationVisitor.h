@@ -4,6 +4,11 @@
 #include "uVisitor.h"
 #include "uLanguageStrategy.h"
 
+/**
+ * @brief The uCodeGenerationVisitor class generates all the code. It uses a Language Strategy to accomplish the generation of the code.
+ * It is a singleton.
+ */
+
 class uCodeGenerationVisitor : public uVisitor
 {
 public:

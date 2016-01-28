@@ -3,6 +3,13 @@
 
 #include "uInheritable.h"
 
+/**
+ * @brief The uClassDiagram class is one of the main classes. It is a Singleton so there is only one and can be accesed from any other class.
+ * This class stores all the uClasses in the diagram, and from it the UI takes the information (through the UIEventDispatcher) for printing them.
+ * It contains all the methods for managing the collection of uClasses (add, remove, size, contains, find, getByIndex,...)
+ * This class apply the code generator too (and any other visitor class that could be implemented in a future).
+ */
+
 class uClassDiagram
 {
 public:

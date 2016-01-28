@@ -4,9 +4,9 @@
 #include <string>
 
 enum uClassType {
-    eChildClass,
-    eInterface,
-    eBaseClass
+    eChildClass, //inherits from another class
+    eInterface, //Interface
+    eBaseClass  //does not inherit from any other class
 };
 
 static std::string getClassTypeString(uClassType type) {

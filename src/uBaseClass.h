@@ -3,6 +3,10 @@
 
 #include "uInheritable.h"
 
+/**
+ * @brief The uBaseClass class is an uInheritable which represents classes with no parent class
+ */
+
 class uBaseClass : public uInheritable
 {
 public:
