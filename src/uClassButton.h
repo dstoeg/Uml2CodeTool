@@ -3,6 +3,10 @@
 
 #include "uButton.h"
 
+/**
+ * @brief The uClassButton class manages the creation and updating of every class with no parents (base class)
+ */
+
 class uClassButton : public uButton
 {
 public:

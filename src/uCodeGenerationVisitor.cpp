@@ -8,7 +8,10 @@
 
 using namespace std;
 
-
+/**
+ * @brief uCodeGenerationVisitor::uCodeGenerationVisitor, the constructor stablishes the Author and the Date. This could be changed with
+ * "setFileAttributes" but it is common for all the classes.
+ */
 
 uCodeGenerationVisitor::uCodeGenerationVisitor()
 {

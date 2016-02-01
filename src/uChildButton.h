@@ -3,6 +3,10 @@
 
 #include "uButton.h"
 
+/**
+ * @brief The uChildButton class manages the creation and updating of every child class
+ */
+
 class uChildButton : public uButton
 {
 public:

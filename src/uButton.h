@@ -11,6 +11,11 @@
 
 #include <QObject>
 
+/**
+ * @brief The uButton class is the abstract class that defines the structure of every button (uChildButton, uClassButton and uInterfaceButton).
+ * It is a Q_OBJECT so the QML types in the user interface can interact with it.
+ * It is also a Singleton because we only need one.
+ */
 
 class uButton : public QObject
 {

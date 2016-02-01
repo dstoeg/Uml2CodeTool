@@ -6,7 +6,10 @@
 #include "uChildClass.h"
 #include "uInterface.h"
 
-
+/**
+ * @brief The uClassFactory class generates all the diferent uClasses. It has two creator functions, one with just the name (made for testind mainly) and
+ * another with all the parameters. It is a singleton so it could be accessed from anywhere (the buttons use this class to create classes).
+ */
 
 class uClassFactory
 {
