@@ -20,6 +20,7 @@ public:
     bool contains(uInheritable * uClass) const;
     bool contains (std::string const& name) const;
     uInheritable * find(QString const& name) const;
+    uInheritable * find(std::string const& name) const;
     void applyVisitor(uVisitor* visitor);
     uInheritable * get(int index) const;
     int size() const;

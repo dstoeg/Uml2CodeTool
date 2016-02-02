@@ -68,6 +68,17 @@ uInheritable *uClassDiagram::find(QString const &name) const
     return NULL;
 }
 
+uInheritable *uClassDiagram::find(std::string const &name) const
+{
+    if (name == "") return NULL;
+
+    for(TClassesConstIter iter = mClasses.begin(); iter < mClasses.end(); iter++){
+        if ((*iter)->getName() == name)
+            return (*iter);
+    }
+    return NULL;
+}
+
 void uClassDiagram::applyVisitor(uVisitor *visitor)
 {
     if (visitor == NULL)

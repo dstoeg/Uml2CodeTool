@@ -48,7 +48,7 @@ void UiEventDispatcher::updateClass(QString oldName, QString newName, QString pa
     TReferences referenceObjects;
 
     // find parent given name
-    uInheritable * parentObj = mClassDiagram->find(parent);
+    uInheritable * parentObj = mClassDiagram->find(parent.toStdString());
 
     // call factory to create object
     mClassButton->update(oldName.toStdString(), uPublic, newName.toStdString(), attributeObjects, methodObjects, referenceObjects, parentObj);

@@ -16,8 +16,10 @@ uProjectFileCreator::uProjectFileCreator()
 
 void uProjectFileCreator::createFile(uClassDiagram const * const diagram)
 {
-    string content = mDevenv->createFile(diagram);
-    generateFile(content);
+    if(mDevenv != NULL){
+        string content = mDevenv->createFile(diagram);
+        generateFile(content);
+    }
 }
 
 void uProjectFileCreator::setDevEnv(uProjectFile *devenv)
