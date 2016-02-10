@@ -110,13 +110,13 @@ ColumnLayout {
         Layout.fillHeight: true
         Layout.fillWidth: true
         StyledText {
-            text: "Methods"
+            text: "Attributes"
             horizontalAlignment: Text.AlignLeft
         }
     }
 
     TextArea {
-        id : methodField
+        id : attributeField
         Layout.rowSpan: 3
         Layout.fillHeight: true
         Layout.fillWidth: true
@@ -130,12 +130,12 @@ ColumnLayout {
         Layout.fillHeight: true
         Layout.fillWidth: true
         StyledText {
-            text: "Attributes"
+            text: "Methods"
             horizontalAlignment: Text.AlignLeft
         }
     }
     TextArea {
-        id: attributeField
+        id: methodField
         Layout.rowSpan: 3
         Layout.fillHeight: true
         Layout.fillWidth: true
