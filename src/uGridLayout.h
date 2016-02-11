@@ -15,7 +15,7 @@ public:
     Q_INVOKABLE bool addClass(int i, int j, QString const& name);
     Q_INVOKABLE bool removeClass(QString const& name);
     Q_INVOKABLE bool removeClass(int i, int j);
-    Q_INVOKABLE bool moveClass(QString const& name, int newI, int newJ);
+    Q_INVOKABLE bool moveClass(QString const& name, const QString &newName, int newI, int newJ);
     Q_INVOKABLE bool moveClass(int i, int j, int newI, int newJ);
 
     Q_INVOKABLE QString getString(int i, int j) const;

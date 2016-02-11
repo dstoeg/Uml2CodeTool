@@ -38,6 +38,8 @@ public:
     void addReference(uReference * reference);
 
     bool hasParent() const;//to check whether it is a childClass or not
+    bool isInterface() const;
+    bool isAbstract() const;
 
     virtual void accept(uVisitor * visitor); //Accepts the code generation visitor
 
@@ -55,6 +57,8 @@ protected:
     std::vector<uReference*> mReferences;
     uAccess mAccess;
     bool mHasParent;
+    bool mIsInterface;
+    bool mIsAbstract;
 };
 
 //Redefinition of collections and iterators

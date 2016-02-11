@@ -56,12 +56,12 @@ bool uGridLayout::removeClass(int i, int j)
     return true;
 }
 
-bool uGridLayout::moveClass(const QString &name, int newI, int newJ)
+bool uGridLayout::moveClass(const QString &name, const QString &newName, int newI, int newJ)
 {
     if (!checkBounds(newI,newJ)) return false;
 
     if (removeClass(name)) {
-        addClass(newI, newJ, name);
+        addClass(newI, newJ, newName);
         return true;
     }
     return false;

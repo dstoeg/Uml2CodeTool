@@ -12,7 +12,7 @@ ColumnLayout {
         Layout.fillWidth: true
 
         StyledText {
-            text: "Baseclass"
+            text: "Inherits from"
             horizontalAlignment: Text.AlignLeft
         }
     }
@@ -32,7 +32,7 @@ ColumnLayout {
         font.bold: false
         font.italic: false
         font.pointSize: 9
-        enabled: false
+        enabled: true
     }
 
     RowLayout {
@@ -44,7 +44,7 @@ ColumnLayout {
             Layout.fillHeight: true
             Layout.fillWidth: true
             StyledText {
-                text: "Name"
+                text: "Class"
                 horizontalAlignment: Text.AlignLeft
             }
         }
@@ -171,8 +171,18 @@ ColumnLayout {
                 }
                 else {
                     if (!gridLayout.contains(name) && gridLayout.isEmpty(parseInt(coordX), parseInt(coordY))) {
+
+                        //Add the class to the grid
                         gridLayout.addClass(parseInt(coordX), parseInt(coordY), name)
+
+                        //Check if the class has a parent
+                        if(parent != "")
+                            dispatcher.setClassState(2)
+
+                        //Create the class
                         dispatcher.createClass(name, parent, methods, attributes)
+
+                        //Repaint the canvas
                         drawingCanvas.requestPaint()
                         clearTextFields()
                         drawingCanvas.selectedClass = ""
@@ -204,9 +214,17 @@ ColumnLayout {
                     var methods = methodField.text
                     var attributes = attributeField.text
 
-                    gridLayout.moveClass(drawingCanvas.selectedClass, i, j)
+                    //Move the class in the grid
+                    gridLayout.moveClass(drawingCanvas.selectedClass, name, i, j)
+
+                    //Check if the class has a parent
+                    if(parent != "")
+                        dispatcher.setClassState(2)
+
+                    //Update the class
                     dispatcher.updateClass(drawingCanvas.selectedClass, name, parent, methods, attributes)
 
+                    //Repaint the canvas
                     drawingCanvas.requestPaint()
                     clearTextFields()
                     drawingCanvas.selectedClass = ""

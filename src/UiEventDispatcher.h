@@ -41,6 +41,8 @@ public:
     Q_INVOKABLE QString getClassAttributes(int index);
     Q_INVOKABLE int getClassIndex(QString name);
     Q_INVOKABLE QString getClassParent(int index);
+    Q_INVOKABLE bool getClassIsInterface(int index);
+    Q_INVOKABLE bool getClassIsAbstract(int index);
     Q_INVOKABLE int getClassReferenceCount(QString name);
     Q_INVOKABLE QString getClassReference(QString name, int index);
 
