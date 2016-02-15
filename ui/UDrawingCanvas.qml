@@ -63,7 +63,10 @@ Canvas {
         context.strokeStyle = "black"
         var letterFont = width < height ? Number(width)/90: Number(height)/60;
         //console.log("LetterFont: " + letterFont)
-        context.font = parseInt(letterFont) + "px sans-serif";
+        if(isAbstract)
+            context.font = "italic " + parseInt(letterFont) + "px sans-serif";
+        else
+            context.font = parseInt(letterFont) + "px sans-serif";
 
         // draw frame
         context.rect(x, y, classWidth, classHeight);

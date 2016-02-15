@@ -21,8 +21,8 @@ class UiEventDispatcher : public QObject
     Q_OBJECT
 public:
     explicit UiEventDispatcher(QObject *parent = 0);
-    Q_INVOKABLE void createClass(QString name, QString parent, QString methods, QString attributes);
-    Q_INVOKABLE void updateClass(QString oldName, QString newName, QString parent, QString methods, QString attributes);
+    Q_INVOKABLE void createClass(QString name, QString parent, QString methods, QString attributes, bool isAbstract);
+    Q_INVOKABLE void updateClass(QString oldName, QString newName, QString parent, QString methods, QString attributes, bool isAbstract);
 
     Q_INVOKABLE void setClassState(int type);
 

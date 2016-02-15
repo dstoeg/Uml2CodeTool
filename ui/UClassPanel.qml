@@ -17,22 +17,30 @@ ColumnLayout {
         }
     }
 
-    TextField {
-//        style: TextFieldStyle {
-//                textColor: "black"
-//                background: Rectangle {
-//                    id: parentFieldBackground
-//                    border.color: "black"
-//                }
-//            }
-        id: parentField
-        Layout.fillHeight: true
-        Layout.fillWidth: true
-        font.family: "Droid Sans"
-        font.bold: false
-        font.italic: false
-        font.pointSize: 9
-        enabled: true
+    RowLayout{
+        TextField {
+    //        style: TextFieldStyle {
+    //                textColor: "black"
+    //                background: Rectangle {
+    //                    id: parentFieldBackground
+    //                    border.color: "black"
+    //                }
+    //            }
+            id: parentField
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            font.family: "Droid Sans"
+            font.bold: false
+            font.italic: false
+            font.pointSize: 9
+            enabled: true
+        }
+
+        CheckBox {
+            id: abstractField;
+            Layout.fillWidth: false
+            text: qsTr("Abstract")
+        }
     }
 
     RowLayout {
@@ -164,6 +172,7 @@ ColumnLayout {
                 var parent = parentField.text
                 var methods = methodField.text
                 var attributes = attributeField.text
+                var isAbstract = abstractField.checked;
 
 
                 if (parent != "" && dispatcher.getClassIndex(parent) === -1) {
@@ -180,7 +189,7 @@ ColumnLayout {
                             dispatcher.setClassState(2)
 
                         //Create the class
-                        dispatcher.createClass(name, parent, methods, attributes)
+                        dispatcher.createClass(name, parent, methods, attributes, isAbstract)
 
                         //Repaint the canvas
                         drawingCanvas.requestPaint()
@@ -213,6 +222,8 @@ ColumnLayout {
                     var parent = parentField.text
                     var methods = methodField.text
                     var attributes = attributeField.text
+                    var isAbstract = abstractField.checked
+
 
                     //Move the class in the grid
                     gridLayout.moveClass(drawingCanvas.selectedClass, name, i, j)
@@ -222,7 +233,7 @@ ColumnLayout {
                         dispatcher.setClassState(2)
 
                     //Update the class
-                    dispatcher.updateClass(drawingCanvas.selectedClass, name, parent, methods, attributes)
+                    dispatcher.updateClass(drawingCanvas.selectedClass, name, parent, methods, attributes, isAbstract)
 
                     //Repaint the canvas
                     drawingCanvas.requestPaint()
@@ -263,6 +274,7 @@ ColumnLayout {
         parentField.text = ""
         methodField.text = ""
         attributeField.text = ""
+        abstractField.checked = false;
     }
 
     function setInformation(x, y, name, parent, methods, attributes) {

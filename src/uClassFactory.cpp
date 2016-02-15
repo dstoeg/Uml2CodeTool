@@ -30,18 +30,18 @@ uInheritable * uClassFactory::createClass(uClassType type, std::string const& na
     }
 }
 
-uInheritable * uClassFactory::createClass(uClassType type, uAccess access, const std::string &name, TParameters &attributes, TMethods &methods, TReferences &references, uInheritable *base)
+uInheritable * uClassFactory::createClass(uClassType type, uAccess access, const std::string &name, TParameters &attributes, TMethods &methods, TReferences &references, uInheritable *base, bool isAbstract)
 {
     switch (type) {
 
         case eBaseClass:
-            return new uBaseClass(access, name, attributes, methods, references);
+            return new uBaseClass(access, name, attributes, methods, references,isAbstract);
             break;
         case eInterface:
             return new uInterface(access, name, attributes, methods, references);
             break;
         case eChildClass:
-            return new uChildClass(access, name, attributes, methods, references, base);
+            return new uChildClass(access, name, attributes, methods, references, base, isAbstract);
             break;
         default:
             return NULL;

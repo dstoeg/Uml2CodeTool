@@ -11,8 +11,8 @@ class uClassButton : public uButton
 {
 public:
     static uClassButton &getInstance();
-    void update(const std::string &oldName, uAccess access, const std::string &newName, TParameters &attributes, TMethods &methods, TReferences &references, uInheritable* base);
-    void create(uAccess access, std::string const& name, TParameters & attributes, TMethods & methods, TReferences & references, uInheritable *base = NULL);
+    void update(const std::string &oldName, uAccess access, const std::string &newName, TParameters &attributes, TMethods &methods, TReferences &references, uInheritable* base, bool isAbstract);
+    void create(uAccess access, std::string const& name, TParameters & attributes, TMethods & methods, TReferences & references, uInheritable *base = NULL, bool isAbstract = false);
 
 protected:
     uClassButton(){}

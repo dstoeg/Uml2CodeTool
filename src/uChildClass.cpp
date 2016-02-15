@@ -17,7 +17,7 @@ uChildClass::uChildClass(std::string const& name, uInheritable * base) : uInheri
     mIsInterface = false;
 }
 
-uChildClass::uChildClass(uAccess access, const std::string &name, TParameters &attributes, TMethods &methods, TReferences &references, uInheritable *base) : uInheritable(access, name, attributes, methods, references)
+uChildClass::uChildClass(uAccess access, const std::string &name, TParameters &attributes, TMethods &methods, TReferences &references, uInheritable *base, bool isAbstract) : uInheritable(access, name, attributes, methods, references, isAbstract)
 {
     mHasParent = true;
     mBaseClass = base;
