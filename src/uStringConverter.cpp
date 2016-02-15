@@ -18,12 +18,18 @@ uStringConverter::uStringConverter()
 {
 
 }
+/**
+ * @brief uStringConverter::parseMethods: Takes a string from the Methods text field and parse it to a TMethods object
+ * @param text
+ * @return equivalent TMethods
+ */
 
 TMethods uStringConverter::parseMethods(const std::string &text)
 {
     TMethods methods;
     if (text.size() == 0) return methods;
 
+    //split the string
     vector<string> methodStrings = splitString(text);
 
     for (vector<string>::iterator iter = methodStrings.begin(); iter < methodStrings.end(); ++iter) {
@@ -41,6 +47,24 @@ TMethods uStringConverter::parseMethods(const std::string &text)
         if(i >= method.size()-1){
             i=0;
             access = dAccess;
+            //check if is string access
+            string strAccess;
+            //avoid spaces at the beginning
+            while(method[i] == ' ')
+                i++;
+
+            //read first word
+            while(method[i] != ' '){
+                strAccess+=method[i];
+                i++;
+                if(strAccess.size() > 5 && isAccessString(strAccess)){
+                    access = getAccessFromString(strAccess);
+                    break;
+                }
+                if(strAccess.size() >= 10)
+                    break;
+            }
+
         } else {
             i++;
         }
@@ -107,6 +131,24 @@ TParameters uStringConverter::parseAttributes(const std::string &text)
         if(i >= attribute.size()-1){
             i=0;
             access = dAccess;
+            //check if is string access
+            string strAccess;
+            //avoid spaces at the beginning
+            while(attribute[i] == ' ')
+                i++;
+
+            //read first word
+            while(attribute[i] != ' '){
+                strAccess+=attribute[i];
+                i++;
+                if(strAccess.size() > 5 && isAccessString(strAccess)){
+                    access = getAccessFromString(strAccess);
+                    break;
+                }
+                if(strAccess.size() >= 10)
+                    break;
+            }
+
         } else {
             i++;
         }
@@ -193,8 +235,12 @@ std::vector<std::string> uStringConverter::splitString(std::string const& text) 
     return methodStrings;
 }
 
-bool uStringConverter::isAccessChar(char c) {
+bool uStringConverter::isAccessChar(char c){
     return (c == '+' || c == '-' || c == '#');
+}
+
+bool uStringConverter::isAccessString(std::string str){
+    return (str == "public" || str == "private" || str == "protected");
 }
 
 std::string uStringConverter::createAttributeString(const TParameters &attributes)

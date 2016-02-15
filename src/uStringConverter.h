@@ -31,6 +31,7 @@ public:
 private:
     static std::vector<std::string> splitString(std::string const& text);
     static bool isAccessChar(char c);
+    static bool isAccessString(std::string str);
 };
 
 #endif // USTRINGCONVERTER_H
