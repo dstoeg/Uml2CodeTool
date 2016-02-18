@@ -26,7 +26,6 @@ RowLayout {
             onClicked: {
                 parent.color = 'grey'
                 uInterfaceClassButton.color = 'white'
-//                uChildClassButton.color = "white"
                 dispatcher.setClassState(0)
                 uClassPanel.enableParentField()
             }
@@ -49,35 +48,11 @@ RowLayout {
             onClicked: {
                 parent.color = 'grey'
                 uBaseClassButton.color = 'white'
-//                uChildClassButton.color = "white"
                 dispatcher.setClassState(1)
                 uClassPanel.disableParentField()
             }
         }
     }
-
-//    //Child button
-//    Rectangle {
-//        id: uChildClassButton
-//        color: "white"
-//        Layout.fillHeight: true
-//        Layout.fillWidth: true
-
-//        StyledText {
-//            text: "Child"
-//        }
-
-//        MouseArea {
-//            anchors.fill: parent
-//            onClicked: {
-//                parent.color = 'grey'
-//                uBaseClassButton.color = 'white'
-//                uInterfaceClassButton.color = "white"
-//                dispatcher.setClassState(2)
-//                uClassPanel.enableParentField()
-//            }
-//        }
-//    }
 
 
 }

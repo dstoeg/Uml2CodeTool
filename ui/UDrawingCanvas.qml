@@ -373,7 +373,7 @@ Canvas {
             var attributes = dispatcher.getClassAttributes(idx);
             var parent = dispatcher.getClassParent(idx)
 
-            // TODO add parent
+            // TODO add abstract and class/interface
             uClassPanel.setInformation(i,j,name, parent, methods, attributes)
 
         }

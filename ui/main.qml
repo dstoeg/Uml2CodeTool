@@ -51,7 +51,7 @@ ApplicationWindow {
             Layout.margins: 10
             Layout.leftMargin: 5
 
-            // Buttons Base, Interface and Child
+            // Buttons Class and Interface
             UClassTypeSelection {
                 Layout.preferredWidth: parent.width
                 Layout.preferredHeight: parent.height * 0.05
