@@ -55,10 +55,13 @@ string uLanguageJava::createDeclarationFileContent(uInheritable * aClass, string
     // TODO
 
     // class name + inheritance
+    string isAbstract = "";
+    if(aClass->isAbstract())
+        isAbstract = " abstract";
     if (base != "")
-        fileContent << getAccessString(aClass->getAccess()) << " class " << aClass->getName() << " implements " << base << "{" << endl << endl;
+        fileContent << getAccessString(aClass->getAccess()) << isAbstract << " class " << aClass->getName() << " implements " << base << "{" << endl << endl;
     else
-        fileContent << getAccessString(aClass->getAccess()) << " class " << aClass->getName() << " {" << endl << endl;
+        fileContent << getAccessString(aClass->getAccess()) << isAbstract << " class " << aClass->getName() << " {" << endl << endl;
 
     // attributes
     TParameters attributes = aClass->getAttributes();
