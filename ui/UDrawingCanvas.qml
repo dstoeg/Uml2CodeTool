@@ -372,9 +372,11 @@ Canvas {
             var methods = dispatcher.getClassMethods(idx);
             var attributes = dispatcher.getClassAttributes(idx);
             var parent = dispatcher.getClassParent(idx)
+            var isAbstract = dispatcher.getClassIsAbstract(idx)
+            var isInterface = dispatcher.getClassIsInterface(idx)
 
             // TODO add abstract and class/interface
-            uClassPanel.setInformation(i,j,name, parent, methods, attributes)
+            uClassPanel.setInformation(i,j,name, parent, methods, attributes, isAbstract, isInterface)
 
         }
         else {

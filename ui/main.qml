@@ -53,6 +53,7 @@ ApplicationWindow {
 
             // Buttons Class and Interface
             UClassTypeSelection {
+                id: uClassSelection
                 Layout.preferredWidth: parent.width
                 Layout.preferredHeight: parent.height * 0.05
             }

@@ -56,26 +56,26 @@ ColumnLayout {
                 horizontalAlignment: Text.AlignLeft
             }
         }
-        Label {
-            width: parent.width/5
-            Layout.fillHeight: true
-            Layout.fillWidth: true
-            //anchors.centerIn: xField
-            StyledText {
-                text: "X (0-"+(gridLayout.getWidth()-1)+")"
-                horizontalAlignment: xField.Top
-            }
-        }
-        Label {
-            Layout.fillHeight: true
-            width: parent.width/5
-            Layout.fillWidth: true
-            //anchors.centerIn: yField
-            StyledText {
-                text: "Y (0-" + (gridLayout.getHeight()-1) + ")"
-                horizontalAlignment: yField.Top
-            }
-        }
+//        Label {
+//            width: parent.width/5
+//            Layout.fillHeight: true
+//            Layout.fillWidth: true
+//            //anchors.centerIn: xField
+//            StyledText {
+//                text: "X (0-"+(.getWidth()-1)+")"
+//                horizontalAlignment: xField.Top
+//            }
+//        }
+//        Label {
+//            Layout.fillHeight: true
+//            width: parent.width/5
+//            Layout.fillWidth: true
+//            //anchors.centerIn: yField
+//            StyledText {
+//                text: "Y (0-" + (gridLayout.getHeight()-1) + ")"
+//                horizontalAlignment: yField.Top
+//            }
+//        }
     }
 
     RowLayout {
@@ -92,26 +92,26 @@ ColumnLayout {
             font.italic: false
             font.pointSize: 9
         }
-        TextField {
-            id: xField
-            Layout.fillHeight: true
-            Layout.fillWidth: true
-            width: parent.width/5
-            font.family: "Droid Sans"
-            font.bold: false
-            font.italic: false
-            font.pointSize: 9
-        }
-        TextField {
-            id: yField
-            Layout.fillHeight: true
-            Layout.fillWidth: true
-            width: parent.width/5
-            font.family: "Droid Sans"
-            font.bold: false
-            font.italic: false
-            font.pointSize: 9
-        }
+//        TextField {
+//            id: xField
+//            Layout.fillHeight: true
+//            Layout.fillWidth: true
+//            width: parent.width/5
+//            font.family: "Droid Sans"
+//            font.bold: false
+//            font.italic: false
+//            font.pointSize: 9
+//        }
+//        TextField {
+//            id: yField
+//            Layout.fillHeight: true
+//            Layout.fillWidth: true
+//            width: parent.width/5
+//            font.family: "Droid Sans"
+//            font.bold: false
+//            font.italic: false
+//            font.pointSize: 9
+//        }
     }
 
     Label {
@@ -166,8 +166,8 @@ ColumnLayout {
             Layout.fillHeight: true
             Layout.fillWidth: true
             onClicked: {
-                var coordX = xField.text
-                var coordY = yField.text
+//                var coordX = xField.text
+//                var coordY = yField.text
                 var name = nameField.text
                 var parent = parentField.text
                 var methods = methodField.text
@@ -179,10 +179,10 @@ ColumnLayout {
                     parentField.textColor = "red"
                 }
                 else {
-                    if (!gridLayout.contains(name) && gridLayout.isEmpty(parseInt(coordX), parseInt(coordY))) {
+                    if (!gridLayout.contains(name)/* && gridLayout.isEmpty(parseInt(coordX), parseInt(coordY))*/) {
 
                         //Add the class to the grid
-                        gridLayout.addClass(parseInt(coordX), parseInt(coordY), name)
+                        gridLayout.addObject(parseInt(coordX), parseInt(coordY), name)
 
                         //Check if the class has a parent
                         if(parent != "")
@@ -197,8 +197,9 @@ ColumnLayout {
                         drawingCanvas.selectedClass = ""
                     }
                     else if (!gridLayout.isEmpty(parseInt(coordX), parseInt(coordY))){
-                        xField.textColor = "red"
-                        yField.textColor = "red"
+                        //TODO notify space not empty
+//                        xField.textColor = "red"
+//                        yField.textColor = "red"
                     }
                     else{
                         nameField.textColor = "red"
@@ -216,8 +217,8 @@ ColumnLayout {
             onClicked: {
 
                 if (drawingCanvas.selectedClass != "") {
-                    var i = xField.text
-                    var j = yField.text
+//                    var i = xField.text
+//                    var j = yField.text
                     var name = nameField.text
                     var parent = parentField.text
                     var methods = methodField.text
@@ -268,8 +269,8 @@ ColumnLayout {
     }
 
     function clearTextFields() {
-        xField.text = ""
-        yField.text = ""
+//        xField.text = ""
+//        yField.text = ""
         nameField.text = ""
         parentField.text = ""
         methodField.text = ""
@@ -277,18 +278,26 @@ ColumnLayout {
         abstractField.checked = false;
     }
 
-    function setInformation(x, y, name, parent, methods, attributes) {
-        xField.text = x
-        yField.text = y
+    function setInformation(x, y, name, parent, methods, attributes, isAbstract, isInterface) {
+//        xField.text = x
+//        yField.text = y
         nameField.text = name
         parentField.text = parent
         methodField.text = methods
         attributeField.text = attributes
+
+        if(isAbstract)
+            abstractField.checked = true;
+        if(isInterface)
+            uClassSelection.setInterfaceButton()
+        else
+            uClassSelection.setClassButton()
+
     }
 
     function setFieldsBlack(){
-        xField.textColor = "black"
-        yField.textColor = "black"
+//        xField.textColor = "black"
+//        yField.textColor = "black"
         nameField.textColor = "black"
         parentField.textColor = "black"
     }

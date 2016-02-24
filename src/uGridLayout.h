@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QString>
 #include <vector>
+#include "uGridObject.h"
 
 class uGridLayout : public QObject
 {
@@ -12,13 +13,13 @@ public:
     explicit uGridLayout(QObject *parent = 0);
     uGridLayout(int width, int height);
 
-    Q_INVOKABLE bool addClass(int i, int j, QString const& name);
-    Q_INVOKABLE bool removeClass(QString const& name);
-    Q_INVOKABLE bool removeClass(int i, int j);
-    Q_INVOKABLE bool moveClass(QString const& name, const QString &newName, int newI, int newJ);
-    Q_INVOKABLE bool moveClass(int i, int j, int newI, int newJ);
+    Q_INVOKABLE bool addObject(int i, int j, int width, int height, QString const& name);
+    Q_INVOKABLE bool removeObject(QString const& name);
+    Q_INVOKABLE bool removeObject(int i, int j);
+    Q_INVOKABLE bool changeObjectName(QString const& name, const QString &newName);
+    Q_INVOKABLE bool moveObject(const QString &name, int newX, int newY);
 
-    Q_INVOKABLE QString getString(int i, int j) const;
+    Q_INVOKABLE QString getString(int x, int y) const;
 
     Q_INVOKABLE int getWidth() const;
     Q_INVOKABLE int getHeight() const;
@@ -26,10 +27,10 @@ public:
     bool setWidth(int width);
     bool setHeight(int height);
 
-    Q_INVOKABLE int getI(QString const& name) const;
-    Q_INVOKABLE int getJ(QString const& name) const;
+    Q_INVOKABLE int getX(QString const& name) const;
+    Q_INVOKABLE int getY(QString const& name) const;
 
-    Q_INVOKABLE bool isEmpty(int i, int j) const;
+    Q_INVOKABLE bool isEmpty(int x, int y) const;
     Q_INVOKABLE bool contains(QString const& name) const;
 
 signals:
@@ -39,7 +40,8 @@ public slots:
 private:
     int mWidth;
     int mHeight;
-    std::vector<std::vector<QString>> mTable;
+    TGridObject mTable;
+    bool checkBounds(int i, int j, int width, int height) const;
     bool checkBounds(int i, int j) const;
 
 };
