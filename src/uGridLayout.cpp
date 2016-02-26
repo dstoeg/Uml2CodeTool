@@ -1,5 +1,6 @@
 #include "uGridLayout.h"
 #include "uDebugPrinter.h"
+#include "uGridObjectFactory.h"
 
 #include <string>
 
@@ -16,12 +17,12 @@ uGridLayout::uGridLayout(int width, int height) : QObject(0)
     mHeight = height;
 }
 
-bool uGridLayout::addObject(int i, int j, int width, int height, const QString &name)
+bool uGridLayout::addObject(int i, int j, int width, int height, const QString &name, int type)
 {
-    //uDebugPrinter::printText("adding class: " + name.toStdString() + " index i: " + to_string(i) + " index j: " + to_string(j));
+    uDebugPrinter::printText("adding class: " + name.toStdString() + " index i: " + to_string(i) + " index j: " + to_string(j));
     if (!checkBounds(i,j,width, height)) return false;
 
-    mTable.push_back(new uGridObject(i ,j ,width ,height ,name));
+    mTable.push_back(uGridObjectFactory::createObject(i ,j ,width ,height ,name, intToGridType(type)));
     return true;
 }
 
@@ -61,7 +62,7 @@ bool uGridLayout::changeObjectName(const QString &name, const QString &newName)
 
 bool uGridLayout::moveObject(const QString &name, int newX, int newY)
 {
-    if(!checkBounds(newX, newY)) return false;
+    //if(!checkBounds(newX, newY)) return false;
 
     for(TGridObjectConstIter iter=mTable.begin(); iter != mTable.end(); iter++) {
         if ((*iter)->getName() == name) {
@@ -135,10 +136,10 @@ bool uGridLayout::isEmpty(int x, int y) const
 {
     for(TGridObjectConstIter iter=mTable.begin(); iter != mTable.end(); iter++) {
         if ((*iter)->selected(x, y)) {
-            return true;
+            return false;
         }
     }
-    return false;
+    return true;
 }
 
 bool uGridLayout::contains(const QString &name) const

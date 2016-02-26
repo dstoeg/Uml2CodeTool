@@ -33,8 +33,8 @@ Canvas {
             var parent = dispatcher.getClassParent(i);
             var isInterface = dispatcher.getClassIsInterface(i)
             var isAbstract = dispatcher.getClassIsAbstract(i)
-            var x = gridLayout.getI(name);
-            var y = gridLayout.getJ(name);
+            var x = gridLayout.getX(name);
+            var y = gridLayout.getY(name);
             drawClass(x, y, name, methods, attributes, parent, isInterface, isAbstract);
         }
     }
@@ -42,8 +42,11 @@ Canvas {
 
     function drawClass(coordX, coordY, name, methods, attributes, parent, isInterface, isAbstract) {
 
-        var x = getXfromCoord(coordX)
-        var y = getYfromCoord(coordY)
+//        var x = getXfromCoord(coordX)
+//        var y = getYfromCoord(coordY)
+        uDebugger.qPrintText("Writing class in the position (" + coordX + "," + coordY + ")")
+        var x = Number(coordX);
+        var y = Number(coordY);
 
         //console.log("Drawing class: "+name +", "+ methods +", "+ attributes)
         var classWidth = getClassWidth()
@@ -149,11 +152,11 @@ Canvas {
 
     function drawInheritance(name, parent) {
 
-        var objI = gridLayout.getI(name)
-        var objJ = gridLayout.getJ(name)
+        var objI = gridLayout.getX(name)
+        var objJ = gridLayout.getY(name)
 
-        var parentI = gridLayout.getI(parent)
-        var parentJ = gridLayout.getJ(parent)
+        var parentI = gridLayout.getX(parent)
+        var parentJ = gridLayout.getY(parent)
 
         uDebugger.qPrintText("obj i: " + objI + ", j: " + objJ)
         uDebugger.qPrintText("parent i: " + parentI + ", j: " + parentJ)
@@ -212,10 +215,10 @@ Canvas {
 
         uDebugger.qPrintText("reference from " + name + " to " + reference)
 
-        var objI = gridLayout.getI(name)
-        var objJ = gridLayout.getJ(name)
-        var referenceI = gridLayout.getI(reference)
-        var referenceJ = gridLayout.getJ(reference)
+        var objI = gridLayout.getX(name)
+        var objJ = gridLayout.getY(name)
+        var referenceI = gridLayout.getX(reference)
+        var referenceJ = gridLayout.getY(reference)
 
         var objX = getXfromCoord(objI)
         var objY = getYfromCoord(objJ)
@@ -357,26 +360,27 @@ Canvas {
     function selectClass(x, y){
         uDebugger.qPrintText("Selected area in (" + x +"," + y + ")");
 
-        var i = getCoordFromX(x)
-        var j = getCoordFromY(y)
+//        var i = getCoordFromX(x)
+//        var j = getCoordFromY(y)
 
         uClassPanel.setFieldsBlack()
 
-        if (!gridLayout.isEmpty(parseInt(i), parseInt(j))) {
+        if (!gridLayout.isEmpty(parseInt(x), parseInt(y))) {
 
-            var name = gridLayout.getString(parseInt(i), parseInt(j))
+            var name = gridLayout.getString(parseInt(x), parseInt(y))
             selectedClass = name
+            //moveClass(Number(200),Number(200))
             uDebugger.qPrintText("name: " + name)
 
-            var idx = dispatcher.getClassIndex(name);
-            var methods = dispatcher.getClassMethods(idx);
-            var attributes = dispatcher.getClassAttributes(idx);
-            var parent = dispatcher.getClassParent(idx)
-            var isAbstract = dispatcher.getClassIsAbstract(idx)
-            var isInterface = dispatcher.getClassIsInterface(idx)
+//            var idx = dispatcher.getClassIndex(name);
+//            var methods = dispatcher.getClassMethods(idx);
+//            var attributes = dispatcher.getClassAttributes(idx);
+//            var parent = dispatcher.getClassParent(idx)
+//            var isAbstract = dispatcher.getClassIsAbstract(idx)
+//            var isInterface = dispatcher.getClassIsInterface(idx)
 
-            // TODO add abstract and class/interface
-            uClassPanel.setInformation(i,j,name, parent, methods, attributes, isAbstract, isInterface)
+//            // TODO add abstract and class/interface
+//            uClassPanel.setInformation(i,j,name, parent, methods, attributes, isAbstract, isInterface)
 
         }
         else {
@@ -385,43 +389,59 @@ Canvas {
         }
     }
 
+    function moveClass(x, y)
+    {
+        if (!gridLayout.isEmpty(parseInt(x), parseInt(y)))
+        {
+            var name = gridLayout.getString(parseInt(x), parseInt(y))
+            selectedClass = name
+        }
+
+        if(selectedClass != "")
+        {
+            uDebugger.qPrintText("Move class: " + selectedClass)
+            gridLayout.moveObject(selectedClass, Number(x), Number(y))
+            requestPaint()
+        }
+    }
+
     function getXfromCoord(coordX)
     {
-        return (Number(coordX)%gridLayout.getWidth()) * offsetX()
+        return (Number(coordX)%(gridLayout.getWidth()/30)) * offsetX()
     }
 
     function getYfromCoord(coordY)
     {
-        return (Number(coordY)%gridLayout.getHeight()) * offsetY() + Number(height)/45
+        return (Number(coordY)%(gridLayout.getHeight()/40)) * offsetY() + Number(height)/45
     }
 
     function getCoordFromX(x)
     {
-        return parseInt((Number(x) / (Number(width)/gridLayout.getWidth())))
+        return parseInt((Number(x) / (Number(width)*30/gridLayout.getWidth())))
     }
 
     function getCoordFromY(y)
     {
-        return parseInt((Number(y) / (Number(height)/gridLayout.getHeight())))
+        return parseInt((Number(y) / (Number(height)*40/gridLayout.getHeight())))
     }
 
     function getClassWidth()
     {
-        return Number(width)/(9*gridLayout.getWidth()/8)
+        return Number(width)/(gridLayout.getWidth()/120)
     }
 
     function getClassHeight()
     {
-        return (1.5)*Number(height)/(2*gridLayout.getHeight())
+        return (1.5)*Number(height)/(gridLayout.getHeight()/170)
     }
 
     //Class width + right padding
     function offsetX(){
-        return Number(width)/(9*gridLayout.getWidth()/9)
+        return Number(width)/(gridLayout.getWidth()/30)
     }
 
     //Class height + bottom padding
     function offsetY(){
-        return Number(height)*(1.65)/(8*gridLayout.getHeight()/5)
+        return Number(height)*(1.65)/(gridLayout.getHeight()/30)
     }
 }

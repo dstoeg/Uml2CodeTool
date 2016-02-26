@@ -182,7 +182,7 @@ ColumnLayout {
                     if (!gridLayout.contains(name)/* && gridLayout.isEmpty(parseInt(coordX), parseInt(coordY))*/) {
 
                         //Add the class to the grid
-                        gridLayout.addObject(parseInt(coordX), parseInt(coordY), name)
+                        gridLayout.addObject(Number(10),Number(10),drawingCanvas.getClassWidth(),drawingCanvas.getClassHeight(), name, 0)
 
                         //Check if the class has a parent
                         if(parent != "")
@@ -196,10 +196,11 @@ ColumnLayout {
                         clearTextFields()
                         drawingCanvas.selectedClass = ""
                     }
-                    else if (!gridLayout.isEmpty(parseInt(coordX), parseInt(coordY))){
+                    else if (!gridLayout.isEmpty(Number(10), Number(10))){
                         //TODO notify space not empty
 //                        xField.textColor = "red"
 //                        yField.textColor = "red"
+                        uDebugger.qPrintText("Position (0,0) not Empty");
                     }
                     else{
                         nameField.textColor = "red"

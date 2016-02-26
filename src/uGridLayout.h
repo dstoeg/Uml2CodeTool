@@ -6,6 +6,7 @@
 #include <vector>
 #include "uGridObject.h"
 
+
 class uGridLayout : public QObject
 {
     Q_OBJECT
@@ -13,7 +14,7 @@ public:
     explicit uGridLayout(QObject *parent = 0);
     uGridLayout(int width, int height);
 
-    Q_INVOKABLE bool addObject(int i, int j, int width, int height, QString const& name);
+    Q_INVOKABLE bool addObject(int i, int j, int width, int height, QString const& name, int type);
     Q_INVOKABLE bool removeObject(QString const& name);
     Q_INVOKABLE bool removeObject(int i, int j);
     Q_INVOKABLE bool changeObjectName(QString const& name, const QString &newName);

@@ -109,7 +109,7 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     UiEventDispatcher dispatcher;
-    uGridLayout layout(8, 4);
+    uGridLayout layout(1200, 1600);
     uDebugPrinter debugger;
 
     QQmlApplicationEngine engine;

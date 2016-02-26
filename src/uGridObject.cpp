@@ -1,12 +1,13 @@
 #include "uGridObject.h"
+#include "uDebugPrinter.h"
 
-//uGridObject::uGridObject()
-//{
+#include <string>
 
-//}
+using namespace std;
 
 uGridObject::uGridObject(int mX, int mY, int mWidth, int mHeight, const QString &mName)
 {
+    //uDebugPrinter::printText("Creating object: " + mName.toStdString() + ", size (" + to_string(mWidth) + "," + to_string(mHeight) + "), position:(" + to_string(mX) + "," + to_string(mY)+")");
     this->mX = mX;
     this->mY = mY;
     this->mHeight = mHeight;

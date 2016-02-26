@@ -37,6 +37,9 @@ ApplicationWindow {
                 anchors.fill: parent
                 acceptedButtons: Qt.LeftButton
                 onClicked: drawingCanvas.selectClass(mouse.x, mouse.y)
+                drag.target: drawingCanvas
+                drag.onActiveChanged: drawingCanvas.moveClass(mouse.x, mouse.y)
+                //onDragChanged:
                 cursorShape: Qt.UpArrowCursor
             }
         }
