@@ -14,11 +14,11 @@ RowLayout {
     Rectangle {
         id: uBaseClassButton
         color: "grey"
-        Layout.preferredWidth:  parent.width /3
+        Layout.preferredWidth:  parent.width /2
         Layout.preferredHeight: parent.height
 
         StyledText {
-            text: "Base"
+            text: "Class"
         }
 
         MouseArea {
@@ -26,9 +26,9 @@ RowLayout {
             onClicked: {
                 parent.color = 'grey'
                 uInterfaceClassButton.color = 'white'
-                uChildClassButton.color = "white"
+//                uChildClassButton.color = "white"
                 dispatcher.setClassState(0)
-                uClassPanel.disableParentField()
+                uClassPanel.enableParentField()
             }
         }
     }
@@ -49,35 +49,35 @@ RowLayout {
             onClicked: {
                 parent.color = 'grey'
                 uBaseClassButton.color = 'white'
-                uChildClassButton.color = "white"
+//                uChildClassButton.color = "white"
                 dispatcher.setClassState(1)
                 uClassPanel.disableParentField()
             }
         }
     }
 
-    //Child button
-    Rectangle {
-        id: uChildClassButton
-        color: "white"
-        Layout.fillHeight: true
-        Layout.fillWidth: true
+//    //Child button
+//    Rectangle {
+//        id: uChildClassButton
+//        color: "white"
+//        Layout.fillHeight: true
+//        Layout.fillWidth: true
 
-        StyledText {
-            text: "Child"
-        }
+//        StyledText {
+//            text: "Child"
+//        }
 
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                parent.color = 'grey'
-                uBaseClassButton.color = 'white'
-                uInterfaceClassButton.color = "white"
-                dispatcher.setClassState(2)
-                uClassPanel.enableParentField()
-            }
-        }
-    }
+//        MouseArea {
+//            anchors.fill: parent
+//            onClicked: {
+//                parent.color = 'grey'
+//                uBaseClassButton.color = 'white'
+//                uInterfaceClassButton.color = "white"
+//                dispatcher.setClassState(2)
+//                uClassPanel.enableParentField()
+//            }
+//        }
+//    }
 
 
 }

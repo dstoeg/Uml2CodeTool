@@ -31,14 +31,16 @@ Canvas {
             var methods = dispatcher.getClassMethods(i);
             var attributes = dispatcher.getClassAttributes(i);
             var parent = dispatcher.getClassParent(i);
+            var isInterface = dispatcher.getClassIsInterface(i)
+            var isAbstract = dispatcher.getClassIsAbstract(i)
             var x = gridLayout.getI(name);
             var y = gridLayout.getJ(name);
-            drawClass(x, y, name, methods, attributes, parent);
+            drawClass(x, y, name, methods, attributes, parent, isInterface, isAbstract);
         }
     }
 
 
-    function drawClass(coordX, coordY, name, methods, attributes, parent, referenced) {
+    function drawClass(coordX, coordY, name, methods, attributes, parent, isInterface, isAbstract) {
 
         var x = getXfromCoord(coordX)
         var y = getYfromCoord(coordY)
@@ -80,6 +82,8 @@ Canvas {
         // draw class name
         context.moveTo(x+textOffset, y+nameOffset);
         context.beginPath();
+        if(isInterface)
+            name = "<<"+name+">>";
         wrapText(context, name, x+textOffset, y+nameOffset, classWidth, classHeight * 0.1)
         context.stroke();
 
@@ -364,9 +368,10 @@ Canvas {
             var idx = dispatcher.getClassIndex(name);
             var methods = dispatcher.getClassMethods(idx);
             var attributes = dispatcher.getClassAttributes(idx);
+            var parent = dispatcher.getClassParent(idx)
 
             // TODO add parent
-            uClassPanel.setInformation(i,j,name, "", methods, attributes)
+            uClassPanel.setInformation(i,j,name, parent, methods, attributes)
 
         }
         else {

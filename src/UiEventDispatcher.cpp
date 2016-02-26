@@ -167,6 +167,18 @@ QString UiEventDispatcher::getClassParent(int index)
     return QString::fromStdString(parent->getName());
 }
 
+bool UiEventDispatcher::getClassIsInterface(int index)
+{
+    uInheritable *obj = getClass(index);
+    return obj->isInterface();
+}
+
+bool UiEventDispatcher::getClassIsAbstract(int index)
+{
+    uInheritable *obj = getClass(index);
+    return obj->isAbstract();
+}
+
 int UiEventDispatcher::getClassReferenceCount(QString name)
 {
     uInheritable * obj = mClassDiagram->find(name);

@@ -79,6 +79,16 @@ bool uInheritable::hasParent() const
     return mHasParent;
 }
 
+bool uInheritable::isInterface() const
+{
+    return mIsInterface;
+}
+
+bool uInheritable::isAbstract() const
+{
+    return mIsAbstract;
+}
+
 bool uInheritable::operator==(const uInheritable &class1) const
 {
     return mName==class1.getName() && mAccess==class1.getAccess() && mAttributes==class1.getAttributes() &&
