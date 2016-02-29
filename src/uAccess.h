@@ -36,7 +36,6 @@ static std::string getAccessString(uAccess access) {
             break;
     }
 }
-
 /**
  * @brief getAccessUmlString
  * @param access
@@ -82,6 +81,25 @@ static uAccess getAccessFromChar(char c) {
             return uPublic;
             break;
     }
+}
+
+/**
+ * @brief This function is used to read from the graphic diagram and create the class, method or attribute in the logic.
+ * @param str
+ * @return the uAccess (public, private or protected) depending on the string
+ */
+
+static uAccess getAccessFromString(std::string str) {
+    if(str == "public")
+        return uPublic;
+
+    if(str == "private")
+        return uPrivate;
+
+    if(str == "protected")
+        return uProtected;
+
+    return uPublic;
 }
 
 
