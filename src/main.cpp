@@ -96,6 +96,8 @@ int main()
 }
 */
 
+#include <iostream>
+
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
@@ -104,8 +106,24 @@ int main()
 #include "uGridLayout.h"
 #include "uDebugPrinter.h"
 
+#include "test/TestMain.h"
+
+#define TEST
+
 int main(int argc, char *argv[])
 {
+
+    using namespace std;
+
+#ifdef TEST
+
+    // run all test cases first
+    cout << "execute tests" << endl;
+    TestMain tests;
+    tests.execute();
+
+#endif
+
     QGuiApplication app(argc, argv);
 
     UiEventDispatcher dispatcher;
