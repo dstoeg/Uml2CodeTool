@@ -8,6 +8,7 @@ ColumnLayout {
     id: classPanel
 
     Label {
+        id: inheritLabel
         Layout.fillHeight: true
         Layout.fillWidth: true
 
@@ -19,13 +20,6 @@ ColumnLayout {
 
     RowLayout{
         TextField {
-    //        style: TextFieldStyle {
-    //                textColor: "black"
-    //                background: Rectangle {
-    //                    id: parentFieldBackground
-    //                    border.color: "black"
-    //                }
-    //            }
             id: parentField
             Layout.fillHeight: true
             Layout.fillWidth: true
@@ -34,12 +28,14 @@ ColumnLayout {
             font.italic: false
             font.pointSize: 9
             enabled: true
+            onTextChanged: updateMethod()
         }
 
         CheckBox {
             id: abstractField;
             Layout.fillWidth: false
             text: qsTr("Abstract")
+            onCheckedChanged: updateMethod()
         }
     }
 
@@ -56,26 +52,6 @@ ColumnLayout {
                 horizontalAlignment: Text.AlignLeft
             }
         }
-//        Label {
-//            width: parent.width/5
-//            Layout.fillHeight: true
-//            Layout.fillWidth: true
-//            //anchors.centerIn: xField
-//            StyledText {
-//                text: "X (0-"+(.getWidth()-1)+")"
-//                horizontalAlignment: xField.Top
-//            }
-//        }
-//        Label {
-//            Layout.fillHeight: true
-//            width: parent.width/5
-//            Layout.fillWidth: true
-//            //anchors.centerIn: yField
-//            StyledText {
-//                text: "Y (0-" + (gridLayout.getHeight()-1) + ")"
-//                horizontalAlignment: yField.Top
-//            }
-//        }
     }
 
     RowLayout {
@@ -91,27 +67,8 @@ ColumnLayout {
             font.bold: false
             font.italic: false
             font.pointSize: 9
+            onTextChanged: updateMethod()
         }
-//        TextField {
-//            id: xField
-//            Layout.fillHeight: true
-//            Layout.fillWidth: true
-//            width: parent.width/5
-//            font.family: "Droid Sans"
-//            font.bold: false
-//            font.italic: false
-//            font.pointSize: 9
-//        }
-//        TextField {
-//            id: yField
-//            Layout.fillHeight: true
-//            Layout.fillWidth: true
-//            width: parent.width/5
-//            font.family: "Droid Sans"
-//            font.bold: false
-//            font.italic: false
-//            font.pointSize: 9
-//        }
     }
 
     Label {
@@ -132,6 +89,7 @@ ColumnLayout {
         font.bold: false
         font.italic: false
         font.pointSize: 9
+        onTextChanged: updateMethod()
     }
 
     Label {
@@ -151,6 +109,7 @@ ColumnLayout {
         font.bold: false
         font.italic: false
         font.pointSize: 9
+        onTextChanged: updateMethod()
     }
 
     RowLayout {
@@ -166,8 +125,6 @@ ColumnLayout {
             Layout.fillHeight: true
             Layout.fillWidth: true
             onClicked: {
-//                var coordX = xField.text
-//                var coordY = yField.text
                 var name = nameField.text
                 var parent = parentField.text
                 var methods = methodField.text
@@ -198,8 +155,7 @@ ColumnLayout {
                     }
                     else if (!gridLayout.isEmpty(Number(10), Number(10))){
                         //TODO notify space not empty
-//                        xField.textColor = "red"
-//                        yField.textColor = "red"
+
                         uDebugger.qPrintText("Position (0,0) not Empty");
                     }
                     else{
@@ -209,41 +165,41 @@ ColumnLayout {
             }
         }
 
-        Button {
-            StyledText {
-                text: "Update"
-            }
-            Layout.fillHeight: true
-            Layout.fillWidth: true
-            onClicked: {
+//        Button {
+//            StyledText {
+//                text: "Update"
+//            }
+//            Layout.fillHeight: true
+//            Layout.fillWidth: true
+//            onClicked: {
 
-                if (drawingCanvas.selectedClass != "") {
-//                    var i = xField.text
-//                    var j = yField.text
-                    var name = nameField.text
-                    var parent = parentField.text
-                    var methods = methodField.text
-                    var attributes = attributeField.text
-                    var isAbstract = abstractField.checked
+//                if (drawingCanvas.selectedClass != "") {
 
 
-                    //Move the class in the grid
-                    gridLayout.moveClass(drawingCanvas.selectedClass, name, i, j)
+//                    var name = nameField.text
+//                    var parent = parentField.text
+//                    var methods = methodField.text
+//                    var attributes = attributeField.text
+//                    var isAbstract = abstractField.checked
 
-                    //Check if the class has a parent
-                    if(parent != "")
-                        dispatcher.setClassState(2)
 
-                    //Update the class
-                    dispatcher.updateClass(drawingCanvas.selectedClass, name, parent, methods, attributes, isAbstract)
+//                    //Move the class in the grid
+//                    gridLayout.changeObjectName(drawingCanvas.selectedClass, name)
 
-                    //Repaint the canvas
-                    drawingCanvas.requestPaint()
-                    clearTextFields()
-                    drawingCanvas.selectedClass = ""
-                }
-            }
-        }
+//                    //Check if the class has a parent
+//                    if(parent != "")
+//                        dispatcher.setClassState(2)
+
+//                    //Update the class
+//                    dispatcher.updateClass(drawingCanvas.selectedClass, name, parent, methods, attributes, isAbstract)
+
+//                    //Repaint the canvas
+//                    drawingCanvas.requestPaint()
+//                    clearTextFields()
+//                    drawingCanvas.selectedClass = ""
+//                }
+//            }
+//        }
         Button {
             StyledText {
                 text: "Delete"
@@ -257,7 +213,7 @@ ColumnLayout {
                     if (gridLayout.contains(name)) {
 
                         dispatcher.removeClass(name)
-                        gridLayout.removeClass(name)
+                        gridLayout.removeObject(name)
 
                         drawingCanvas.requestPaint()
                         clearTextFields()
@@ -270,8 +226,7 @@ ColumnLayout {
     }
 
     function clearTextFields() {
-//        xField.text = ""
-//        yField.text = ""
+        drawingCanvas.selectedClass = ""
         nameField.text = ""
         parentField.text = ""
         methodField.text = ""
@@ -279,9 +234,7 @@ ColumnLayout {
         abstractField.checked = false;
     }
 
-    function setInformation(x, y, name, parent, methods, attributes, isAbstract, isInterface) {
-//        xField.text = x
-//        yField.text = y
+    function setInformation(name, parent, methods, attributes, isAbstract, isInterface) {
         nameField.text = name
         parentField.text = parent
         methodField.text = methods
@@ -297,19 +250,59 @@ ColumnLayout {
     }
 
     function setFieldsBlack(){
-//        xField.textColor = "black"
-//        yField.textColor = "black"
         nameField.textColor = "black"
         parentField.textColor = "black"
     }
 
     function disableParentField() {
         parentField.enabled = false
-        //parentField.style.color = "grey"
+        parentField.visible = false
+        inheritLabel.visible = false
     }
 
     function enableParentField() {
         parentField.enabled = true
-        //parentFieldBackground.color = "white"
+        parentField.visible = true
+        inheritLabel.visible = true
+    }
+
+    function disableAbstractField()
+    {
+        abstractField.enabled = false
+        abstractField.visible = false
+    }
+
+    function enableAbstractField()
+    {
+        abstractField.enabled = true
+        abstractField.visible = true
+    }
+
+    function updateMethod()
+    {
+        if (drawingCanvas.selectedClass != "") {
+
+            var name = nameField.text
+            var parent = parentField.text
+            var methods = methodField.text
+            var attributes = attributeField.text
+            var isAbstract = abstractField.checked
+
+
+            //Move the class in the grid
+            gridLayout.changeObjectName(drawingCanvas.selectedClass, name)
+
+            //Check if the class has a parent
+            if(parent != "")
+                dispatcher.setClassState(2)
+
+            //Update the class
+            dispatcher.updateClass(drawingCanvas.selectedClass, name, parent, methods, attributes, isAbstract)
+
+            //Repaint the canvas
+            drawingCanvas.requestPaint()
+            //clearTextFields()
+            //drawingCanvas.selectedClass = ""
+        }
     }
 }

@@ -25,8 +25,9 @@ public:
     Q_INVOKABLE int getWidth() const;
     Q_INVOKABLE int getHeight() const;
 
-    bool setWidth(int width);
-    bool setHeight(int height);
+    Q_INVOKABLE bool setWidth(int width);
+    Q_INVOKABLE bool setHeight(int height);
+    Q_INVOKABLE bool setPrinted(QString const& name);
 
     Q_INVOKABLE int getX(QString const& name) const;
     Q_INVOKABLE int getY(QString const& name) const;

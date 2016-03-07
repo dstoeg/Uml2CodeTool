@@ -33,13 +33,20 @@ ApplicationWindow {
             id: drawingCanvas
             Layout.preferredWidth: parent.width * 0.75
             Layout.preferredHeight: parent.height
+            onHeightChanged: gridLayout.setHeight(Number(height));
+            onWidthChanged: gridLayout.setWidth(Number(width));
+
             MouseArea {
                 anchors.fill: parent
                 acceptedButtons: Qt.LeftButton
-                onClicked: drawingCanvas.selectClass(mouse.x, mouse.y)
-                drag.target: drawingCanvas
-                drag.onActiveChanged: drawingCanvas.moveClass(mouse.x, mouse.y)
-                //onDragChanged:
+                onPressed: {
+                    drawingCanvas.selectedX = mouse.x
+                    drawingCanvas.selectedY = mouse.y
+                    drawingCanvas.selectClass(mouse.x, mouse.y)
+                }
+                onMouseXChanged: drawingCanvas.moveClass(mouse.x, mouse.y)
+                onMouseYChanged: drawingCanvas.moveClass(mouse.x, mouse.y)
+                onReleased: drawingCanvas.releasedMouse()
                 cursorShape: Qt.UpArrowCursor
             }
         }

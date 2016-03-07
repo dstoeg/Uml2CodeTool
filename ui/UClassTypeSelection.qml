@@ -26,10 +26,7 @@ RowLayout {
             anchors.fill: parent
             onClicked: {
                 setClassButton()
-//                parent.color = 'grey'
-//                uInterfaceClassButton.color = 'white'
-//                dispatcher.setClassState(0)
-//                uClassPanel.enableParentField()
+                uClassPanel.updateMethod()
             }
         }
     }
@@ -49,10 +46,7 @@ RowLayout {
             anchors.fill: parent
             onClicked: {
                 setInterfaceButton()
-//                parent.color = 'grey'
-//                uBaseClassButton.color = 'white'
-//                dispatcher.setClassState(1)
-//                uClassPanel.disableParentField()
+                uClassPanel.updateMethod()
             }
         }
     }
@@ -63,6 +57,7 @@ RowLayout {
         uBaseClassButton.color = 'white'
         dispatcher.setClassState(1)
         uClassPanel.disableParentField()
+        uClassPanel.disableAbstractField()
     }
 
     function setClassButton()
@@ -71,6 +66,7 @@ RowLayout {
         uInterfaceClassButton.color = 'white'
         dispatcher.setClassState(0)
         uClassPanel.enableParentField()
+        uClassPanel.enableAbstractField()
     }
 
 }

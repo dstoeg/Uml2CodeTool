@@ -62,13 +62,11 @@ bool uGridLayout::changeObjectName(const QString &name, const QString &newName)
 
 bool uGridLayout::moveObject(const QString &name, int newX, int newY)
 {
-    //if(!checkBounds(newX, newY)) return false;
-
     for(TGridObjectConstIter iter=mTable.begin(); iter != mTable.end(); iter++) {
         if ((*iter)->getName() == name) {
-            if(checkBounds(newX, newY, (*iter)->getWidth(), (*iter)->getHeight())){
-                (*iter)->setY(newY);
-                (*iter)->setX(newX);
+            if(checkBounds((*iter)->getX() + newX, (*iter)->getY() + newY, (*iter)->getWidth(), (*iter)->getHeight())){
+                (*iter)->setY((*iter)->getY() + newY);
+                (*iter)->setX((*iter)->getX() + newX);
                 return true;
             }
         }
@@ -86,7 +84,7 @@ QString uGridLayout::getString(int x, int y) const
     }
     return "";
 }
-//TODO redefine width and height------------------
+
 int uGridLayout::getWidth() const
 {
     return mWidth;
@@ -101,6 +99,7 @@ bool uGridLayout::setWidth(int width)
 {
     if (width < 0) return false;
     mWidth = width;
+    //uDebugPrinter::printText("Set grid width: " + to_string(width));
     return true;
 }
 
@@ -108,9 +107,20 @@ bool uGridLayout::setHeight(int height)
 {
     if (height < 0) return false;
     mHeight = height;
+    //uDebugPrinter::printText("Set grid height: " + to_string(height));
     return true;
 }
-//--------------------------------------------
+
+bool uGridLayout::setPrinted(const QString &name)
+{
+    for(TGridObjectConstIter iter=mTable.begin(); iter != mTable.end(); iter++) {
+        if ((*iter)->getName() == name) {
+            (*iter)->setPrinted(true);
+            return true;
+        }
+    }
+    return false;
+}
 
 int uGridLayout::getX(const QString &name) const
 {

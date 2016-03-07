@@ -40,12 +40,14 @@ public:
     int getWidth() const;
     int getHeight() const;
     QString getName() const;
+    bool isPrinted() const;
 
     bool setX(int newX);
     bool setY(int newY);
     bool setWidth(int newWidth);
     bool setHeight(int newHeight);
     bool setName(const QString &newName);
+    void setPrinted(bool printed);
 
 protected:
     int mX;
@@ -53,6 +55,7 @@ protected:
     int mWidth;
     int mHeight;
     QString mName;
+    bool mPrinted;
 
 };
 

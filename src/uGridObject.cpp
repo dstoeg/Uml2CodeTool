@@ -51,6 +51,11 @@ QString uGridObject::getName() const
     return mName;
 }
 
+bool uGridObject::isPrinted() const
+{
+    return mPrinted;
+}
+
 bool uGridObject::setX(int newX)
 {
     //TODO add comparison >= with GridLayout max width
@@ -88,5 +93,10 @@ bool uGridObject::setName(const QString &newName)
     if( newName.toStdString() == "") return false;
     this->mName = newName;
     return true;
+}
+
+void uGridObject::setPrinted(bool printed)
+{
+    this->mPrinted = printed;
 }
 

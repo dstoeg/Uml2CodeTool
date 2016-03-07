@@ -10,6 +10,8 @@ Canvas {
     Layout.margins: 5
 
     property string selectedClass: ""
+    property int selectedX: 0
+    property int selectedY: 0
 
     onPaint: {
         uClassPanel.setFieldsBlack()
@@ -358,29 +360,26 @@ Canvas {
 
 
     function selectClass(x, y){
-        uDebugger.qPrintText("Selected area in (" + x +"," + y + ")");
 
-//        var i = getCoordFromX(x)
-//        var j = getCoordFromY(y)
+        uDebugger.qPrintText("Selected area in (" + x +"," + y + ")");
 
         uClassPanel.setFieldsBlack()
 
-        if (!gridLayout.isEmpty(parseInt(x), parseInt(y))) {
+        var name = gridLayout.getString(parseInt(x), parseInt(y))
+        if (name != "") {
 
-            var name = gridLayout.getString(parseInt(x), parseInt(y))
             selectedClass = name
-            //moveClass(Number(200),Number(200))
-            uDebugger.qPrintText("name: " + name)
 
-//            var idx = dispatcher.getClassIndex(name);
-//            var methods = dispatcher.getClassMethods(idx);
-//            var attributes = dispatcher.getClassAttributes(idx);
-//            var parent = dispatcher.getClassParent(idx)
-//            var isAbstract = dispatcher.getClassIsAbstract(idx)
-//            var isInterface = dispatcher.getClassIsInterface(idx)
+            uDebugger.qPrintText("Selected class: " + name)
 
-//            // TODO add abstract and class/interface
-//            uClassPanel.setInformation(i,j,name, parent, methods, attributes, isAbstract, isInterface)
+            var idx = dispatcher.getClassIndex(name);
+            var methods = dispatcher.getClassMethods(idx);
+            var attributes = dispatcher.getClassAttributes(idx);
+            var parent = dispatcher.getClassParent(idx)
+            var isAbstract = dispatcher.getClassIsAbstract(idx)
+            var isInterface = dispatcher.getClassIsInterface(idx)
+
+            uClassPanel.setInformation(name, parent, methods, attributes, isAbstract, isInterface)
 
         }
         else {
@@ -391,18 +390,21 @@ Canvas {
 
     function moveClass(x, y)
     {
-        if (!gridLayout.isEmpty(parseInt(x), parseInt(y)))
-        {
-            var name = gridLayout.getString(parseInt(x), parseInt(y))
-            selectedClass = name
-        }
-
+        var movX = x - selectedX
+        var movY = y - selectedY
         if(selectedClass != "")
         {
             uDebugger.qPrintText("Move class: " + selectedClass)
-            gridLayout.moveObject(selectedClass, Number(x), Number(y))
+            gridLayout.moveObject(selectedClass, Number(movX), Number(movY))
             requestPaint()
         }
+        selectedX = x;
+        selectedY = y;
+    }
+
+    function releasedMouse()
+    {
+        uDebugger.qPrintText("Mouse RELEASED")
     }
 
     function getXfromCoord(coordX)
@@ -427,12 +429,12 @@ Canvas {
 
     function getClassWidth()
     {
-        return Number(width)/(gridLayout.getWidth()/120)
+        return Number(width)/9
     }
 
     function getClassHeight()
     {
-        return (1.5)*Number(height)/(gridLayout.getHeight()/170)
+        return Number(height)/6;
     }
 
     //Class width + right padding
