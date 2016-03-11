@@ -18,15 +18,15 @@ public:
     static TParameters parseAttributes(std::string const& text);
     static uLanguageStrategy * parseLanguage(std::string const& language);
     static uProjectFile * parseDevEnv(std::string const& devenv);
-    static std::string createMethodString(TMethods const& methods);
-    static std::string createAttributeString(TParameters const& attributes);
+    static std::string createMethodString(TMethods const& methods, bool accessSymbol);
+    static std::string createAttributeString(TParameters const& attributes, bool accessSymbol);
     static uAccess dAccess;
 
     // qml functions
-    static QString qCreateMethodString(TMethods const& methods);
-    static QString qCreateMethodStringFromClass(uInheritable * obj);
-    static QString qCreateAttributeString(TParameters const& attributes);
-    static QString qCreateAttributeStringFromClass(uInheritable * obj);
+    static QString qCreateMethodString(TMethods const& methods, bool accessSymbol);
+    static QString qCreateMethodStringFromClass(uInheritable * obj, bool accessSymbol);
+    static QString qCreateAttributeString(TParameters const& attributes, bool accessSymbol);
+    static QString qCreateAttributeStringFromClass(uInheritable * obj, bool accessSymbol);
 
 private:
     static std::vector<std::string> splitString(std::string const& text);

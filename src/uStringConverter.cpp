@@ -187,13 +187,16 @@ uLanguageStrategy * uStringConverter::parseLanguage(const string &language)
     return strategy;
 }
 
-std::string uStringConverter::createMethodString(const TMethods &methods)
+std::string uStringConverter::createMethodString(const TMethods &methods, bool accessSymbol)
 {
     stringstream text;
     for (TMethodsConstIter iter = methods.begin(); iter < methods.end(); ++iter) {
 
         // access
-        text << getAccessUmlString((*iter)->getAccess());
+        if(accessSymbol)
+            text << getAccessUmlString((*iter)->getAccess());
+        else
+            text << getAccessString((*iter)->getAccess());
 
         // method name
         text << " " << (*iter)->getName() << "(";
@@ -243,13 +246,16 @@ bool uStringConverter::isAccessString(std::string str){
     return (str == "public" || str == "private" || str == "protected");
 }
 
-std::string uStringConverter::createAttributeString(const TParameters &attributes)
+std::string uStringConverter::createAttributeString(const TParameters &attributes, bool accessSymbol)
 {
     stringstream text;
     for (TParametersConstIter iter = attributes.begin(); iter < attributes.end(); ++iter) {
 
         // access
-        text << getAccessUmlString((*iter)->getAccess());
+        if(accessSymbol)
+            text << getAccessUmlString((*iter)->getAccess());
+        else
+            text << getAccessString((*iter)->getAccess());
 
         // attribute name
         text << " " << (*iter)->getName() << " : ";
@@ -264,24 +270,24 @@ std::string uStringConverter::createAttributeString(const TParameters &attribute
     return text.str();
 }
 
-QString uStringConverter::qCreateMethodString(const TMethods &methods)
+QString uStringConverter::qCreateMethodString(const TMethods &methods, bool accessSymbol)
 {
-    return QString::fromStdString(createMethodString(methods));
+    return QString::fromStdString(createMethodString(methods, accessSymbol));
 }
 
-QString uStringConverter::qCreateMethodStringFromClass(uInheritable * obj)
+QString uStringConverter::qCreateMethodStringFromClass(uInheritable * obj,  bool accessSymbol)
 {
-    return qCreateMethodString(obj->getMethods());
+    return qCreateMethodString(obj->getMethods(), accessSymbol);
 }
 
-QString uStringConverter::qCreateAttributeString(const TParameters &attributes)
+QString uStringConverter::qCreateAttributeString(const TParameters &attributes, bool accessSymbol)
 {
-    return QString::fromStdString(createAttributeString(attributes));
+    return QString::fromStdString(createAttributeString(attributes, accessSymbol));
 }
 
-QString uStringConverter::qCreateAttributeStringFromClass(uInheritable *obj)
+QString uStringConverter::qCreateAttributeStringFromClass(uInheritable *obj, bool accessSymbol)
 {
-    return qCreateAttributeString(obj->getAttributes());
+    return qCreateAttributeString(obj->getAttributes(), accessSymbol);
 }
 
 

@@ -30,8 +30,8 @@ Canvas {
     function drawClasses(){
         for(var i = 0; i < dispatcher.getDiagramSize(); i++) {
             var name = dispatcher.getClassName(i);
-            var methods = dispatcher.getClassMethods(i);
-            var attributes = dispatcher.getClassAttributes(i);
+            var methods = dispatcher.getClassMethods(i, true); //true implies "access" specified with symbol (+,-,#)
+            var attributes = dispatcher.getClassAttributes(i, true); //true implies "access" specified with symbol (+,-,#)
             var parent = dispatcher.getClassParent(i);
             var isInterface = dispatcher.getClassIsInterface(i)
             var isAbstract = dispatcher.getClassIsAbstract(i)
@@ -373,8 +373,8 @@ Canvas {
             uDebugger.qPrintText("Selected class: " + name)
 
             var idx = dispatcher.getClassIndex(name);
-            var methods = dispatcher.getClassMethods(idx);
-            var attributes = dispatcher.getClassAttributes(idx);
+            var methods = dispatcher.getClassMethods(idx, false); //False implies "access" specified with letters (public, private...)
+            var attributes = dispatcher.getClassAttributes(idx, false); //False implies "access" specified with letters
             var parent = dispatcher.getClassParent(idx)
             var isAbstract = dispatcher.getClassIsAbstract(idx)
             var isInterface = dispatcher.getClassIsInterface(idx)

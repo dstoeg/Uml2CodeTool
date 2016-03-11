@@ -128,20 +128,20 @@ QString UiEventDispatcher::getClassName(int index)
     return QString::fromStdString(obj->getName());
 }
 
-QString UiEventDispatcher::getClassMethods(int index)
+QString UiEventDispatcher::getClassMethods(int index, bool accessSymbol)
 {
     uInheritable * obj = getClass(index);
     if (obj == NULL) return "";
 
-    return uStringConverter::qCreateMethodStringFromClass(obj);
+    return uStringConverter::qCreateMethodStringFromClass(obj, accessSymbol);
 }
 
-QString UiEventDispatcher::getClassAttributes(int index)
+QString UiEventDispatcher::getClassAttributes(int index, bool accessSymbol)
 {
     uInheritable * obj = getClass(index);
     if (obj == NULL) return "";
 
-    return uStringConverter::qCreateAttributeStringFromClass(obj);
+    return uStringConverter::qCreateAttributeStringFromClass(obj, accessSymbol);
 }
 
 int UiEventDispatcher::getClassIndex(QString name)

@@ -165,41 +165,6 @@ ColumnLayout {
             }
         }
 
-//        Button {
-//            StyledText {
-//                text: "Update"
-//            }
-//            Layout.fillHeight: true
-//            Layout.fillWidth: true
-//            onClicked: {
-
-//                if (drawingCanvas.selectedClass != "") {
-
-
-//                    var name = nameField.text
-//                    var parent = parentField.text
-//                    var methods = methodField.text
-//                    var attributes = attributeField.text
-//                    var isAbstract = abstractField.checked
-
-
-//                    //Move the class in the grid
-//                    gridLayout.changeObjectName(drawingCanvas.selectedClass, name)
-
-//                    //Check if the class has a parent
-//                    if(parent != "")
-//                        dispatcher.setClassState(2)
-
-//                    //Update the class
-//                    dispatcher.updateClass(drawingCanvas.selectedClass, name, parent, methods, attributes, isAbstract)
-
-//                    //Repaint the canvas
-//                    drawingCanvas.requestPaint()
-//                    clearTextFields()
-//                    drawingCanvas.selectedClass = ""
-//                }
-//            }
-//        }
         Button {
             StyledText {
                 text: "Delete"
@@ -301,8 +266,6 @@ ColumnLayout {
 
             //Repaint the canvas
             drawingCanvas.requestPaint()
-            //clearTextFields()
-            //drawingCanvas.selectedClass = ""
         }
     }
 }
