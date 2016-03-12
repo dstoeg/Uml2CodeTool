@@ -136,7 +136,7 @@ ColumnLayout {
                     parentField.textColor = "red"
                 }
                 else {
-                    if (!gridLayout.contains(name)/* && gridLayout.isEmpty(parseInt(coordX), parseInt(coordY))*/) {
+                    if (name != "" && !gridLayout.contains(name)) {
 
                         //Add the class to the grid
                         gridLayout.addObject(Number(10),Number(10),drawingCanvas.getClassWidth(),drawingCanvas.getClassHeight(), name, 0)
@@ -245,7 +245,7 @@ ColumnLayout {
 
     function updateMethod()
     {
-        if (drawingCanvas.selectedClass != "") {
+        if (drawingCanvas.selectedClass != "" && !drawingCanvas.selecting) {
 
             var name = nameField.text
             var parent = parentField.text

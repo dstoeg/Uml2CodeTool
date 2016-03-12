@@ -12,6 +12,7 @@ Canvas {
     property string selectedClass: ""
     property int selectedX: 0
     property int selectedY: 0
+    property bool selecting: false //this is a flag for avoiding uClassPanel.updateMethod() to be call when a class is clicked
 
     onPaint: {
         uClassPanel.setFieldsBlack()
@@ -372,6 +373,9 @@ Canvas {
 
             uDebugger.qPrintText("Selected class: " + name)
 
+            selecting = true; //avoid uClassPanel.updateMethod() to be called
+
+            //Get information from the logic background via uDispatcher
             var idx = dispatcher.getClassIndex(name);
             var methods = dispatcher.getClassMethods(idx, false); //False implies "access" specified with letters (public, private...)
             var attributes = dispatcher.getClassAttributes(idx, false); //False implies "access" specified with letters
@@ -379,7 +383,10 @@ Canvas {
             var isAbstract = dispatcher.getClassIsAbstract(idx)
             var isInterface = dispatcher.getClassIsInterface(idx)
 
+            //set information in the text fields
             uClassPanel.setInformation(name, parent, methods, attributes, isAbstract, isInterface)
+
+            selecting = false;//allows uClassPanel.updateMethod() to be called
 
         }
         else {
