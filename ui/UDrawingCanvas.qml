@@ -26,9 +26,11 @@ Canvas {
         context.fill();
 
         drawClasses()
+        drawSegments()
     }
 
-    function drawClasses(){
+    function drawClasses()
+    {
         for(var i = 0; i < dispatcher.getDiagramSize(); i++) {
             var name = dispatcher.getClassName(i);
             var methods = dispatcher.getClassMethods(i, true); //true implies "access" specified with symbol (+,-,#)
@@ -42,11 +44,21 @@ Canvas {
         }
     }
 
+    function drawSegments()
+    {
+        for(var i = 0; i < gridLayout.getSegmentsSize(); i++)
+        {
+            var x = gridLayout.getSegmentX(i);
+            var y = gridLayout.getSegmentY(i);
+            var width = gridLayout.getSegmentWidth(i);
+            var height = gridLayout.getSegmentHeight(i);
+            drawSegmentWidthHeight(x, y, width, height);
+        }
+    }
 
-    function drawClass(coordX, coordY, name, methods, attributes, parent, isInterface, isAbstract) {
 
-//        var x = getXfromCoord(coordX)
-//        var y = getYfromCoord(coordY)
+    function drawClass(coordX, coordY, name, methods, attributes, parent, isInterface, isAbstract)
+    {
         uDebugger.qPrintText("Writing class in the position (" + coordX + "," + coordY + ")")
         var x = Number(coordX);
         var y = Number(coordY);
@@ -164,14 +176,73 @@ Canvas {
         uDebugger.qPrintText("obj i: " + objI + ", j: " + objJ)
         uDebugger.qPrintText("parent i: " + parentI + ", j: " + parentJ)
 
-        var objX = getXfromCoord(objI);
-        var objY = getYfromCoord(objJ)
+        drawInheritanceArrow(objI, objJ, parentI, parentJ)
+    }
 
-        var parentX = getXfromCoord(parentI)
-        var parentY = getYfromCoord(parentJ)
+    function drawSegment(x, y, x_to, y_to)
+    {
+        context.strokeStyle = "black";
+        context.moveTo(x, y)
+        context.lineTo(x_to, y_to)
+        context.stroke();
+    }
 
+    function drawSegmentWidthHeight(x, y, width, height)
+    {
+        context.strokeStyle = "black";
+        context.moveTo(x, y)
+        context.lineTo(x + width, y+ height)
+        context.stroke();
+    }
 
-        drawInheritanceArrow(objX, objY, parentX, parentY)
+    function autoGenerateInheritanceArrow(x, y, x_to, y_to)
+    {
+        var paddingX = Number(offsetX()) - Number(getClassWidth())
+        var paddingY = Number(offsetY()) - Number(getClassHeight())
+
+        //Line1 up from child class
+        gridLayout.addObject(x+getClassWidth()/2, y, 0, -paddingY/4,
+                             ("seg("+(x+getClassWidth()/2).toString()+"_"+(y).toString()+")(0_"+(-paddingY/4).toString()+")")
+                             , 1) //This 1 means that I am creating a uGridSegment
+        //Line2 right/left
+        var newX;
+        if(x_to<x)
+        {
+            gridLayout.addObject(x+getClassWidth()/2, y - paddingY/4, - Number(paddingX)/3 - getClassWidth()/2 ,0
+                                 ("seg("+(x+getClassWidth()/2).toString()+"_"+(y - paddingY/4).toString()+")("
+                                  +(- Number(paddingX)/3 - getClassWidth()/2).toString()+"_0)")
+                                 , 1)
+            newX = Number(x- Number(paddingX)/3)
+        }
+        else{
+            gridLayout.addObject(x+getClassWidth()/2, y - paddingY/4, paddingX/3 ,0,
+                                 ("seg("+(x+getClassWidth()/2).toString()+"_"+(y - paddingY/4).toString()+")("
+                                  +(paddingX/3).toString()+"_0)")
+                                 , 1)
+            newX = Number(x + Number(getClassWidth()) + paddingX/3)
+        }
+
+        //Line3 up/down
+        gridLayout.addObject(newX ,y - paddingY/4, 0, y_to - y + getClassHeight() + paddingY/2,
+                             ("seg("+(newX).toString()+"_"+(y - paddingY/4).toString()+")(0_"
+                              +(y_to - y + getClassHeight() + paddingY/2).toString()+")")
+                             , 1)
+
+        //Line4 left/rght
+        gridLayout.addObject(newX ,y_to + getClassHeight() + paddingY/4, x_to + getClassWidth()/2 -newX ,0,
+                             ("seg("+(newX).toString()+"_"+(y_to + getClassHeight() + paddingY/4).toString()+")("
+                              +(x_to + getClassWidth()/2 -newX).toString()+"_0)")
+                             , 1)
+
+        //Line5 up Parent
+        gridLayout.addObject(x_to + getClassWidth()/2 ,y_to + getClassHeight() + paddingY/4, 0 ,-paddingY/4,
+                             ("seg("+(x_to + getClassWidth()/2).toString()+"_"+(y_to + getClassHeight() + paddingY/4).toString()+
+                              ")(0_"+(-paddingY/4).toString()+")")
+                             , 1)
+
+//        var triangleW = getClassWidth()/10
+//        var triangleH = paddingY/5
+//        drawTriangle(x_to + getClassWidth()/2,y_to + getClassHeight(), triangleW ,triangleH ,true);
     }
 
     function drawInheritanceArrow(x, y, x_to, y_to) {
@@ -181,52 +252,41 @@ Canvas {
 
         context.strokeStyle = "black";
         //Line1 up from child class
-        context.moveTo(x+getClassWidth()/2, y)
-        context.lineTo(x+getClassWidth()/2, y - paddingY/4)
+        drawSegment(x+getClassWidth()/2, y, x+getClassWidth()/2, y - paddingY/4)
         //Line2 right/left
-        context.moveTo(x+getClassWidth()/2, y - paddingY/4)
         var newX;
         if(x_to<x)
         {
-            context.lineTo(x - Number(paddingX)/3 ,y - paddingY/4)
+            drawSegment(x+getClassWidth()/2, y - paddingY/4, x - Number(paddingX)/3 ,y - paddingY/4)
             newX = Number(x- Number(paddingX)/3)
         }
         else{
-            context.lineTo(x + Number(getClassWidth()) + paddingX/3 ,y - paddingY/4)
+            drawSegment(x+getClassWidth()/2, y - paddingY/4, x + Number(getClassWidth()) + paddingX/3 ,y - paddingY/4)
             newX = Number(x + Number(getClassWidth()) + paddingX/3)
         }
 
         //Line3 up/down
-        context.moveTo(newX ,y - paddingY/4)
-        context.lineTo(newX, y_to + getClassHeight() + paddingY/4)
+        drawSegment(newX ,y - paddingY/4, newX, y_to + getClassHeight() + paddingY/4)
 
         //Line4 left/rght
-        context.moveTo(newX ,y_to + getClassHeight() + paddingY/4)
-        context.lineTo(x_to + getClassWidth()/2 ,y_to + getClassHeight() + paddingY/4)
+        drawSegment(newX ,y_to + getClassHeight() + paddingY/4, x_to + getClassWidth()/2 ,y_to + getClassHeight() + paddingY/4)
 
         //Line5 up Parent
-        context.moveTo(x_to + getClassWidth()/2 ,y_to + getClassHeight() + paddingY/4)
-        context.lineTo(x_to + getClassWidth()/2 ,y_to + getClassHeight())
+        drawSegment(x_to + getClassWidth()/2 ,y_to + getClassHeight() + paddingY/4, x_to + getClassWidth()/2 ,y_to + getClassHeight())
 
         var triangleW = getClassWidth()/10
         var triangleH = paddingY/5
         drawTriangle(x_to + getClassWidth()/2,y_to + getClassHeight(), triangleW ,triangleH ,true);
-        context.stroke();
     }
 
     function drawAggregation(name, reference) {
 
         uDebugger.qPrintText("reference from " + name + " to " + reference)
 
-        var objI = gridLayout.getX(name)
-        var objJ = gridLayout.getY(name)
-        var referenceI = gridLayout.getX(reference)
-        var referenceJ = gridLayout.getY(reference)
-
-        var objX = getXfromCoord(objI)
-        var objY = getYfromCoord(objJ)
-        var referenceX = getXfromCoord(referenceI)
-        var referenceY = getYfromCoord(referenceJ)
+        var objX = gridLayout.getX(name)
+        var objY = gridLayout.getY(name)
+        var referenceX = gridLayout.getX(reference)
+        var referenceY = gridLayout.getY(reference)
 
         drawAggregationArrow(objX, objY, referenceX, referenceY)
     }
@@ -341,6 +401,7 @@ Canvas {
         context.closePath();
         if (isFilled)
             context.fill();
+        context.stroke()
     }
 
     function drawDiamond( x , y , diamondWidth, diamondHeight, isFilled){
@@ -401,7 +462,7 @@ Canvas {
         var movY = y - selectedY
         if(selectedClass != "")
         {
-            uDebugger.qPrintText("Move class: " + selectedClass)
+            //uDebugger.qPrintText("Move class: " + selectedClass)
             gridLayout.moveObject(selectedClass, Number(movX), Number(movY))
             requestPaint()
         }
@@ -409,29 +470,9 @@ Canvas {
         selectedY = y;
     }
 
-    function releasedMouse()
+    function releasedMouse(x, y)
     {
-        uDebugger.qPrintText("Mouse RELEASED")
-    }
-
-    function getXfromCoord(coordX)
-    {
-        return (Number(coordX)%(gridLayout.getWidth()/30)) * offsetX()
-    }
-
-    function getYfromCoord(coordY)
-    {
-        return (Number(coordY)%(gridLayout.getHeight()/40)) * offsetY() + Number(height)/45
-    }
-
-    function getCoordFromX(x)
-    {
-        return parseInt((Number(x) / (Number(width)*30/gridLayout.getWidth())))
-    }
-
-    function getCoordFromY(y)
-    {
-        return parseInt((Number(y) / (Number(height)*40/gridLayout.getHeight())))
+        uDebugger.qPrintText("Mouse RELEASED in (" + x +"," + y + ")")
     }
 
     function getClassWidth()
@@ -446,11 +487,11 @@ Canvas {
 
     //Class width + right padding
     function offsetX(){
-        return Number(width)/(gridLayout.getWidth()/30)
+        return Number(width)/(gridLayout.getWidth()/160)
     }
 
     //Class height + bottom padding
     function offsetY(){
-        return Number(height)*(1.65)/(gridLayout.getHeight()/30)
+        return Number(height)*(1.65)/(gridLayout.getHeight()/110)
     }
 }

@@ -1,5 +1,4 @@
 #include "uGridObjectFactory.h"
-#include "uGridClass.h"
 #include "uDebugPrinter.h"
 
 #include <string>
@@ -11,9 +10,14 @@ uGridObjectFactory::uGridObjectFactory()
 
 }
 
-uGridObject *uGridObjectFactory::createClass(int mX, int mY, int mWidth, int mHeight, QString mName)
+uGridClass *uGridObjectFactory::createClass(int mX, int mY, int mWidth, int mHeight, QString mName)
 {
     return new uGridClass(mX, mY, mWidth, mHeight, mName);
+}
+
+uGridSegment *uGridObjectFactory::createSegment(int mX, int mY, int mWidth, int mHeight, QString mName)
+{
+   return new uGridSegment(mX, mY, mWidth, mHeight, mName);
 }
 
 uGridObjectFactory &uGridObjectFactory::getInstance()

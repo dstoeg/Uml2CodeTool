@@ -24,6 +24,7 @@ public:
 
     Q_INVOKABLE int getWidth() const;
     Q_INVOKABLE int getHeight() const;
+    Q_INVOKABLE int getSegmentsSize() const;
 
     Q_INVOKABLE bool setWidth(int width);
     Q_INVOKABLE bool setHeight(int height);
@@ -31,6 +32,11 @@ public:
 
     Q_INVOKABLE int getX(QString const& name) const;
     Q_INVOKABLE int getY(QString const& name) const;
+
+    Q_INVOKABLE int getSegmentX(int index) const;
+    Q_INVOKABLE int getSegmentY(int index) const;
+    Q_INVOKABLE int getSegmentWidth(int index) const;
+    Q_INVOKABLE int getSegmentHeight(int index) const;
 
     Q_INVOKABLE bool isEmpty(int x, int y) const;
     Q_INVOKABLE bool contains(QString const& name) const;
@@ -43,6 +49,8 @@ private:
     int mWidth;
     int mHeight;
     TGridObject mTable;
+    TGridObject mArrows;
+    TGridObject mSegments;
     bool checkBounds(int i, int j, int width, int height) const;
     bool checkBounds(int i, int j) const;
 

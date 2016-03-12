@@ -46,7 +46,7 @@ ApplicationWindow {
                 }
                 onMouseXChanged: drawingCanvas.moveClass(mouse.x, mouse.y)
                 onMouseYChanged: drawingCanvas.moveClass(mouse.x, mouse.y)
-                onReleased: drawingCanvas.releasedMouse()
+                onReleased: drawingCanvas.releasedMouse(mouse.x, mouse.y)
                 cursorShape: Qt.UpArrowCursor
             }
         }

@@ -2,6 +2,8 @@
 #define UGRIDOBJECTFACTORY_H
 
 #include "uGridObject.h"
+#include "uGridClass.h"
+#include "uGridSegment.h"
 
 class uGridObjectFactory
 {
@@ -15,9 +17,9 @@ private:
     uGridObjectFactory(uGridObjectFactory const&);
     void operator=(uGridObjectFactory const&);
 
-    uGridObject * createClass(int mX, int mY, int mWidth, int mHeight, QString mName);
+    uGridClass * createClass(int mX, int mY, int mWidth, int mHeight, QString mName);
+    uGridSegment * createSegment(int mX, int mY, int mWidth, int mHeight, QString mName);
     //TODO
-    //uGridObject * createSegment();
     //uGridObject * createArrow();
 };
 

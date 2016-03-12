@@ -11,6 +11,14 @@ public:
     virtual ~uGridSegment(){}
 
     virtual bool selected(int x, int y) const;
+
+    void setPrinted(bool printed);
+
+    bool pivoteMovement(int oldX, int oldY, int newX, int newY);
 };
+
+typedef std::vector<uGridSegment*> TGridSegment;
+typedef std::vector<uGridSegment*>::iterator TGridSegmentIter;
+typedef std::vector<uGridSegment*>::const_iterator TGridSegmentConstIter;
 
 #endif // UGRIDSEGMENT_H

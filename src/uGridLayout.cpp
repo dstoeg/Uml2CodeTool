@@ -22,7 +22,11 @@ bool uGridLayout::addObject(int i, int j, int width, int height, const QString &
     uDebugPrinter::printText("adding class: " + name.toStdString() + " index i: " + to_string(i) + " index j: " + to_string(j));
     if (!checkBounds(i,j,width, height)) return false;
 
-    mTable.push_back(uGridObjectFactory::createObject(i ,j ,width ,height ,name, intToGridType(type)));
+    if(type == 0) //If it is a class
+        mTable.push_back(uGridObjectFactory::createObject(i ,j ,width ,height ,name, intToGridType(type)));
+    else          //If it is a segment
+        mSegments.push_back(uGridObjectFactory::createObject(i ,j ,width ,height ,name, intToGridType(type)));
+
     return true;
 }
 
@@ -95,6 +99,11 @@ int uGridLayout::getHeight() const
     return mHeight;
 }
 
+int uGridLayout::getSegmentsSize() const
+{
+    return mSegments.size();
+}
+
 bool uGridLayout::setWidth(int width)
 {
     if (width < 0) return false;
@@ -140,6 +149,26 @@ int uGridLayout::getY(const QString &name) const
         }
     }
     return -1;
+}
+
+int uGridLayout::getSegmentX(int index) const
+{
+    return mSegments[index]->getX();
+}
+
+int uGridLayout::getSegmentY(int index) const
+{
+    return mSegments[index]->getY();
+}
+
+int uGridLayout::getSegmentWidth(int index) const
+{
+    return mSegments[index]->getWidth();
+}
+
+int uGridLayout::getSegmentHeight(int index) const
+{
+    return mSegments[index]->getHeight();
 }
 
 bool uGridLayout::isEmpty(int x, int y) const
