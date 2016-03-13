@@ -30,6 +30,8 @@ public:
     Q_INVOKABLE void setArrowsDeleted();
 
     Q_INVOKABLE QString getString(int x, int y) const;
+    Q_INVOKABLE int getArrowSelected(int x, int y) const;
+    Q_INVOKABLE void modifyArrow(int index, int oldX, int oldY, int newX, int newY);
 
     Q_INVOKABLE int getWidth() const;
     Q_INVOKABLE int getHeight() const;
@@ -40,8 +42,10 @@ public:
     Q_INVOKABLE bool setWidth(int width);
     Q_INVOKABLE bool setHeight(int height);
 
-    Q_INVOKABLE int getX(QString const& name) const;
-    Q_INVOKABLE int getY(QString const& name) const;
+    Q_INVOKABLE int getClassX(QString const& name) const;
+    Q_INVOKABLE int getClassY(QString const& name) const;
+    Q_INVOKABLE int getClassWidth(QString const& name) const;
+    Q_INVOKABLE int getClassHeight(QString const& name) const;
 
     Q_INVOKABLE int getSegmentX(int arrowIndex, int segIndex) const;
     Q_INVOKABLE int getSegmentY(int arrowIndex, int segIndex) const;

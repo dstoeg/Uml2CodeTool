@@ -35,15 +35,19 @@ public:
 
     virtual bool selected(int x, int y) const;
 
+    //Getters
     int getX() const;
     int getY() const;
     int getWidth() const;
     int getHeight() const;
 
+    //Setters
     bool setX(int newX);
     bool setY(int newY);
     bool setWidth(int newWidth);
     bool setHeight(int newHeight);
+    void resizeX(double ratio);
+    void resizeY(double ratio);
 
 protected:
     int mX;

@@ -130,6 +130,7 @@ int uGridLayout::getInheritanceIndex(const QString &name, const QString &referen
 void uGridLayout::addSegmentToArrow(int arrowIndex, int mX, int mY, int mWidth, int mHeight) const
 {
     mArrows[arrowIndex]->addSegment(uGridObjectFactory::createSegment(mX, mY, mWidth, mHeight));
+    uDebugPrinter::printText("added segment ("+to_string(mX)+","+ to_string(mY) +"), size("+ to_string(mWidth) +","+ to_string(mHeight) +")");
 }
 
 void uGridLayout::deleteNonExistentArrows()
@@ -156,6 +157,21 @@ QString uGridLayout::getString(int x, int y) const
         }
     }
     return "";
+}
+
+int uGridLayout::getArrowSelected(int x, int y) const
+{
+    for(int i = 0; i < mArrows.size(); i++)
+    {
+        if(mArrows[i]->selected(x,y) >= 0)
+            return i;
+    }
+    return -1;
+}
+
+void uGridLayout::modifyArrow(int index, int oldX, int oldY, int newX, int newY)
+{
+    mArrows[index]->moveSegments(oldX, oldY, newX, newY);
 }
 
 int uGridLayout::getWidth() const
@@ -186,7 +202,21 @@ int uGridLayout::getArrowType(int index) const
 bool uGridLayout::setWidth(int width)
 {
     if (width < 0) return false;
+
+    double ratio = (double)width/(double)mWidth;
+
     mWidth = width;
+
+    //resize elements in grid
+    for(TGridClassConstIter iter=mTable.begin(); iter != mTable.end(); iter++)
+        (*iter)->resizeX(ratio);
+
+    for(TGridArrowConstIter iter=mArrows.begin(); iter != mArrows.end(); iter++){
+        int destX = getClassX((*iter)->getDestination());
+        int destWidth = getClassWidth((*iter)->getDestination());
+        (*iter)->resizeX(ratio, destX, destWidth);
+    }
+
     //uDebugPrinter::printText("Set grid width: " + to_string(width));
     return true;
 }
@@ -194,12 +224,46 @@ bool uGridLayout::setWidth(int width)
 bool uGridLayout::setHeight(int height)
 {
     if (height < 0) return false;
+
+    double ratio = (double)height/(double)mHeight;
+
     mHeight = height;
+
+    //resize elements in grid
+    for(TGridClassConstIter iter=mTable.begin(); iter != mTable.end(); iter++)
+        (*iter)->resizeY(ratio);
+
+    for(TGridArrowConstIter iter=mArrows.begin(); iter != mArrows.end(); iter++){
+        int destY = getClassY((*iter)->getDestination());
+        int destHeight = getClassHeight((*iter)->getDestination());
+        (*iter)->resizeY(ratio, destY, destHeight);
+    }
+
     //uDebugPrinter::printText("Set grid height: " + to_string(height));
     return true;
 }
 
-int uGridLayout::getX(const QString &name) const
+int uGridLayout::getClassWidth(const QString &name) const
+{
+    for(TGridClassConstIter iter=mTable.begin(); iter != mTable.end(); iter++) {
+        if ((*iter)->getName() == name) {
+            return (*iter)->getWidth();
+        }
+    }
+    return -1;
+}
+
+int uGridLayout::getClassHeight(const QString &name) const
+{
+    for(TGridClassConstIter iter=mTable.begin(); iter != mTable.end(); iter++) {
+        if ((*iter)->getName() == name) {
+            return (*iter)->getHeight();
+        }
+    }
+    return -1;
+}
+
+int uGridLayout::getClassX(const QString &name) const
 {
     for(TGridClassConstIter iter=mTable.begin(); iter != mTable.end(); iter++) {
         if ((*iter)->getName() == name) {
@@ -209,7 +273,7 @@ int uGridLayout::getX(const QString &name) const
     return -1;
 }
 
-int uGridLayout::getY(const QString &name) const
+int uGridLayout::getClassY(const QString &name) const
 {
     for(TGridClassConstIter iter=mTable.begin(); iter != mTable.end(); iter++) {
         if ((*iter)->getName() == name) {

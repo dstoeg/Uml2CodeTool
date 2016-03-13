@@ -65,7 +65,6 @@ bool uGridObject::setY(int newY)
 bool uGridObject::setWidth(int newWidth)
 {
     //TODO add comparison with GridLayout limits
-    if(newWidth < 0) return false;
     this->mWidth = newWidth;
     return true;
 }
@@ -73,8 +72,19 @@ bool uGridObject::setWidth(int newWidth)
 bool uGridObject::setHeight(int newHeight)
 {
     //TODO add comparison with GridLayout limits
-    if (newHeight < 0) return false;
     this->mHeight = newHeight;
     return true;
+}
+
+void uGridObject::resizeX(double ratio)
+{
+    mX = (int)((double)mX*ratio + 0.5);
+    mWidth = (int)((double)mWidth*ratio + 0.99);
+}
+
+void uGridObject::resizeY(double ratio)
+{
+    mY = (int)((double)mY*ratio + 0.5);
+    mHeight = (int)((double)mHeight*ratio + 0.99);
 }
 

@@ -15,6 +15,10 @@ Canvas {
     property int selectedY: 0
     property bool selecting: false //this is a flag for avoiding uClassPanel.updateMethod() to be call when a class is clicked
 
+    property bool arrowSelected: false
+    property int selectedArrowX: 0
+    property int selectedArrowY: 0
+
     onPaint: {
         uClassPanel.setFieldsBlack()
         // Get drawing context
@@ -40,8 +44,8 @@ Canvas {
             var parent = dispatcher.getClassParent(i);
             var isInterface = dispatcher.getClassIsInterface(i)
             var isAbstract = dispatcher.getClassIsAbstract(i)
-            var x = gridLayout.getX(name);
-            var y = gridLayout.getY(name);
+            var x = gridLayout.getClassX(name);
+            var y = gridLayout.getClassY(name);
             drawClass(x, y, name, methods, attributes, parent, isInterface, isAbstract);
         }
     }
@@ -206,11 +210,11 @@ Canvas {
 
     function drawInheritance(name, parent) {
 
-        var objI = gridLayout.getX(name)
-        var objJ = gridLayout.getY(name)
+        var objI = gridLayout.getClassX(name)
+        var objJ = gridLayout.getClassY(name)
 
-        var parentI = gridLayout.getX(parent)
-        var parentJ = gridLayout.getY(parent)
+        var parentI = gridLayout.getClassX(parent)
+        var parentJ = gridLayout.getClassY(parent)
 
         uDebugger.qPrintText("obj i: " + objI + ", j: " + objJ)
         uDebugger.qPrintText("parent i: " + parentI + ", j: " + parentJ)
@@ -236,11 +240,11 @@ Canvas {
 
     function autoGenerateInheritanceArrow(name, parent)
     {
-        var x = gridLayout.getX(name)
-        var y = gridLayout.getY(name)
+        var x = gridLayout.getClassX(name)
+        var y = gridLayout.getClassY(name)
 
-        var x_to = gridLayout.getX(parent)
-        var y_to = gridLayout.getY(parent)
+        var x_to = gridLayout.getClassX(parent)
+        var y_to = gridLayout.getClassY(parent)
 
         var index = gridLayout.getInheritanceIndex(name, parent)
 
@@ -314,20 +318,20 @@ Canvas {
 
         uDebugger.qPrintText("reference from " + name + " to " + reference)
 
-        var objX = gridLayout.getX(name)
-        var objY = gridLayout.getY(name)
-        var referenceX = gridLayout.getX(reference)
-        var referenceY = gridLayout.getY(reference)
+        var objX = gridLayout.getClassX(name)
+        var objY = gridLayout.getClassY(name)
+        var referenceX = gridLayout.getClassX(reference)
+        var referenceY = gridLayout.getClassY(reference)
 
         drawAggregationArrow(objX, objY, referenceX, referenceY)
     }
 
     function autoGenerateAggregationArrow(name, reference) {
 
-        var x = gridLayout.getX(name)
-        var y = gridLayout.getY(name)
-        var x_to = gridLayout.getX(reference)
-        var y_to = gridLayout.getY(reference)
+        var x = gridLayout.getClassX(name)
+        var y = gridLayout.getClassY(name)
+        var x_to = gridLayout.getClassX(reference)
+        var y_to = gridLayout.getClassY(reference)
         var index = gridLayout.getAggregationIndex(name, reference)
 
         var paddingX = Number(offsetX()) - Number(getClassWidth())
@@ -533,6 +537,7 @@ Canvas {
 
         uClassPanel.setFieldsBlack()
 
+        //First check class
         var name = gridLayout.getString(parseInt(x), parseInt(y))
         if (name != "" && !selectingParent) {
 
@@ -563,7 +568,18 @@ Canvas {
         {
             uClassPanel.clearTextFields()
             selectedClass = ""
+
+            //if no class selected, check arrows
+            var index = gridLayout.getArrowSelected(x,y)
+            if(index >= 0){
+                uDebugger.qPrintText("Found arrow: " +index)
+                arrowSelected = true;
+                selectedArrowX = x
+                selectedArrowY = y
+            }
         }
+
+
     }
 
     function moveClass(x, y)
@@ -583,6 +599,15 @@ Canvas {
     function releasedMouse(x, y)
     {
         uDebugger.qPrintText("Mouse RELEASED in (" + x +"," + y + ")")
+
+        //test for arrow movement
+        if(arrowSelected){
+            uDebugger.qPrintText("arrow Selected in release")
+            var index = gridLayout.getArrowSelected(selectedArrowX,selectedArrowY)
+            gridLayout.modifyArrow(index, selectedArrowX, selectedArrowY, x, y)
+            arrowSelected = false;
+            requestPaint()
+        }
     }
 
     function getClassWidth()

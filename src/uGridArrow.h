@@ -32,15 +32,22 @@ public:
     QString getDestination() const;
     int getSize() const;
     uGridSegment * getSegment(int index) const;
+    TGridSegment getSegments() const;
     bool getDeleted() const;
     int getType() const;
 
     //Setters
     void addSegment(uGridSegment * segment);
     void setDeleted(bool del);
+    void resizeX(double ratio, int destinationX, int destWidth);
+    void resizeY(double ratio, int destinationY, int destHeight);
 
     bool equals(uGridArrow * arrow) const;
     bool equals(const QString &origin, const QString &destination, uArrowType type) const;
+    int selected(int x, int y) const;
+
+    //Manages the segment movements
+    void moveSegments(int oldX, int oldY, int newX, int newY);
 
 private:
     uArrowType mType;
@@ -48,6 +55,12 @@ private:
     QString mOrigin;
     QString mDestination;
     bool mDeleted;
+    double mRatioXdest;
+    double mRatioYdest;
+    double mRatioXorigin;
+    double mRatioYorigin;
+
+    double distancePointToPoint(int x, int y, int i, int j) const;
 };
 
 typedef std::vector<uGridArrow*> TGridArrow;
