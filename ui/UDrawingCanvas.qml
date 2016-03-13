@@ -48,12 +48,14 @@ Canvas {
     {
         for(var i = 0; i < gridLayout.getArrowsSize(); i++)
         {
-            for(var j = 0; j < gridLayout.getArrowSize(i); j++)
-            var x = gridLayout.getSegmentX(i, j);
-            var y = gridLayout.getSegmentY(i, j);
-            var width = gridLayout.getSegmentWidth(i, j);
-            var height = gridLayout.getSegmentHeight(i, j);
-            drawSegmentWidthHeight(x, y, width, height);
+            for(var j = 0; j < gridLayout.getArrowSize(i); j++){
+
+                var x = gridLayout.getSegmentX(i, j);
+                var y = gridLayout.getSegmentY(i, j);
+                var width = gridLayout.getSegmentWidth(i, j);
+                var height = gridLayout.getSegmentHeight(i, j);
+                drawSegmentWidthHeight(x, y, width, height);
+            }
         }
     }
 
@@ -227,28 +229,28 @@ Canvas {
         var paddingY = Number(offsetY()) - Number(getClassHeight())
 
         //Line1 up from child class
-        gridLayout.addSegment(index, x+getClassWidth()/2, y, 0, -paddingY/4)
+        gridLayout.addSegmentToArrow(index, x+getClassWidth()/2, y, 0, -paddingY/4)
 
         //Line2 right/left
         var newX;
         if(x_to<x)
         {
-            gridLayout.addSegment(index, x+getClassWidth()/2, y - paddingY/4, - Number(paddingX)/3 - getClassWidth()/2)
+            gridLayout.addSegmentToArrow(index, x+getClassWidth()/2, y - paddingY/4, - Number(paddingX)/3 - getClassWidth()/2)
             newX = Number(x- Number(paddingX)/3)
         }
         else{
-            gridLayout.addSegment(index, x+getClassWidth()/2, y - paddingY/4, paddingX/3 ,0)
+            gridLayout.addSegmentToArrow(index, x+getClassWidth()/2, y - paddingY/4, paddingX/3 ,0)
             newX = Number(x + Number(getClassWidth()) + paddingX/3)
         }
 
         //Line3 up/down
-        gridLayout.addSegment(index, newX ,y - paddingY/4, 0, y_to - y + getClassHeight() + paddingY/2)
+        gridLayout.addSegmentToArrow(index, newX ,y - paddingY/4, 0, y_to - y + getClassHeight() + paddingY/2)
 
         //Line4 left/rght
-        gridLayout.addSegment(index, newX ,y_to + getClassHeight() + paddingY/4, x_to + getClassWidth()/2 -newX ,0)
+        gridLayout.addSegmentToArrow(index, newX ,y_to + getClassHeight() + paddingY/4, x_to + getClassWidth()/2 -newX ,0)
 
         //Line5 up Parent
-        gridLayout.addSegment(index, x_to + getClassWidth()/2 ,y_to + getClassHeight() + paddingY/4, 0 ,-paddingY/4)
+        gridLayout.addSegmentToArrow(index, x_to + getClassWidth()/2 ,y_to + getClassHeight() + paddingY/4, 0 ,-paddingY/4)
 
 //        var triangleW = getClassWidth()/10
 //        var triangleH = paddingY/5

@@ -139,7 +139,7 @@ ColumnLayout {
                     if (name != "" && !gridLayout.contains(name)) {
 
                         //Add the class to the grid
-                        gridLayout.addObject(Number(10),Number(10),drawingCanvas.getClassWidth(),drawingCanvas.getClassHeight(), name, 0)
+                        gridLayout.addClass(Number(10),Number(10),drawingCanvas.getClassWidth(),drawingCanvas.getClassHeight(), name)
 
                         //Check if the class has a parent
                         if(parent != "")
