@@ -81,8 +81,10 @@ bool uGridLayout::createAggregation(const QString &aggregationName, const QStrin
 
     for(TGridArrowConstIter iter=mArrows.begin(); iter != mArrows.end(); iter++)
     {
-        if((*iter)->equals(aggregationName, name, uAggregation))
+        if((*iter)->equals(aggregationName, name, uAggregation)){
+            (*iter)->setDeleted(false);
             return false;
+        }
     }
 
     mArrows.push_back(new uGridArrow(aggregationName, name, uAggregation));
@@ -93,8 +95,10 @@ bool uGridLayout::createInheritance(const QString &name, const QString &parent)
 {
     for(TGridArrowConstIter iter=mArrows.begin(); iter != mArrows.end(); iter++)
     {
-        if((*iter)->equals(name, parent, uInheritance))
+        if((*iter)->equals(name, parent, uInheritance)){
+            (*iter)->setDeleted(false);
             return false;
+        }
     }
 
     mArrows.push_back(new uGridArrow(name, parent, uInheritance));
@@ -128,6 +132,21 @@ void uGridLayout::addSegmentToArrow(int arrowIndex, int mX, int mY, int mWidth, 
     mArrows[arrowIndex]->addSegment(uGridObjectFactory::createSegment(mX, mY, mWidth, mHeight));
 }
 
+void uGridLayout::deleteNonExistentArrows()
+{
+    for(TGridArrowConstIter iter = mArrows.begin(); iter != mArrows.end(); iter++)
+        if((*iter)->getDeleted()){
+            mArrows.erase(iter);
+            deleteNonExistentArrows();
+            return;
+        }
+}
+
+void uGridLayout::setArrowsDeleted()
+{
+    for(TGridArrowConstIter iter = mArrows.begin(); iter != mArrows.end(); iter++)
+        (*iter)->setDeleted(true);
+}
 
 QString uGridLayout::getString(int x, int y) const
 {
@@ -159,6 +178,11 @@ int uGridLayout::getArrowSize(int index) const
     return mArrows[index]->getSize();
 }
 
+int uGridLayout::getArrowType(int index) const
+{
+    return mArrows[index]->getType();
+}
+
 bool uGridLayout::setWidth(int width)
 {
     if (width < 0) return false;
@@ -173,17 +197,6 @@ bool uGridLayout::setHeight(int height)
     mHeight = height;
     //uDebugPrinter::printText("Set grid height: " + to_string(height));
     return true;
-}
-
-bool uGridLayout::setPrinted(const QString &name)
-{
-    for(TGridClassConstIter iter=mTable.begin(); iter != mTable.end(); iter++) {
-        if ((*iter)->getName() == name) {
-            (*iter)->setPrinted(true);
-            return true;
-        }
-    }
-    return false;
 }
 
 int uGridLayout::getX(const QString &name) const

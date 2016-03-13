@@ -26,6 +26,8 @@ public:
     Q_INVOKABLE int getAggregationIndex(const QString &name, const QString &reference) const;
     Q_INVOKABLE int getInheritanceIndex(const QString &name, const QString &reference) const;
     Q_INVOKABLE void addSegmentToArrow(int arrowIndex, int mX, int mY, int mWidth, int mHeight) const;
+    Q_INVOKABLE void deleteNonExistentArrows();
+    Q_INVOKABLE void setArrowsDeleted();
 
     Q_INVOKABLE QString getString(int x, int y) const;
 
@@ -33,10 +35,10 @@ public:
     Q_INVOKABLE int getHeight() const;
     Q_INVOKABLE int getArrowsSize() const;
     Q_INVOKABLE int getArrowSize(int index) const;
+    Q_INVOKABLE int getArrowType(int index) const;
 
     Q_INVOKABLE bool setWidth(int width);
     Q_INVOKABLE bool setHeight(int height);
-    Q_INVOKABLE bool setPrinted(QString const& name);
 
     Q_INVOKABLE int getX(QString const& name) const;
     Q_INVOKABLE int getY(QString const& name) const;

@@ -6,7 +6,7 @@
 
 uGridSegment::uGridSegment(int mX, int mY, int mWidth, int mHeight): uGridObject(mX, mY, mWidth, mHeight)
 {
-    this->mPrinted = false;
+
 }
 
 bool uGridSegment::selected(int x, int y) const
@@ -20,11 +20,6 @@ bool uGridSegment::selected(int x, int y) const
     float distance = (float)abs(mHeight*x - mWidth*y + (mWidth*mY - mHeight*mX))
             /sqrt((float)mHeight*mHeight + mWidth*mWidth);
     return distance < epsilon;
-}
-
-void uGridSegment::setPrinted(bool printed)
-{
-    mPrinted = printed;
 }
 
 bool uGridSegment::pivoteMovement(int oldX, int oldY, int newX, int newY)

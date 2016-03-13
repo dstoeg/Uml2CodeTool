@@ -39,20 +39,17 @@ public:
     int getY() const;
     int getWidth() const;
     int getHeight() const;
-    bool isPrinted() const;
 
     bool setX(int newX);
     bool setY(int newY);
     bool setWidth(int newWidth);
     bool setHeight(int newHeight);
-    void setPrinted(bool printed);
 
 protected:
     int mX;
     int mY;
     int mWidth;
     int mHeight;
-    bool mPrinted;
 
 };
 

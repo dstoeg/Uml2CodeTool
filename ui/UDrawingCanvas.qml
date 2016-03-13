@@ -25,6 +25,7 @@ Canvas {
         context.clearRect(0, 0, width, height);
         context.fill();
 
+        //draw each class from the uClassDiagram and checking position with the
         drawClasses()
         drawSegments()
     }
@@ -46,19 +47,38 @@ Canvas {
 
     function drawSegments()
     {
+        gridLayout.deleteNonExistentArrows();
         for(var i = 0; i < gridLayout.getArrowsSize(); i++)
         {
-            for(var j = 0; j < gridLayout.getArrowSize(i); j++){
+            var size = gridLayout.getArrowSize(i);
+            for(var j = 0; j < size; j++){
 
                 var x = gridLayout.getSegmentX(i, j);
                 var y = gridLayout.getSegmentY(i, j);
                 var width = gridLayout.getSegmentWidth(i, j);
                 var height = gridLayout.getSegmentHeight(i, j);
                 drawSegmentWidthHeight(x, y, width, height);
+                if(j == size -1){
+                    var arrowType = gridLayout.getArrowType(i);
+                    var paddingX = Number(offsetX()) - Number(getClassWidth())
+                    var paddingY = Number(offsetY()) - Number(getClassHeight())
+                    drawReferenceSymbol(x + width, y + height, paddingX/10, paddingY/10, arrowType);
+                }
             }
         }
+
+        gridLayout.setArrowsDeleted();
     }
 
+    function drawReferenceSymbol(x, y, width, height, arrowType)
+    {
+        if(arrowType === 0)
+            drawTriangle(x, y, width, height, true)
+
+        if(arrowType === 1)
+            drawDiamond(x, y, width, height, false)
+
+    }
 
     function drawClass(coordX, coordY, name, methods, attributes, parent, isInterface, isAbstract)
     {
@@ -129,8 +149,6 @@ Canvas {
             {
                 autoGenerateInheritanceArrow(name, parent)
             }
-
-            //drawInheritance(name, parent)
         }
 
         // draw references
@@ -139,9 +157,9 @@ Canvas {
         for (i=0; i<referenceCount; i++) {
             var referenceName = dispatcher.getClassReference(name, i);
             if (referenceName != "") {
-                if(gridLayout.createAggregation(referenceName, name))
+                if(gridLayout.createAggregation(referenceName, name)){
                     autoGenerateAggregationArrow(referenceName, name);
-                //drawAggregation(referenceName, name)
+                }
             }
         }
 
@@ -235,11 +253,11 @@ Canvas {
         var newX;
         if(x_to<x)
         {
-            gridLayout.addSegmentToArrow(index, x+getClassWidth()/2, y - paddingY/4, - Number(paddingX)/3 - getClassWidth()/2)
-            newX = Number(x- Number(paddingX)/3)
+            gridLayout.addSegmentToArrow(index, x + getClassWidth()/2, y - paddingY/4, - Number(paddingX)/3 - getClassWidth()/2, 0)
+            newX = Number(x - Number(paddingX)/3)
         }
         else{
-            gridLayout.addSegmentToArrow(index, x+getClassWidth()/2, y - paddingY/4, paddingX/3 ,0)
+            gridLayout.addSegmentToArrow(index, x+getClassWidth()/2, y - paddingY/4, paddingX/3 + getClassWidth()/2 ,0)
             newX = Number(x + Number(getClassWidth()) + paddingX/3)
         }
 

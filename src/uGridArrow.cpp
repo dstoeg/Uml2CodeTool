@@ -6,6 +6,7 @@ uGridArrow::uGridArrow(QString const& origin, QString const& destination, int ty
     mDestination = destination;
     mSegments = segments;
     mType = uDependency;
+    mDeleted = false;
 
     if(type == 0)
         mType = uInheritance;
@@ -20,6 +21,7 @@ uGridArrow::uGridArrow(QString const& origin, QString const& destination, uArrow
     mOrigin = origin;
     mDestination = destination;
     mType = type;
+    mDeleted = false;
 }
 
 QString uGridArrow::getOrigin() const
@@ -37,14 +39,35 @@ int uGridArrow::getSize() const
     return mSegments.size();
 }
 
-uGridSegment *uGridArrow::getSegment(int index)
+uGridSegment *uGridArrow::getSegment(int index) const
 {
     return mSegments[index];
+}
+
+bool uGridArrow::getDeleted() const
+{
+    return mDeleted;
+}
+
+int uGridArrow::getType() const
+{
+    if(mType == uInheritance)
+        return 0;
+
+    if(mType == uAggregation)
+        return 1;
+
+    return 2;
 }
 
 void uGridArrow::addSegment(uGridSegment *segment)
 {
     return mSegments.push_back(segment);
+}
+
+void uGridArrow::setDeleted(bool del)
+{
+    mDeleted = del;
 }
 
 bool uGridArrow::equals(uGridArrow *arrow) const

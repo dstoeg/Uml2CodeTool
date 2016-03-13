@@ -31,10 +31,13 @@ public:
     QString getOrigin() const;
     QString getDestination() const;
     int getSize() const;
-    uGridSegment * getSegment(int index);
+    uGridSegment * getSegment(int index) const;
+    bool getDeleted() const;
+    int getType() const;
 
     //Setters
     void addSegment(uGridSegment * segment);
+    void setDeleted(bool del);
 
     bool equals(uGridArrow * arrow) const;
     bool equals(const QString &origin, const QString &destination, uArrowType type) const;
@@ -44,6 +47,7 @@ private:
     TGridSegment mSegments;
     QString mOrigin;
     QString mDestination;
+    bool mDeleted;
 };
 
 typedef std::vector<uGridArrow*> TGridArrow;

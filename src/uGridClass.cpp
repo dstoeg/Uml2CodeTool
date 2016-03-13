@@ -3,7 +3,6 @@
 uGridClass::uGridClass(int mX, int mY, int mWidth, int mHeight, QString mName): uGridObject(mX, mY, mWidth, mHeight)
 {
     this->mName = mName;
-    this->mPrinted = false;
 }
 
 bool uGridClass::selected(int x, int y) const

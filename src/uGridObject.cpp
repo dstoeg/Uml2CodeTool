@@ -45,10 +45,6 @@ int uGridObject::getHeight() const
     return mHeight;
 }
 
-bool uGridObject::isPrinted() const
-{
-    return mPrinted;
-}
 
 bool uGridObject::setX(int newX)
 {
@@ -80,10 +76,5 @@ bool uGridObject::setHeight(int newHeight)
     if (newHeight < 0) return false;
     this->mHeight = newHeight;
     return true;
-}
-
-void uGridObject::setPrinted(bool printed)
-{
-    this->mPrinted = printed;
 }
 

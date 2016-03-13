@@ -13,8 +13,6 @@ public:
 
     virtual bool selected(int x, int y) const;
 
-    void setPrinted(bool printed);
-
     bool pivoteMovement(int oldX, int oldY, int newX, int newY);
 
 };
