@@ -37,6 +37,10 @@ ColumnLayout {
                 else
                     drawingCanvas.selectingParent = false;
             }
+            Keys.onReturnPressed: {
+                createMethod()
+                event.accepted = true;
+            }
         }
 
         CheckBox {
@@ -76,6 +80,10 @@ ColumnLayout {
             font.italic: false
             font.pointSize: 9
             onTextChanged: updateMethod()
+            Keys.onReturnPressed: {
+                createMethod()
+                event.accepted = true;
+            }
         }
     }
 
@@ -126,50 +134,14 @@ ColumnLayout {
         Layout.fillWidth: true
         Layout.topMargin: 10
         Button {
+
             StyledText {
                 text: "Create"
             }
-
             Layout.fillHeight: true
             Layout.fillWidth: true
             onClicked: {
-                var name = nameField.text
-                var parent = parentField.text
-                var methods = methodField.text
-                var attributes = attributeField.text
-                var isAbstract = abstractField.checked;
-
-
-                if (parent != "" && dispatcher.getClassIndex(parent) === -1) {
-                    parentField.textColor = "red"
-                }
-                else {
-                    if (name != "" && !gridLayout.contains(name)) {
-
-                        //Add the class to the grid
-                        gridLayout.addClass(Number(10),Number(10),drawingCanvas.getClassWidth(),drawingCanvas.getClassHeight(), name)
-
-                        //Check if the class has a parent
-                        if(parent != "")
-                            dispatcher.setClassState(2)
-
-                        //Create the class
-                        dispatcher.createClass(name, parent, methods, attributes, isAbstract)
-
-                        //Repaint the canvas
-                        drawingCanvas.requestPaint()
-                        clearTextFields()
-                        drawingCanvas.selectedClass = ""
-                    }
-                    else if (!gridLayout.isEmpty(Number(10), Number(10))){
-                        //TODO notify space not empty
-
-                        uDebugger.qPrintText("Position (0,0) not Empty");
-                    }
-                    else{
-                        nameField.textColor = "red"
-                    }
-                }
+                createMethod();
             }
         }
 
@@ -181,20 +153,8 @@ ColumnLayout {
             Layout.fillHeight: true
             Layout.fillWidth: true
             onClicked: {
-                var name = nameField.text
-                if (name != "") {
-                    if (gridLayout.contains(name)) {
-
-                        dispatcher.removeClass(name)
-                        gridLayout.removeObject(name)
-
-                        drawingCanvas.requestPaint()
-                        clearTextFields()
-                        drawingCanvas.selectedClass = ""
-                    }
-                }
+                deleteMethod()
             }
-
         }
     }
 
@@ -280,6 +240,62 @@ ColumnLayout {
 
             //Repaint the canvas
             drawingCanvas.requestPaint()
+        }
+    }
+
+    function createMethod()
+    {
+        var name = nameField.text
+        var parent = parentField.text
+        var methods = methodField.text
+        var attributes = attributeField.text
+        var isAbstract = abstractField.checked;
+
+
+        if (parent != "" && dispatcher.getClassIndex(parent) === -1) {
+            parentField.textColor = "red"
+        }
+        else {
+            if (name != "" && !gridLayout.contains(name)) {
+
+                //Add the class to the grid
+                gridLayout.addClass(Number(10),Number(10),drawingCanvas.getClassWidth(),drawingCanvas.getClassHeight(), name)
+
+                //Check if the class has a parent
+                if(parent != "")
+                    dispatcher.setClassState(2)
+
+                //Create the class
+                dispatcher.createClass(name, parent, methods, attributes, isAbstract)
+
+                //Repaint the canvas
+                drawingCanvas.requestPaint()
+                clearTextFields()
+                drawingCanvas.selectedClass = ""
+            }
+            else if (!gridLayout.isEmpty(Number(10), Number(10))){
+                //TODO notify space not empty
+                uDebugger.qPrintText("Position (0,0) not Empty");
+            }
+            else{
+                nameField.textColor = "red"
+            }
+        }
+    }
+
+    function deleteMethod()
+    {
+        var name = nameField.text
+        if (name != "") {
+            if (gridLayout.contains(name)) {
+
+                dispatcher.removeClass(name)
+                gridLayout.removeObject(name)
+
+                drawingCanvas.requestPaint()
+                clearTextFields()
+                drawingCanvas.selectedClass = ""
+            }
         }
     }
 }

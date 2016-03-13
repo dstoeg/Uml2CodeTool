@@ -35,6 +35,10 @@ ApplicationWindow {
             Layout.preferredHeight: parent.height
             onHeightChanged: gridLayout.setHeight(Number(height));
             onWidthChanged: gridLayout.setWidth(Number(width));
+            Keys.onDeletePressed: {
+                uClassPanel.deleteMethod();
+                event.accepted = true;
+            }
 
             MouseArea {
                 anchors.fill: parent
@@ -43,11 +47,13 @@ ApplicationWindow {
                     drawingCanvas.selectedX = mouse.x
                     drawingCanvas.selectedY = mouse.y
                     drawingCanvas.selectClass(mouse.x, mouse.y)
+                    drawingCanvas.forceActiveFocus()
                 }
                 onMouseXChanged: drawingCanvas.moveClass(mouse.x, mouse.y)
                 onMouseYChanged: drawingCanvas.moveClass(mouse.x, mouse.y)
                 onReleased: drawingCanvas.releasedMouse(mouse.x, mouse.y)
                 cursorShape: Qt.UpArrowCursor
+
             }
         }
 
