@@ -28,7 +28,15 @@ ColumnLayout {
             font.italic: false
             font.pointSize: 9
             enabled: true
-            onTextChanged: updateMethod()
+            onTextChanged: {
+                updateMethod();
+            }
+            onActiveFocusChanged: {
+                if(activeFocus == true)
+                    drawingCanvas.selectingParent = true;
+                else
+                    drawingCanvas.selectingParent = false;
+            }
         }
 
         CheckBox {
@@ -212,6 +220,12 @@ ColumnLayout {
         else
             uClassSelection.setClassButton()
 
+    }
+
+    function setParentField(name)
+    {
+        parentField.text = name
+        nameField.forceActiveFocus();
     }
 
     function setFieldsBlack(){

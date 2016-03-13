@@ -10,6 +10,7 @@ Canvas {
     Layout.margins: 5
 
     property string selectedClass: ""
+    property bool selectingParent: false
     property int selectedX: 0
     property int selectedY: 0
     property bool selecting: false //this is a flag for avoiding uClassPanel.updateMethod() to be call when a class is clicked
@@ -533,7 +534,7 @@ Canvas {
         uClassPanel.setFieldsBlack()
 
         var name = gridLayout.getString(parseInt(x), parseInt(y))
-        if (name != "") {
+        if (name != "" && !selectingParent) {
 
             selectedClass = name
 
@@ -555,7 +556,11 @@ Canvas {
             selecting = false;//allows uClassPanel.updateMethod() to be called
 
         }
-        else {
+        else if(selectingParent){
+           uClassPanel.setParentField(name);
+        }
+        else
+        {
             uClassPanel.clearTextFields()
             selectedClass = ""
         }
