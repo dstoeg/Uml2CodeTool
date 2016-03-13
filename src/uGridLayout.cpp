@@ -17,15 +17,12 @@ uGridLayout::uGridLayout(int width, int height) : QObject(0)
     mHeight = height;
 }
 
-bool uGridLayout::addObject(int i, int j, int width, int height, const QString &name, int type)
+bool uGridLayout::addClass(int i, int j, int width, int height, const QString &name)
 {
     uDebugPrinter::printText("adding class: " + name.toStdString() + " index i: " + to_string(i) + " index j: " + to_string(j));
     if (!checkBounds(i,j,width, height)) return false;
 
-    if(type == 0) //If it is a class
-        mTable.push_back(uGridObjectFactory::createObject(i ,j ,width ,height ,name, intToGridType(type)));
-    else          //If it is a segment
-        mSegments.push_back(uGridObjectFactory::createObject(i ,j ,width ,height ,name, intToGridType(type)));
+    mTable.push_back(uGridObjectFactory::createClass(i ,j ,width ,height ,name));
 
     return true;
 }
@@ -33,7 +30,7 @@ bool uGridLayout::addObject(int i, int j, int width, int height, const QString &
 
 bool uGridLayout::removeObject(const QString &name)
 {
-    for(TGridObjectConstIter iter=mTable.begin(); iter != mTable.end(); iter++) {
+    for(TGridClassConstIter iter=mTable.begin(); iter != mTable.end(); iter++) {
         if ((*iter)->getName() == name) {
             mTable.erase(iter);
             return true;
@@ -44,7 +41,7 @@ bool uGridLayout::removeObject(const QString &name)
 
 bool uGridLayout::removeObject(int x, int y)
 {
-    for(TGridObjectConstIter iter=mTable.begin(); iter != mTable.end(); iter++) {
+    for(TGridClassConstIter iter=mTable.begin(); iter != mTable.end(); iter++) {
         if ((*iter)->selected(x,y)) {
             mTable.erase(iter);
             return true;
@@ -55,7 +52,7 @@ bool uGridLayout::removeObject(int x, int y)
 
 bool uGridLayout::changeObjectName(const QString &name, const QString &newName)
 {
-    for(TGridObjectConstIter iter=mTable.begin(); iter != mTable.end(); iter++) {
+    for(TGridClassConstIter iter=mTable.begin(); iter != mTable.end(); iter++) {
         if ((*iter)->getName() == name) {
             (*iter)->setName(newName);
             return true;
@@ -66,7 +63,7 @@ bool uGridLayout::changeObjectName(const QString &name, const QString &newName)
 
 bool uGridLayout::moveObject(const QString &name, int newX, int newY)
 {
-    for(TGridObjectConstIter iter=mTable.begin(); iter != mTable.end(); iter++) {
+    for(TGridClassConstIter iter=mTable.begin(); iter != mTable.end(); iter++) {
         if ((*iter)->getName() == name) {
             if(checkBounds((*iter)->getX() + newX, (*iter)->getY() + newY, (*iter)->getWidth(), (*iter)->getHeight())){
                 (*iter)->setY((*iter)->getY() + newY);
@@ -79,9 +76,62 @@ bool uGridLayout::moveObject(const QString &name, int newX, int newY)
     return false;
 }
 
+bool uGridLayout::createAggregation(const QString &aggregationName, const QString &name)
+{
+
+    for(TGridArrowConstIter iter=mArrows.begin(); iter != mArrows.end(); iter++)
+    {
+        if((*iter)->equals(aggregationName, name, uAggregation))
+            return false;
+    }
+
+    mArrows.push_back(new uGridArrow(aggregationName, name, uAggregation));
+    return true;
+}
+
+bool uGridLayout::createInheritance(const QString &name, const QString &parent)
+{
+    for(TGridArrowConstIter iter=mArrows.begin(); iter != mArrows.end(); iter++)
+    {
+        if((*iter)->equals(name, parent, uInheritance))
+            return false;
+    }
+
+    mArrows.push_back(new uGridArrow(name, parent, uInheritance));
+    return true;
+}
+
+int uGridLayout::getAggregationIndex(const QString &name, const QString &reference) const
+{
+    for(unsigned int i = 0; i < mArrows.size(); i++)
+    {
+        if(mArrows[i]->equals(name, reference, uAggregation))
+            return i;
+    }
+
+    return -1;
+}
+
+int uGridLayout::getInheritanceIndex(const QString &name, const QString &reference) const
+{
+    for(unsigned int i = 0; i < mArrows.size(); i++)
+    {
+        if(mArrows[i]->equals(name, reference, uInheritance))
+            return i;
+    }
+
+    return -1;
+}
+
+void uGridLayout::addSegmentToArrow(int arrowIndex, int mX, int mY, int mWidth, int mHeight) const
+{
+    mArrows[arrowIndex]->addSegment(uGridObjectFactory::createSegment(mX, mY, mWidth, mHeight));
+}
+
+
 QString uGridLayout::getString(int x, int y) const
 {
-    for(TGridObjectConstIter iter=mTable.begin(); iter != mTable.end(); iter++) {
+    for(TGridClassConstIter iter=mTable.begin(); iter != mTable.end(); iter++) {
         if ((*iter)->selected(x, y)) {
             return (*iter)->getName();
         }
@@ -99,9 +149,14 @@ int uGridLayout::getHeight() const
     return mHeight;
 }
 
-int uGridLayout::getSegmentsSize() const
+int uGridLayout::getArrowsSize() const
 {
-    return mSegments.size();
+    return mArrows.size();
+}
+
+int uGridLayout::getArrowSize(int index) const
+{
+    return mArrows[index]->getSize();
 }
 
 bool uGridLayout::setWidth(int width)
@@ -122,7 +177,7 @@ bool uGridLayout::setHeight(int height)
 
 bool uGridLayout::setPrinted(const QString &name)
 {
-    for(TGridObjectConstIter iter=mTable.begin(); iter != mTable.end(); iter++) {
+    for(TGridClassConstIter iter=mTable.begin(); iter != mTable.end(); iter++) {
         if ((*iter)->getName() == name) {
             (*iter)->setPrinted(true);
             return true;
@@ -133,7 +188,7 @@ bool uGridLayout::setPrinted(const QString &name)
 
 int uGridLayout::getX(const QString &name) const
 {
-    for(TGridObjectConstIter iter=mTable.begin(); iter != mTable.end(); iter++) {
+    for(TGridClassConstIter iter=mTable.begin(); iter != mTable.end(); iter++) {
         if ((*iter)->getName() == name) {
             return (*iter)->getX();
         }
@@ -143,7 +198,7 @@ int uGridLayout::getX(const QString &name) const
 
 int uGridLayout::getY(const QString &name) const
 {
-    for(TGridObjectConstIter iter=mTable.begin(); iter != mTable.end(); iter++) {
+    for(TGridClassConstIter iter=mTable.begin(); iter != mTable.end(); iter++) {
         if ((*iter)->getName() == name) {
             return (*iter)->getY();
         }
@@ -151,29 +206,29 @@ int uGridLayout::getY(const QString &name) const
     return -1;
 }
 
-int uGridLayout::getSegmentX(int index) const
+int uGridLayout::getSegmentX(int arrowIndex, int segIndex) const
 {
-    return mSegments[index]->getX();
+    return mArrows[arrowIndex]->getSegment(segIndex)->getX();
 }
 
-int uGridLayout::getSegmentY(int index) const
+int uGridLayout::getSegmentY(int arrowIndex, int segIndex) const
 {
-    return mSegments[index]->getY();
+    return mArrows[arrowIndex]->getSegment(segIndex)->getY();
 }
 
-int uGridLayout::getSegmentWidth(int index) const
+int uGridLayout::getSegmentWidth(int arrowIndex, int segIndex) const
 {
-    return mSegments[index]->getWidth();
+    return mArrows[arrowIndex]->getSegment(segIndex)->getWidth();
 }
 
-int uGridLayout::getSegmentHeight(int index) const
+int uGridLayout::getSegmentHeight(int arrowIndex, int segIndex) const
 {
-    return mSegments[index]->getHeight();
+    return mArrows[arrowIndex]->getSegment(segIndex)->getHeight();
 }
 
 bool uGridLayout::isEmpty(int x, int y) const
 {
-    for(TGridObjectConstIter iter=mTable.begin(); iter != mTable.end(); iter++) {
+    for(TGridClassConstIter iter=mTable.begin(); iter != mTable.end(); iter++) {
         if ((*iter)->selected(x, y)) {
             return false;
         }
@@ -183,7 +238,7 @@ bool uGridLayout::isEmpty(int x, int y) const
 
 bool uGridLayout::contains(const QString &name) const
 {
-    for(TGridObjectConstIter iter=mTable.begin(); iter != mTable.end(); iter++) {
+    for(TGridClassConstIter iter=mTable.begin(); iter != mTable.end(); iter++) {
         if ((*iter)->getName() == name) {
             return true;
         }

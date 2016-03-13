@@ -4,6 +4,8 @@
 #include "uGridObject.h"
 #include "uGridSegment.h"
 
+#include <QString>
+
 class uGridClass;
 
 enum uArrowType {
@@ -21,12 +23,13 @@ enum uArrowType {
 class uGridArrow
 {
 public:
-    uGridArrow(uGridClass * origin, uGridClass * destination, int type, TGridSegment segments);
+    uGridArrow(const QString &origin, const QString &destination, int type, TGridSegment segments);
+    uGridArrow(const QString &origin, const QString &destination, uArrowType type);
     //~uGridArrow();
 
     //Getters
-    uGridClass * getOrigin() const;
-    uGridClass * getDestination() const;
+    QString getOrigin() const;
+    QString getDestination() const;
     int getSize() const;
     uGridSegment * getSegment(int index);
 
@@ -34,12 +37,13 @@ public:
     void addSegment(uGridSegment * segment);
 
     bool equals(uGridArrow * arrow) const;
+    bool equals(const QString &origin, const QString &destination, uArrowType type) const;
 
 private:
     uArrowType mType;
     TGridSegment mSegments;
-    uGridClass * mOrigin;
-    uGridClass * mDestination;
+    QString mOrigin;
+    QString mDestination;
 };
 
 typedef std::vector<uGridArrow*> TGridArrow;

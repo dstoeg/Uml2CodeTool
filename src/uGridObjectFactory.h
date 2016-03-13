@@ -9,7 +9,11 @@ class uGridObjectFactory
 {
 public:
     static uGridObjectFactory &getInstance();
-    static uGridObject * createObject(int mX, int mY, int mWidth, int mHeight, QString mName, uGridObjectType type);
+    static uGridClass * createClass(int mX, int mY, int mWidth, int mHeight, QString mName);
+    static uGridSegment * createSegment(int mX, int mY, int mWidth, int mHeight);
+
+    //TODO
+    //uGridObject * createArrow();
 
 private:
     //Singleton template
@@ -17,10 +21,6 @@ private:
     uGridObjectFactory(uGridObjectFactory const&);
     void operator=(uGridObjectFactory const&);
 
-    uGridClass * createClass(int mX, int mY, int mWidth, int mHeight, QString mName);
-    uGridSegment * createSegment(int mX, int mY, int mWidth, int mHeight, QString mName);
-    //TODO
-    //uGridObject * createArrow();
 };
 
 #endif // UGRIDOBJECTFACTORY_H

@@ -1,6 +1,6 @@
 #include "uGridArrow.h"
 
-uGridArrow::uGridArrow(uGridClass *origin, uGridClass *destination, int type, TGridSegment segments)
+uGridArrow::uGridArrow(QString const& origin, QString const& destination, int type, TGridSegment segments)
 {
     mOrigin = origin;
     mDestination = destination;
@@ -15,12 +15,19 @@ uGridArrow::uGridArrow(uGridClass *origin, uGridClass *destination, int type, TG
 
 }
 
-uGridClass *uGridArrow::getOrigin() const
+uGridArrow::uGridArrow(QString const& origin, QString const& destination, uArrowType type)
+{
+    mOrigin = origin;
+    mDestination = destination;
+    mType = type;
+}
+
+QString uGridArrow::getOrigin() const
 {
     return mOrigin;
 }
 
-uGridClass *uGridArrow::getDestination() const
+QString uGridArrow::getDestination() const
 {
     return mDestination;
 }
@@ -43,6 +50,11 @@ void uGridArrow::addSegment(uGridSegment *segment)
 bool uGridArrow::equals(uGridArrow *arrow) const
 {
     return arrow->mType == mType && arrow->mOrigin == mOrigin && arrow->mDestination == mDestination;
+}
+
+bool uGridArrow::equals(const QString &origin, const QString &destination, uArrowType type) const
+{
+    return mOrigin == origin && mDestination == destination && mType == type;
 }
 
 //uGridArrow::~uGridArrow()

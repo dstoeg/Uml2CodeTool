@@ -4,7 +4,8 @@
 #include <QObject>
 #include <QString>
 #include <vector>
-#include "uGridObject.h"
+#include "uGridArrow.h"
+#include "uGridClass.h"
 
 
 class uGridLayout : public QObject
@@ -14,17 +15,24 @@ public:
     explicit uGridLayout(QObject *parent = 0);
     uGridLayout(int width, int height);
 
-    Q_INVOKABLE bool addObject(int i, int j, int width, int height, QString const& name, int type);
+    Q_INVOKABLE bool addClass(int i, int j, int width, int height, QString const& name);
     Q_INVOKABLE bool removeObject(QString const& name);
     Q_INVOKABLE bool removeObject(int i, int j);
     Q_INVOKABLE bool changeObjectName(QString const& name, const QString &newName);
     Q_INVOKABLE bool moveObject(const QString &name, int newX, int newY);
+    Q_INVOKABLE bool createAggregation(const QString &aggregationName, const QString &name);
+    Q_INVOKABLE bool createInheritance(const QString &name, const QString &parent);
+
+    Q_INVOKABLE int getAggregationIndex(const QString &name, const QString &reference) const;
+    Q_INVOKABLE int getInheritanceIndex(const QString &name, const QString &reference) const;
+    Q_INVOKABLE void addSegmentToArrow(int arrowIndex, int mX, int mY, int mWidth, int mHeight) const;
 
     Q_INVOKABLE QString getString(int x, int y) const;
 
     Q_INVOKABLE int getWidth() const;
     Q_INVOKABLE int getHeight() const;
-    Q_INVOKABLE int getSegmentsSize() const;
+    Q_INVOKABLE int getArrowsSize() const;
+    Q_INVOKABLE int getArrowSize(int index) const;
 
     Q_INVOKABLE bool setWidth(int width);
     Q_INVOKABLE bool setHeight(int height);
@@ -33,10 +41,10 @@ public:
     Q_INVOKABLE int getX(QString const& name) const;
     Q_INVOKABLE int getY(QString const& name) const;
 
-    Q_INVOKABLE int getSegmentX(int index) const;
-    Q_INVOKABLE int getSegmentY(int index) const;
-    Q_INVOKABLE int getSegmentWidth(int index) const;
-    Q_INVOKABLE int getSegmentHeight(int index) const;
+    Q_INVOKABLE int getSegmentX(int arrowIndex, int segIndex) const;
+    Q_INVOKABLE int getSegmentY(int arrowIndex, int segIndex) const;
+    Q_INVOKABLE int getSegmentWidth(int arrowIndex, int segIndex) const;
+    Q_INVOKABLE int getSegmentHeight(int arrowIndex, int segIndex) const;
 
     Q_INVOKABLE bool isEmpty(int x, int y) const;
     Q_INVOKABLE bool contains(QString const& name) const;
@@ -48,9 +56,9 @@ public slots:
 private:
     int mWidth;
     int mHeight;
-    TGridObject mTable;
-    TGridObject mArrows;
-    TGridObject mSegments;
+    TGridClass mTable;
+    TGridArrow mArrows;
+    TGridSegment mSegments;
     bool checkBounds(int i, int j, int width, int height) const;
     bool checkBounds(int i, int j) const;
 

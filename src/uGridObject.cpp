@@ -5,14 +5,13 @@
 
 using namespace std;
 
-uGridObject::uGridObject(int mX, int mY, int mWidth, int mHeight, const QString &mName)
+uGridObject::uGridObject(int mX, int mY, int mWidth, int mHeight)
 {
     //uDebugPrinter::printText("Creating object: " + mName.toStdString() + ", size (" + to_string(mWidth) + "," + to_string(mHeight) + "), position:(" + to_string(mX) + "," + to_string(mY)+")");
     this->mX = mX;
     this->mY = mY;
     this->mHeight = mHeight;
     this->mWidth = mWidth;
-    this->mName = mName;
 }
 
 uGridObject::~uGridObject()
@@ -44,11 +43,6 @@ int uGridObject::getWidth() const
 int uGridObject::getHeight() const
 {
     return mHeight;
-}
-
-QString uGridObject::getName() const
-{
-    return mName;
 }
 
 bool uGridObject::isPrinted() const
@@ -85,13 +79,6 @@ bool uGridObject::setHeight(int newHeight)
     //TODO add comparison with GridLayout limits
     if (newHeight < 0) return false;
     this->mHeight = newHeight;
-    return true;
-}
-
-bool uGridObject::setName(const QString &newName)
-{
-    if( newName.toStdString() == "") return false;
-    this->mName = newName;
     return true;
 }
 

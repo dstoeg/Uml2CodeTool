@@ -4,7 +4,7 @@
 #include <string>
 
 
-uGridSegment::uGridSegment(int mX, int mY, int mWidth, int mHeight, QString mName): uGridObject(mX, mY, mWidth, mHeight, mName)
+uGridSegment::uGridSegment(int mX, int mY, int mWidth, int mHeight): uGridObject(mX, mY, mWidth, mHeight)
 {
     this->mPrinted = false;
 }

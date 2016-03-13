@@ -46,12 +46,13 @@ Canvas {
 
     function drawSegments()
     {
-        for(var i = 0; i < gridLayout.getSegmentsSize(); i++)
+        for(var i = 0; i < gridLayout.getArrowsSize(); i++)
         {
-            var x = gridLayout.getSegmentX(i);
-            var y = gridLayout.getSegmentY(i);
-            var width = gridLayout.getSegmentWidth(i);
-            var height = gridLayout.getSegmentHeight(i);
+            for(var j = 0; j < gridLayout.getArrowSize(i); j++)
+            var x = gridLayout.getSegmentX(i, j);
+            var y = gridLayout.getSegmentY(i, j);
+            var width = gridLayout.getSegmentWidth(i, j);
+            var height = gridLayout.getSegmentHeight(i, j);
             drawSegmentWidthHeight(x, y, width, height);
         }
     }
@@ -122,17 +123,34 @@ Canvas {
 
         // draw inheritance
         if(parent != "") {
-            drawInheritance(name, parent)
+            if(gridLayout.createInheritance(name, parent))
+            {
+                autoGenerateInheritanceArrow(name, parent)
+            }
+
+            //drawInheritance(name, parent)
         }
 
         // draw references
+        var i;
         var referenceCount = dispatcher.getClassReferenceCount(name);
-        for (var i=0; i<referenceCount; i++) {
+        for (i=0; i<referenceCount; i++) {
             var referenceName = dispatcher.getClassReference(name, i);
             if (referenceName != "") {
-                drawAggregation(referenceName, name)
+                if(gridLayout.createAggregation(referenceName, name))
+                    autoGenerateAggregationArrow(referenceName, name);
+                //drawAggregation(referenceName, name)
             }
         }
+
+//        // draw dependecies
+//        var dependenceCount = dispatcher.getClassDependenceCount(name);
+//        for (i=0; i<dependenceCount; i++) {
+//            var dependenceName = dispatcher.getClassDependence(name, i);
+//            if (dependenceName != "") {
+//                gridLayout.createDependence(dependenceName, name);
+//            }
+//        }
     }
 
     function wrapText(context, text, x, y, maxWidth, lineHeight) {
@@ -195,50 +213,42 @@ Canvas {
         context.stroke();
     }
 
-    function autoGenerateInheritanceArrow(x, y, x_to, y_to)
+    function autoGenerateInheritanceArrow(name, parent)
     {
+        var x = gridLayout.getX(name)
+        var y = gridLayout.getY(name)
+
+        var x_to = gridLayout.getX(parent)
+        var y_to = gridLayout.getY(parent)
+
+        var index = gridLayout.getInheritanceIndex(name, parent)
+
         var paddingX = Number(offsetX()) - Number(getClassWidth())
         var paddingY = Number(offsetY()) - Number(getClassHeight())
 
         //Line1 up from child class
-        gridLayout.addObject(x+getClassWidth()/2, y, 0, -paddingY/4,
-                             ("seg("+(x+getClassWidth()/2).toString()+"_"+(y).toString()+")(0_"+(-paddingY/4).toString()+")")
-                             , 1) //This 1 means that I am creating a uGridSegment
+        gridLayout.addSegment(index, x+getClassWidth()/2, y, 0, -paddingY/4)
+
         //Line2 right/left
         var newX;
         if(x_to<x)
         {
-            gridLayout.addObject(x+getClassWidth()/2, y - paddingY/4, - Number(paddingX)/3 - getClassWidth()/2 ,0
-                                 ("seg("+(x+getClassWidth()/2).toString()+"_"+(y - paddingY/4).toString()+")("
-                                  +(- Number(paddingX)/3 - getClassWidth()/2).toString()+"_0)")
-                                 , 1)
+            gridLayout.addSegment(index, x+getClassWidth()/2, y - paddingY/4, - Number(paddingX)/3 - getClassWidth()/2)
             newX = Number(x- Number(paddingX)/3)
         }
         else{
-            gridLayout.addObject(x+getClassWidth()/2, y - paddingY/4, paddingX/3 ,0,
-                                 ("seg("+(x+getClassWidth()/2).toString()+"_"+(y - paddingY/4).toString()+")("
-                                  +(paddingX/3).toString()+"_0)")
-                                 , 1)
+            gridLayout.addSegment(index, x+getClassWidth()/2, y - paddingY/4, paddingX/3 ,0)
             newX = Number(x + Number(getClassWidth()) + paddingX/3)
         }
 
         //Line3 up/down
-        gridLayout.addObject(newX ,y - paddingY/4, 0, y_to - y + getClassHeight() + paddingY/2,
-                             ("seg("+(newX).toString()+"_"+(y - paddingY/4).toString()+")(0_"
-                              +(y_to - y + getClassHeight() + paddingY/2).toString()+")")
-                             , 1)
+        gridLayout.addSegment(index, newX ,y - paddingY/4, 0, y_to - y + getClassHeight() + paddingY/2)
 
         //Line4 left/rght
-        gridLayout.addObject(newX ,y_to + getClassHeight() + paddingY/4, x_to + getClassWidth()/2 -newX ,0,
-                             ("seg("+(newX).toString()+"_"+(y_to + getClassHeight() + paddingY/4).toString()+")("
-                              +(x_to + getClassWidth()/2 -newX).toString()+"_0)")
-                             , 1)
+        gridLayout.addSegment(index, newX ,y_to + getClassHeight() + paddingY/4, x_to + getClassWidth()/2 -newX ,0)
 
         //Line5 up Parent
-        gridLayout.addObject(x_to + getClassWidth()/2 ,y_to + getClassHeight() + paddingY/4, 0 ,-paddingY/4,
-                             ("seg("+(x_to + getClassWidth()/2).toString()+"_"+(y_to + getClassHeight() + paddingY/4).toString()+
-                              ")(0_"+(-paddingY/4).toString()+")")
-                             , 1)
+        gridLayout.addSegment(index, x_to + getClassWidth()/2 ,y_to + getClassHeight() + paddingY/4, 0 ,-paddingY/4)
 
 //        var triangleW = getClassWidth()/10
 //        var triangleH = paddingY/5
@@ -289,6 +299,81 @@ Canvas {
         var referenceY = gridLayout.getY(reference)
 
         drawAggregationArrow(objX, objY, referenceX, referenceY)
+    }
+
+    function autoGenerateAggregationArrow(name, reference) {
+
+        var x = gridLayout.getX(name)
+        var y = gridLayout.getY(name)
+        var x_to = gridLayout.getX(reference)
+        var y_to = gridLayout.getY(reference)
+        var index = gridLayout.getAggregationIndex(name, reference)
+
+        var paddingX = Number(offsetX()) - Number(getClassWidth())
+        var paddingY = Number(offsetY()) - Number(getClassHeight())
+
+        context.strokeStyle = "black";
+        //Line1 right/left from child class
+        var newX;
+        if(x_to<x){
+            newX = x
+            gridLayout.addSegmentToArrow(index, newX, y + getClassHeight()/2, -paddingX/2, 0)
+            newX = x - paddingX/2
+        }
+        else{
+            newX = x + getClassWidth()
+            gridLayout.addSegmentToArrow(index, newX, y + getClassHeight()/2, paddingX/2, 0)
+            newX = newX + paddingX/2
+        }
+
+        //Line2 up/down
+        var newY
+        if(y_to<y){
+            gridLayout.addSegmentToArrow(index, newX, y + getClassHeight()/2, 0, y_to - y + getClassHeight()/2 + paddingY/3)
+            newY = y_to + getClassHeight() + paddingY/3
+        }
+        else{
+            gridLayout.addSegmentToArrow(index, newX, y + getClassHeight()/2, 0, y_to - y - getClassHeight()/2 - paddingY/3)
+            newY = y_to - paddingY/3
+        }
+
+        //Line3 left/right
+        //context.moveTo(newX, newY)
+        if(x_to<x){
+            //context.lineTo(x_to + getClassWidth() + paddingX/2, newY)
+            gridLayout.addSegmentToArrow(index, newX, newY, x_to + getClassWidth() + paddingX/2 - newX, 0)
+            newX = x_to + getClassWidth() + paddingX/2
+        }
+        else{
+            gridLayout.addSegmentToArrow(index, newX, newY, x_to - paddingX/2 - newX ,0)
+            //context.lineTo(x_to - paddingX/2, newY)
+            newX = x_to - paddingX/2
+        }
+
+        //Line4 up/down
+//        context.moveTo(newX ,newY)
+//        context.lineTo(newX, y_to + getClassHeight()/2)
+        gridLayout.addSegmentToArrow(index, newX, newY, 0, y_to + getClassHeight()/2 - newY)
+        newY = y_to + getClassHeight()/2
+
+        //Line5 up Parent
+//        context.moveTo(newX ,newY)
+//        if(x_to<x){
+//            //context.lineTo(x_to + getClassWidth(), newY)
+//            newX = x_to + getClassWidth()
+//        }
+//        else{
+//            //context.lineTo(x_to, newY)
+//            newX = x_to
+//        }
+
+//        var diamondW = paddingX/2
+//        var diamondH = paddingY/7
+//        if(x_to<x)
+//            drawDiamond(newX,newY, diamondW ,diamondH ,false);
+//        else
+//            drawDiamond(newX-diamondW,newY, diamondW ,diamondH ,false);
+//        context.stroke();
     }
 
     function drawAggregationArrow(x, y, x_to, y_to) {

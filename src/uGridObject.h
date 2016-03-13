@@ -15,22 +15,22 @@ enum uGridObjectType {
     gArrow
 };
 
-static uGridObjectType intToGridType(int n)
-{
-    if(n == 1)
-        return gSegment;
+//static uGridObjectType intToGridType(int n)
+//{
+//    if(n == 1)
+//        return gSegment;
 
-    if(n == 2)
-        return gArrow;
+//    if(n == 2)
+//        return gArrow;
 
-    return gClass;
-}
+//    return gClass;
+//}
 
 class uGridObject
 {
 public:
     //Constructors
-    uGridObject(int mX, int mY, int mWidth, int mHeight, const QString &mName);
+    uGridObject(int mX, int mY, int mWidth, int mHeight);
     virtual ~uGridObject();
 
     virtual bool selected(int x, int y) const;
@@ -39,14 +39,12 @@ public:
     int getY() const;
     int getWidth() const;
     int getHeight() const;
-    QString getName() const;
     bool isPrinted() const;
 
     bool setX(int newX);
     bool setY(int newY);
     bool setWidth(int newWidth);
     bool setHeight(int newHeight);
-    bool setName(const QString &newName);
     void setPrinted(bool printed);
 
 protected:
@@ -54,7 +52,6 @@ protected:
     int mY;
     int mWidth;
     int mHeight;
-    QString mName;
     bool mPrinted;
 
 };
