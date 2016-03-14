@@ -8,18 +8,18 @@
 class uGridClass: public uGridObject
 {
 public:
-    uGridClass(int mX, int mY, int mWidth, int mHeight, QString mName);
+    uGridClass(int mX, int mY, int mX_to, int mY_to, QString mName);
     virtual ~uGridClass(){}
 
     virtual bool selected(int x, int y) const;
 
-    bool notifyMovement();
+    bool notifyMovement(int movX, int movY);
 
     bool setName(const QString &newName);
 
     QString getName() const;
 
-    bool addReference();
+    bool addReference(uGridArrow * arrow);
 
 private:
     QString mName;

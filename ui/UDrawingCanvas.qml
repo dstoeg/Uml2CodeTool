@@ -16,6 +16,7 @@ Canvas {
     property bool selecting: false //this is a flag for avoiding uClassPanel.updateMethod() to be call when a class is clicked
 
     property bool arrowSelected: false
+    property int arrowSelectedIndex: -1
     property int selectedArrowX: 0
     property int selectedArrowY: 0
 
@@ -561,7 +562,7 @@ Canvas {
             selecting = false;//allows uClassPanel.updateMethod() to be called
 
         }
-        else if(selectingParent){
+        else if(selectingParent && name != ""){
            uClassPanel.setParentField(name);
         }
         else
@@ -570,9 +571,9 @@ Canvas {
             selectedClass = ""
 
             //if no class selected, check arrows
-            var index = gridLayout.getArrowSelected(x,y)
-            if(index >= 0){
-                uDebugger.qPrintText("Found arrow: " +index)
+            arrowSelectedIndex = gridLayout.getArrowSelected(x,y)
+            if(arrowSelectedIndex >= 0){
+                uDebugger.qPrintText("Found arrow: " +arrowSelectedIndex)
                 arrowSelected = true;
                 selectedArrowX = x
                 selectedArrowY = y
@@ -592,6 +593,17 @@ Canvas {
             gridLayout.moveObject(selectedClass, Number(movX), Number(movY))
             requestPaint()
         }
+        else
+        {
+            //test for arrow movement
+            if(arrowSelected){
+                gridLayout.modifyArrow(arrowSelectedIndex, selectedArrowX, selectedArrowY, x, y)
+                requestPaint()
+                selectedArrowX = x
+                selectedArrowY = y
+            }
+        }
+
         selectedX = x;
         selectedY = y;
     }
@@ -599,15 +611,16 @@ Canvas {
     function releasedMouse(x, y)
     {
         uDebugger.qPrintText("Mouse RELEASED in (" + x +"," + y + ")")
-
-        //test for arrow movement
-        if(arrowSelected){
-            uDebugger.qPrintText("arrow Selected in release")
-            var index = gridLayout.getArrowSelected(selectedArrowX,selectedArrowY)
-            gridLayout.modifyArrow(index, selectedArrowX, selectedArrowY, x, y)
-            arrowSelected = false;
-            requestPaint()
-        }
+        arrowSelected = false;
+        arrowSelectedIndex = -1;
+//        //test for arrow movement
+//        if(arrowSelected){
+//            uDebugger.qPrintText("arrow Selected in release")
+//            var index = gridLayout.getArrowSelected(selectedArrowX,selectedArrowY)
+//            gridLayout.modifyArrow(index, selectedArrowX, selectedArrowY, x, y)
+//            arrowSelected = false;
+//            requestPaint()
+//        }
     }
 
     function getClassWidth()

@@ -4,22 +4,44 @@
 #include <string>
 
 
-uGridSegment::uGridSegment(int mX, int mY, int mWidth, int mHeight): uGridObject(mX, mY, mWidth, mHeight)
+uGridSegment::uGridSegment(int mX, int mY, int mX_to, int mY_to): uGridObject(mX, mY, mX_to, mY_to)
 {
 
 }
 
 bool uGridSegment::selected(int x, int y) const
 {
-    //general line ecuation r: Ax + By + C = 0
-    // mP = (mX, mY), mVector = (mWidth,mHeight)
-    // A = mHeight, B = -mWidth, C = mWidth*mY - mHeight*mX
-    // d((x,y), r) = |Ax + By + C|/sqrt(A*A + B*B)
+    //distance point-segment
+    double epsilon = 5;
 
-    float epsilon = 3;
-    float distance = (float)abs(mHeight*x - mWidth*y + (mWidth*mY - mHeight*mX))
-            /sqrt((float)mHeight*mHeight + mWidth*mWidth);
-    return distance < epsilon;
+    double A = x - mX;
+    double B = y - mY;
+    double C = mX_to - mX;
+    double D = mY_to - mY;
+
+    double dot = A * C + B * D;
+    double len_sq = C * C + D * D;
+    double param = dot / len_sq;
+
+    double xx, yy;
+
+    //if long segment == 0;
+    if (param < 0 || (mX == mX_to && mY == mY_to)) {
+        xx = mX;
+        yy = mY;
+    }
+    else if (param > 1) {
+        xx = mX_to;
+        yy = mY_to;
+    }
+    else {
+        xx = mX + param * C;
+        yy = mY + param * D;
+    }
+
+    double dx = x - xx;
+    double dy = y - yy;
+    return sqrt(dx * dx + dy * dy) < epsilon;
 }
 
 bool uGridSegment::pivoteMovement(int oldX, int oldY, int newX, int newY)
@@ -30,13 +52,13 @@ bool uGridSegment::pivoteMovement(int oldX, int oldY, int newX, int newY)
         return true;
     }
 
-    if(oldX == mX + mWidth && oldY == mY + mHeight){
-        mWidth = newX - mX;
-        mHeight = newY - mY;
+    if(oldX == mX_to && oldY == mY_to){
+        mX_to = newX;
+        mY_to = newY;
         return true;
     }
 
-//    uDebugPrinter::printText("Pivote movement failed in (" + to_string(oldX) + "," + to_string(oldY) +
-//                             ") to (" + to_string(newX) + "," + to_string(newY) + ")");
+    uDebugPrinter::printText("Pivote movement failed in (" + std::to_string(oldX) + "," + std::to_string(oldY) +
+                             ") to (" + std::to_string(newX) + "," + std::to_string(newY) + ")");
     return false;
 }

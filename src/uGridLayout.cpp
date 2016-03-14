@@ -61,13 +61,16 @@ bool uGridLayout::changeObjectName(const QString &name, const QString &newName)
     return false;
 }
 
-bool uGridLayout::moveObject(const QString &name, int newX, int newY)
+bool uGridLayout::moveObject(const QString &name, int movX, int movY)
 {
     for(TGridClassConstIter iter=mTable.begin(); iter != mTable.end(); iter++) {
         if ((*iter)->getName() == name) {
-            if(checkBounds((*iter)->getX() + newX, (*iter)->getY() + newY, (*iter)->getWidth(), (*iter)->getHeight())){
-                (*iter)->setY((*iter)->getY() + newY);
-                (*iter)->setX((*iter)->getX() + newX);
+            if(checkBounds((*iter)->getX() + movX, (*iter)->getY() + movY, (*iter)->getWidth(), (*iter)->getHeight())){
+                (*iter)->setY((*iter)->getY() + movY);
+                (*iter)->setX((*iter)->getX() + movX);
+                (*iter)->setY_to((*iter)->getY_to() + movY);
+                (*iter)->setX_to((*iter)->getX_to() + movX);
+                (*iter)->notifyMovement(movX, movY); //notifies the arrows that it is moving
                 return true;
             }
         }
@@ -79,6 +82,7 @@ bool uGridLayout::moveObject(const QString &name, int newX, int newY)
 bool uGridLayout::createAggregation(const QString &aggregationName, const QString &name)
 {
 
+    //First If it is created already. If it is, I check it as created
     for(TGridArrowConstIter iter=mArrows.begin(); iter != mArrows.end(); iter++)
     {
         if((*iter)->equals(aggregationName, name, uAggregation)){
@@ -87,7 +91,15 @@ bool uGridLayout::createAggregation(const QString &aggregationName, const QStrin
         }
     }
 
-    mArrows.push_back(new uGridArrow(aggregationName, name, uAggregation));
+    uGridArrow * arrow = new uGridArrow(aggregationName, name, uAggregation);
+    mArrows.push_back(arrow);
+
+    for(TGridClassConstIter iter=mTable.begin(); iter != mTable.end(); iter++) {
+        if ((*iter)->getName() == name || (*iter)->getName() == aggregationName) {
+            (*iter)->addReference(arrow);
+        }
+    }
+
     return true;
 }
 
@@ -101,7 +113,15 @@ bool uGridLayout::createInheritance(const QString &name, const QString &parent)
         }
     }
 
-    mArrows.push_back(new uGridArrow(name, parent, uInheritance));
+    uGridArrow * arrow = new uGridArrow(name, parent, uInheritance);
+    mArrows.push_back(arrow);
+
+    for(TGridClassConstIter iter=mTable.begin(); iter != mTable.end(); iter++) {
+        if ((*iter)->getName() == name || (*iter)->getName() == parent) {
+            (*iter)->addReference(arrow);
+        }
+    }
+
     return true;
 }
 
@@ -129,8 +149,9 @@ int uGridLayout::getInheritanceIndex(const QString &name, const QString &referen
 
 void uGridLayout::addSegmentToArrow(int arrowIndex, int mX, int mY, int mWidth, int mHeight) const
 {
-    mArrows[arrowIndex]->addSegment(uGridObjectFactory::createSegment(mX, mY, mWidth, mHeight));
-    uDebugPrinter::printText("added segment ("+to_string(mX)+","+ to_string(mY) +"), size("+ to_string(mWidth) +","+ to_string(mHeight) +")");
+    mArrows[arrowIndex]->addSegment(uGridObjectFactory::createSegment(mX, mY, mX + mWidth, mY + mHeight));
+    uDebugPrinter::printText("added segment ("+to_string(mX)+","+ to_string(mY) +"), size("+ to_string(mWidth) +","+ to_string(mHeight) +") "
+                              "to arrow: " + to_string(arrowIndex));
 }
 
 void uGridLayout::deleteNonExistentArrows()
@@ -283,6 +304,26 @@ int uGridLayout::getClassY(const QString &name) const
     return -1;
 }
 
+int uGridLayout::getClassX_to(const QString &name) const
+{
+    for(TGridClassConstIter iter=mTable.begin(); iter != mTable.end(); iter++) {
+        if ((*iter)->getName() == name) {
+            return (*iter)->getX_to();
+        }
+    }
+    return -1;
+}
+
+int uGridLayout::getClassY_to(const QString &name) const
+{
+    for(TGridClassConstIter iter=mTable.begin(); iter != mTable.end(); iter++) {
+        if ((*iter)->getName() == name) {
+            return (*iter)->getY_to();
+        }
+    }
+    return -1;
+}
+
 int uGridLayout::getSegmentX(int arrowIndex, int segIndex) const
 {
     return mArrows[arrowIndex]->getSegment(segIndex)->getX();
@@ -291,6 +332,16 @@ int uGridLayout::getSegmentX(int arrowIndex, int segIndex) const
 int uGridLayout::getSegmentY(int arrowIndex, int segIndex) const
 {
     return mArrows[arrowIndex]->getSegment(segIndex)->getY();
+}
+
+int uGridLayout::getSegmentX_to(int arrowIndex, int segIndex) const
+{
+    return mArrows[arrowIndex]->getSegment(segIndex)->getX_to();
+}
+
+int uGridLayout::getSegmentY_to(int arrowIndex, int segIndex) const
+{
+    return mArrows[arrowIndex]->getSegment(segIndex)->getY_to();
 }
 
 int uGridLayout::getSegmentWidth(int arrowIndex, int segIndex) const

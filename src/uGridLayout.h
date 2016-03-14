@@ -19,7 +19,7 @@ public:
     Q_INVOKABLE bool removeObject(QString const& name);
     Q_INVOKABLE bool removeObject(int i, int j);
     Q_INVOKABLE bool changeObjectName(QString const& name, const QString &newName);
-    Q_INVOKABLE bool moveObject(const QString &name, int newX, int newY);
+    Q_INVOKABLE bool moveObject(const QString &name, int movX, int movY);
     Q_INVOKABLE bool createAggregation(const QString &aggregationName, const QString &name);
     Q_INVOKABLE bool createInheritance(const QString &name, const QString &parent);
 
@@ -44,11 +44,15 @@ public:
 
     Q_INVOKABLE int getClassX(QString const& name) const;
     Q_INVOKABLE int getClassY(QString const& name) const;
+    Q_INVOKABLE int getClassX_to(QString const& name) const;
+    Q_INVOKABLE int getClassY_to(QString const& name) const;
     Q_INVOKABLE int getClassWidth(QString const& name) const;
     Q_INVOKABLE int getClassHeight(QString const& name) const;
 
     Q_INVOKABLE int getSegmentX(int arrowIndex, int segIndex) const;
     Q_INVOKABLE int getSegmentY(int arrowIndex, int segIndex) const;
+    Q_INVOKABLE int getSegmentX_to(int arrowIndex, int segIndex) const;
+    Q_INVOKABLE int getSegmentY_to(int arrowIndex, int segIndex) const;
     Q_INVOKABLE int getSegmentWidth(int arrowIndex, int segIndex) const;
     Q_INVOKABLE int getSegmentHeight(int arrowIndex, int segIndex) const;
 

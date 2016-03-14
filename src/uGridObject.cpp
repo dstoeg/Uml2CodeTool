@@ -5,13 +5,13 @@
 
 using namespace std;
 
-uGridObject::uGridObject(int mX, int mY, int mWidth, int mHeight)
+uGridObject::uGridObject(int mX, int mY, int mX_to, int mY_to)
 {
     //uDebugPrinter::printText("Creating object: " + mName.toStdString() + ", size (" + to_string(mWidth) + "," + to_string(mHeight) + "), position:(" + to_string(mX) + "," + to_string(mY)+")");
     this->mX = mX;
     this->mY = mY;
-    this->mHeight = mHeight;
-    this->mWidth = mWidth;
+    this->mY_to = mY_to;
+    this->mX_to = mX_to;
 }
 
 uGridObject::~uGridObject()
@@ -21,7 +21,7 @@ uGridObject::~uGridObject()
 
 bool uGridObject::selected(int x, int y) const
 {
-    return ((this->mX + this->mWidth) >= x ) && ((mY + mHeight) >= y)
+    return ((this->mX_to) >= x ) && ((mY_to) >= y)
             && mX <=x && mY <= y;
 }
 
@@ -35,14 +35,24 @@ int uGridObject::getY() const
     return mY;
 }
 
+int uGridObject::getX_to() const
+{
+    return mX_to;
+}
+
+int uGridObject::getY_to() const
+{
+    return mY_to;
+}
+
 int uGridObject::getWidth() const
 {
-    return mWidth;
+    return mX_to - mX;
 }
 
 int uGridObject::getHeight() const
 {
-    return mHeight;
+    return mY_to - mY;
 }
 
 
@@ -62,29 +72,25 @@ bool uGridObject::setY(int newY)
     return true;
 }
 
-bool uGridObject::setWidth(int newWidth)
+bool uGridObject::setX_to(int newX)
 {
-    //TODO add comparison with GridLayout limits
-    this->mWidth = newWidth;
-    return true;
+    mX_to = newX;
 }
 
-bool uGridObject::setHeight(int newHeight)
+bool uGridObject::setY_to(int newY)
 {
-    //TODO add comparison with GridLayout limits
-    this->mHeight = newHeight;
-    return true;
+    mY_to = newY;
 }
 
 void uGridObject::resizeX(double ratio)
 {
     mX = (int)((double)mX*ratio + 0.5);
-    mWidth = (int)((double)mWidth*ratio + 0.99);
+    mX_to = (int)((double)mX_to*ratio + 0.5);
 }
 
 void uGridObject::resizeY(double ratio)
 {
     mY = (int)((double)mY*ratio + 0.5);
-    mHeight = (int)((double)mHeight*ratio + 0.99);
+    mY_to = (int)((double)mY_to*ratio + 0.5);
 }
 

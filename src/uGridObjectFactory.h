@@ -9,8 +9,8 @@ class uGridObjectFactory
 {
 public:
     static uGridObjectFactory &getInstance();
-    static uGridClass * createClass(int mX, int mY, int mWidth, int mHeight, QString mName);
-    static uGridSegment * createSegment(int mX, int mY, int mWidth, int mHeight);
+    static uGridClass * createClass(int mX, int mY, int mX_to, int mY_to, QString mName);
+    static uGridSegment * createSegment(int mX, int mY, int mX_to, int mY_to);
 
     //TODO
     //uGridObject * createArrow();

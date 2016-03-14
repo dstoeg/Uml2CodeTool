@@ -8,6 +8,7 @@ uGridArrow::uGridArrow(QString const& origin, QString const& destination, int ty
     mSegments = segments;
     mType = uDependency;
     mDeleted = false;
+    mSegmentSelected = -1;
 
     if(type == 0){
         mType = uInheritance;
@@ -33,6 +34,7 @@ uGridArrow::uGridArrow(QString const& origin, QString const& destination, uArrow
     mOrigin = origin;
     mDestination = destination;
     mType = type;
+    mSegmentSelected = -1;
 
     if(type == uInheritance){
         mRatioXdest = 0.5;
@@ -95,7 +97,7 @@ int uGridArrow::getType() const
 
 void uGridArrow::addSegment(uGridSegment *segment)
 {
-    return mSegments.push_back(segment);
+    mSegments.push_back(segment);
 }
 
 void uGridArrow::setDeleted(bool del)
@@ -112,12 +114,12 @@ void uGridArrow::resizeX(double ratio, int destinationX, int destWidth)
     TGridSegmentConstIter iter2 = mSegments.begin();
     for(TGridSegmentConstIter iter = ++mSegments.begin(); iter != mSegments.end(); iter++)
     {
-        (*iter2)->setWidth((*iter)->getX()-(*iter2)->getX());
-        uDebugPrinter::printText("new width " + std::to_string((*iter2)->getWidth()));
+        (*iter2)->setX_to((*iter)->getX());
+//        uDebugPrinter::printText("new width " + std::to_string((*iter2)->getWidth()));
         iter2++;
     }
 
-    mSegments[mSegments.size()-1]->setWidth(destinationX -  mSegments[mSegments.size()-1]->getX());
+    //mSegments[mSegments.size()-1]->setX_to(destinationX -  mSegments[mSegments.size()-1]->getX());
 
 }
 
@@ -130,12 +132,12 @@ void uGridArrow::resizeY(double ratio, int destinationY, int destHeight)
     TGridSegmentConstIter iter2 = mSegments.begin();
     for(TGridSegmentConstIter iter = ++mSegments.begin(); iter != mSegments.end(); iter++)
     {
-        (*iter2)->setHeight((*iter)->getY()-(*iter2)->getY());
-        uDebugPrinter::printText("new height " + std::to_string((*iter2)->getHeight()));
+        (*iter2)->setY_to((*iter)->getY());
+       // uDebugPrinter::printText("new height " + std::to_string((*iter2)->getHeight()));
         iter2++;
     }
 
-    mSegments[mSegments.size()-1]->setHeight(destinationY -  mSegments[mSegments.size()-1]->getY());
+    //mSegments[mSegments.size()-1]->setHeight(destinationY -  mSegments[mSegments.size()-1]->getY());
 }
 
 bool uGridArrow::equals(uGridArrow *arrow) const
@@ -161,29 +163,105 @@ int uGridArrow::selected(int x, int y) const
 void uGridArrow::moveSegments(int oldX, int oldY, int newX, int newY)
 {
     //Check if the movement is close to the join of two segments
-    double epsilon = 3;
-    bool join = false;
+    double epsilon = 5;
+
+    //If a segment was already selected, first I check that one
+    if(mSegmentSelected != -1){
+
+        //if that segment was not the last, then was in a joint of two segments
+        if(mSegmentSelected != mSegments.size()-1){
+            if(distancePointToPoint(mSegments[mSegmentSelected]->getX_to(),
+                                    mSegments[mSegmentSelected]->getY_to(), oldX, oldY) < epsilon
+                    && distancePointToPoint(mSegments[mSegmentSelected+1]->getX(),
+                                            mSegments[mSegmentSelected+1]->getY(), oldX, oldY) < epsilon)
+            {
+//                uDebugPrinter::printText("Joint found in (" + std::to_string(oldX) + "," + std::to_string(oldY) + ")");
+                mSegments[mSegmentSelected]->setX_to(newX);
+                mSegments[mSegmentSelected]->setY_to(newY);
+                mSegments[mSegmentSelected+1]->setX(newX);
+                mSegments[mSegmentSelected+1]->setY(newY);
+                return;
+            }
+            else //if it was not in a joint, then is unselected
+            {
+                mSegmentSelected = -1;
+            }
+        }
+    }
+
     TGridSegmentConstIter iter2 = mSegments.begin();
     TGridSegmentConstIter iter;
-    for(iter = ++mSegments.begin(); iter != mSegments.end(); iter++)
+    mSegmentSelected = -1;
+    for(iter = mSegments.begin() + 1; iter != mSegments.end(); iter++)
     {
-        if(distancePointToPoint((*iter2)->getX() + (*iter2)->getWidth(),(*iter2)->getY() + (*iter2)->getHeight(), oldX, oldY) < epsilon
+        mSegmentSelected++;
+        //Check segments joints
+        if(distancePointToPoint((*iter2)->getX_to(),(*iter2)->getY_to(), oldX, oldY) < epsilon
                 && distancePointToPoint((*iter)->getX(),(*iter)->getY(), oldX, oldY) < epsilon)
         {
-            join = true;
-            break;
+            uDebugPrinter::printText("Join found in (" + std::to_string(oldX) + "," + std::to_string(oldY) + ")");
+            (*iter2)->setX_to(newX);
+            (*iter2)->setY_to(newY);
+            (*iter)->setX(newX);
+            (*iter)->setY(newY);
+            return;
         }
+
+        //Check middle segments
+        if((*iter2)->selected(oldX, oldY))
+        {
+            int x_to = (*iter2)->getX_to();
+            int y_to = (*iter2)->getY_to();
+            (*iter2)->setX_to(newX);
+            (*iter2)->setY_to(newY);
+
+            uDebugPrinter::printText("New segment created in (" + std::to_string(oldX) + "," + std::to_string(oldY) + ")");
+            //create a new segment in the middle
+            mSegments.insert(iter, new uGridSegment(newX, newY, x_to, y_to));
+            return;
+        }
+
         iter2++;
     }
 
-    if(join)
+
+    //Check last point
+    if((*iter2)->selected(oldX, oldY))
     {
-        (*iter2)->setWidth(newX - (*iter2)->getX());
-        (*iter2)->setHeight(newY - (*iter2)->getY());
-        (*iter)->setX(newX);
-        (*iter)->setY(newY);
+        int x_to = (*iter2)->getX_to();
+        int y_to = (*iter2)->getY_to();
+        (*iter2)->setX_to(newX);
+        (*iter2)->setY_to(newY);
+
+        uDebugPrinter::printText("New segment created in (" + std::to_string(oldX) + "," + std::to_string(oldY) + ")");
+        //create a new segment in the middle
+        mSegments.insert(iter, new uGridSegment(newX, newY, x_to, y_to));
+        return;
     }
 
+    mSegmentSelected = -1;
+}
+
+bool uGridArrow::notifyMovement(const QString &name, int movX, int movY)
+{
+    //If class moved was the origin class
+    if(name == mOrigin){
+        mSegments[0]->setX(mSegments[0]->getX() + movX);
+        mSegments[0]->setY(mSegments[0]->getY() + movY);
+    }
+
+    //If class moved was the destination class
+    if (name == mDestination)
+    {
+        int index = mSegments.size()-1;
+        mSegments[index]->setX_to(mSegments[index]->getX_to() + movX);
+        mSegments[index]->setY_to(mSegments[index]->getY_to() + movY);
+    }
+
+    if(name != mOrigin && name != mDestination)
+        return false;
+
+    return true;
 }
 
 double uGridArrow::distancePointToPoint(int x, int y, int i, int j) const

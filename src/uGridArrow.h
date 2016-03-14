@@ -48,6 +48,7 @@ public:
 
     //Manages the segment movements
     void moveSegments(int oldX, int oldY, int newX, int newY);
+    bool notifyMovement(QString const &name, int movX, int movY);
 
 private:
     uArrowType mType;
@@ -59,6 +60,7 @@ private:
     double mRatioYdest;
     double mRatioXorigin;
     double mRatioYorigin;
+    int mSegmentSelected;
 
     double distancePointToPoint(int x, int y, int i, int j) const;
 };

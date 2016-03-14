@@ -8,7 +8,7 @@ class uGridSegment: public uGridObject
 {
 public:
 
-    uGridSegment(int mX, int mY, int mWidth, int mHeight);
+    uGridSegment(int mX, int mY, int mX_to, int mY_to);
     virtual ~uGridSegment(){}
 
     virtual bool selected(int x, int y) const;
