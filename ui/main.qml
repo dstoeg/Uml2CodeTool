@@ -33,11 +33,27 @@ ApplicationWindow {
             id: drawingCanvas
             Layout.preferredWidth: parent.width * 0.75
             Layout.preferredHeight: parent.height
+            onHeightChanged: gridLayout.setHeight(Number(height));
+            onWidthChanged: gridLayout.setWidth(Number(width));
+            Keys.onDeletePressed: {
+                uClassPanel.deleteMethod();
+                event.accepted = true;
+            }
+
             MouseArea {
                 anchors.fill: parent
                 acceptedButtons: Qt.LeftButton
-                onClicked: drawingCanvas.selectClass(mouse.x, mouse.y)
+                onPressed: {
+                    drawingCanvas.selectedX = mouse.x
+                    drawingCanvas.selectedY = mouse.y
+                    drawingCanvas.selectClass(mouse.x, mouse.y)
+                    drawingCanvas.forceActiveFocus()
+                }
+                onMouseXChanged: drawingCanvas.moveClass(mouse.x, mouse.y)
+                onMouseYChanged: drawingCanvas.moveClass(mouse.x, mouse.y)
+                onReleased: drawingCanvas.releasedMouse(mouse.x, mouse.y)
                 cursorShape: Qt.UpArrowCursor
+
             }
         }
 
@@ -51,8 +67,9 @@ ApplicationWindow {
             Layout.margins: 10
             Layout.leftMargin: 5
 
-            // Buttons Base, Interface and Child
+            // Buttons Class and Interface
             UClassTypeSelection {
+                id: uClassSelection
                 Layout.preferredWidth: parent.width
                 Layout.preferredHeight: parent.height * 0.05
             }

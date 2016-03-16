@@ -55,7 +55,7 @@ void uInheritableTest::initTestCase()
     TParameters parameters = {new uParameter(uPrivate , "int", "id"),new uParameter(uProtected , "string", "name"),new uParameter(uPublic , "float", "size")};
     TMethods methods = {method};
     TReferences references;
-    mObject = new uInheritable(uPublic,"TestClass", parameters, methods, references);
+    mObject = new uInheritable(uPublic,"TestClass", parameters, methods, references,false);
 }
 
 void uInheritableTest::cleanupTestCase()

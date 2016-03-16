@@ -21,8 +21,8 @@ class UiEventDispatcher : public QObject
     Q_OBJECT
 public:
     explicit UiEventDispatcher(QObject *parent = 0);
-    Q_INVOKABLE void createClass(QString name, QString parent, QString methods, QString attributes);
-    Q_INVOKABLE void updateClass(QString oldName, QString newName, QString parent, QString methods, QString attributes);
+    Q_INVOKABLE void createClass(QString name, QString parent, QString methods, QString attributes, bool isAbstract);
+    Q_INVOKABLE void updateClass(QString oldName, QString newName, QString parent, QString methods, QString attributes, bool isAbstract);
 
     Q_INVOKABLE void setClassState(int type);
 
@@ -37,8 +37,8 @@ public:
     Q_INVOKABLE void removeClass(QString name);
 
     Q_INVOKABLE QString getClassName(int index);
-    Q_INVOKABLE QString getClassMethods(int index);
-    Q_INVOKABLE QString getClassAttributes(int index);
+    Q_INVOKABLE QString getClassMethods(int index, bool accessSymbol);
+    Q_INVOKABLE QString getClassAttributes(int index, bool accessSymbol);
     Q_INVOKABLE int getClassIndex(QString name);
     Q_INVOKABLE QString getClassParent(int index);
     Q_INVOKABLE bool getClassIsInterface(int index);

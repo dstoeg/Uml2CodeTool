@@ -22,7 +22,7 @@ public:
     //Constructors
     explicit uInheritable();
     uInheritable(std::string const& name);
-    uInheritable(uAccess access, std::string const& name, TParameters & attributes, TMethods & methods, TReferences & references);
+    uInheritable(uAccess access, std::string const& name, TParameters & attributes, TMethods & methods, TReferences & references, bool isAbstract);
     virtual ~uInheritable();
 
     //Getters and Setters

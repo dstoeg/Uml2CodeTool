@@ -20,7 +20,7 @@ uBaseClass::uBaseClass(std::string const& name) : uInheritable(name)
  * @param name
  */
 
-uBaseClass::uBaseClass(uAccess access, const std::string &name, TParameters &attributes, TMethods &methods, TReferences &references) : uInheritable(access, name, attributes, methods, references)
+uBaseClass::uBaseClass(uAccess access, const std::string &name, TParameters &attributes, TMethods &methods, TReferences &references, bool isAbstract) : uInheritable(access, name, attributes, methods, references, isAbstract)
 {
     mHasParent = false;
     mIsInterface = false;

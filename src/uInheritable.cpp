@@ -13,7 +13,7 @@ uInheritable::uInheritable(const std::string &name)
     mBaseClass = NULL;
 }
 
-uInheritable::uInheritable(uAccess access, const std::string &name, TParameters &attributes, TMethods &methods, TReferences &references)
+uInheritable::uInheritable(uAccess access, const std::string &name, TParameters &attributes, TMethods &methods, TReferences &references, bool isAbstract)
 {
     mAccess = access;
     mName = name;
@@ -22,6 +22,7 @@ uInheritable::uInheritable(uAccess access, const std::string &name, TParameters 
     mReferences = references;
     mHasParent = false;
     mBaseClass = NULL;
+    mIsAbstract = isAbstract;
 }
 
 uInheritable::~uInheritable()

@@ -6,6 +6,7 @@ import QtQuick.Layouts 1.1
 
 //This class creates the three buttons
 RowLayout {
+    id: classSelection
     spacing : 2
     Layout.fillHeight: true
     Layout.fillWidth: true
@@ -24,11 +25,8 @@ RowLayout {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                parent.color = 'grey'
-                uInterfaceClassButton.color = 'white'
-//                uChildClassButton.color = "white"
-                dispatcher.setClassState(0)
-                uClassPanel.enableParentField()
+                setClassButton()
+                uClassPanel.updateMethod()
             }
         }
     }
@@ -47,37 +45,28 @@ RowLayout {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                parent.color = 'grey'
-                uBaseClassButton.color = 'white'
-//                uChildClassButton.color = "white"
-                dispatcher.setClassState(1)
-                uClassPanel.disableParentField()
+                setInterfaceButton()
+                uClassPanel.updateMethod()
             }
         }
     }
 
-//    //Child button
-//    Rectangle {
-//        id: uChildClassButton
-//        color: "white"
-//        Layout.fillHeight: true
-//        Layout.fillWidth: true
+    function setInterfaceButton()
+    {
+        uInterfaceClassButton.color = 'grey'
+        uBaseClassButton.color = 'white'
+        dispatcher.setClassState(1)
+        uClassPanel.disableParentField()
+        uClassPanel.disableAbstractField()
+    }
 
-//        StyledText {
-//            text: "Child"
-//        }
-
-//        MouseArea {
-//            anchors.fill: parent
-//            onClicked: {
-//                parent.color = 'grey'
-//                uBaseClassButton.color = 'white'
-//                uInterfaceClassButton.color = "white"
-//                dispatcher.setClassState(2)
-//                uClassPanel.enableParentField()
-//            }
-//        }
-//    }
-
+    function setClassButton()
+    {
+        uBaseClassButton.color = 'grey'
+        uInterfaceClassButton.color = 'white'
+        dispatcher.setClassState(0)
+        uClassPanel.enableParentField()
+        uClassPanel.enableAbstractField()
+    }
 
 }

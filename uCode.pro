@@ -43,7 +43,12 @@ SOURCES += src/main.cpp \
     src/uChildButton.cpp \
     src/uProjectFileCreator.cpp \
     src/uProjectFile.cpp \
-    src/uProjectFileQT.cpp
+    src/uProjectFileQT.cpp \
+    src/uGridObjectFactory.cpp \
+    src/uGridClass.cpp \
+    src/uGridObject.cpp \
+    src/uGridSegment.cpp \
+    src/uGridArrow.cpp
 
 RESOURCES += ui/qml.qrc
 
@@ -96,5 +101,10 @@ HEADERS += \
     src/uChildButton.h \
     src/uProjectFileCreator.h \
     src/uProjectFile.h \
-    src/uProjectFileQT.h
+    src/uProjectFileQT.h \
+    src/uGridObjectFactory.h \
+    src/uGridClass.h \
+    src/uGridObject.h \
+    src/uGridSegment.h \
+    src/uGridArrow.h
 
