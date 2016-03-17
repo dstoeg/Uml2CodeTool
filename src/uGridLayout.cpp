@@ -52,11 +52,23 @@ bool uGridLayout::removeObject(int x, int y)
 
 bool uGridLayout::changeObjectName(const QString &name, const QString &newName)
 {
-    for(TGridClassConstIter iter=mTable.begin(); iter != mTable.end(); iter++) {
+    bool found = false;
+    TGridClassConstIter foundPosition;
+
+    for(TGridClassConstIter iter=mTable.begin(); iter != mTable.end(); iter++)
+    {
         if ((*iter)->getName() == name) {
-            (*iter)->setName(newName);
-            return true;
+            foundPosition = iter;
+            found = true;
         }
+
+        if ((*iter)->getName() == newName)
+            return false;
+    }
+
+    if (found){
+        (*foundPosition)->setName(newName);
+        return true;
     }
     return false;
 }

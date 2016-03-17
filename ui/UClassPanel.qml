@@ -227,13 +227,13 @@ ColumnLayout {
             var attributes = attributeField.text
             var isAbstract = abstractField.checked
 
-
-            //Move the class in the grid
-            gridLayout.changeObjectName(drawingCanvas.selectedClass, name)
-
             //Check if the class has a parent
             if(parent != "")
                 dispatcher.setClassState(2)
+
+            //Move the class in the grid and check if the name is used
+            if(!gridLayout.changeObjectName(drawingCanvas.selectedClass, name))
+                name = drawingCanvas.selectedClass; //if class name exists, name keeps the same
 
             //Update the class
             dispatcher.updateClass(drawingCanvas.selectedClass, name, parent, methods, attributes, isAbstract)
