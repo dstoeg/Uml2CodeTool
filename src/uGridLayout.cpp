@@ -17,12 +17,12 @@ uGridLayout::uGridLayout(int width, int height) : QObject(0)
     mHeight = height;
 }
 
-bool uGridLayout::addClass(int i, int j, int width, int height, const QString &name)
+bool uGridLayout::addClass(int i, int j, int i_to, int j_to, const QString &name)
 {
     uDebugPrinter::printText("adding class: " + name.toStdString() + " index i: " + to_string(i) + " index j: " + to_string(j));
-    if (!checkBounds(i,j,width, height)) return false;
+    if (!checkBounds(i,j,i_to, j_to)) return false;
 
-    mTable.push_back(uGridObjectFactory::createClass(i ,j ,width ,height ,name));
+    mTable.push_back(uGridObjectFactory::createClass(i ,j ,i_to ,j_to ,name));
 
     return true;
 }
@@ -207,6 +207,11 @@ void uGridLayout::modifyArrow(int index, int oldX, int oldY, int newX, int newY)
     mArrows[index]->moveSegments(oldX, oldY, newX, newY);
 }
 
+//void uGridLayout::mergeSegments(int arrowIndex)
+//{
+//    mArrows[arrowIndex]->mergeSegments();
+//}
+
 int uGridLayout::getWidth() const
 {
     return mWidth;
@@ -364,6 +369,11 @@ int uGridLayout::getSegmentWidth(int arrowIndex, int segIndex) const
 int uGridLayout::getSegmentHeight(int arrowIndex, int segIndex) const
 {
     return mArrows[arrowIndex]->getSegment(segIndex)->getHeight();
+}
+
+int uGridLayout::getSegmentLength(int arrowIndex, int segIndex) const
+{
+    return mArrows[arrowIndex]->getSegment(segIndex)->getLength();
 }
 
 bool uGridLayout::isEmpty(int x, int y) const

@@ -237,6 +237,7 @@ ColumnLayout {
 
             //Update the class
             dispatcher.updateClass(drawingCanvas.selectedClass, name, parent, methods, attributes, isAbstract)
+            drawingCanvas.selectedClass = name;
 
             //Repaint the canvas
             drawingCanvas.requestPaint()
@@ -259,7 +260,7 @@ ColumnLayout {
             if (name != "" && !gridLayout.contains(name)) {
 
                 //Add the class to the grid
-                gridLayout.addClass(Number(10),Number(10),drawingCanvas.getClassWidth(),drawingCanvas.getClassHeight(), name)
+                gridLayout.addClass(Number(10),Number(10),drawingCanvas.getClassWidth()+10,drawingCanvas.getClassHeight()+10, name)
 
                 //Check if the class has a parent
                 if(parent != "")

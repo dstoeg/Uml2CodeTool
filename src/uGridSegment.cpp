@@ -62,3 +62,13 @@ bool uGridSegment::pivoteMovement(int oldX, int oldY, int newX, int newY)
                              ") to (" + std::to_string(newX) + "," + std::to_string(newY) + ")");
     return false;
 }
+
+int uGridSegment::getLength() const
+{
+    return (int)sqrt((mX_to - mX)*(mX_to - mX) + (mY_to - mY)*(mY_to - mY));
+}
+
+double uGridSegment::getInclination() const
+{
+    return (double)(mX_to - mX)/(double)(mY_to - mY);
+}
