@@ -264,6 +264,28 @@ bool uGridArrow::notifyMovement(const QString &name, int movX, int movY)
     return true;
 }
 
+//void uGridArrow::mergeSegments()
+//{
+//    //Check for flat joints to merge them in one segment
+//    double epsilon = 0.00000000001;
+//    TGridSegmentConstIter iter2 = mSegments.begin();
+//    TGridSegmentConstIter iter;
+//    for(iter = mSegments.begin() + 1; iter != mSegments.end(); iter++)
+//    {
+//        double inclination1 = (*iter2)->getInclination();
+//        double inclination2 =
+//        if(((*iter2)->getInclination() - (*iter)->getInclination()) < epsilon*(*iter2)->getInclination())
+//        {
+//            (*iter2)->setX_to((*iter)->getX_to());
+//            (*iter2)->setY_to((*iter)->getY_to());
+//            mSegments.erase(iter);
+//            mergeSegments();
+//            return;
+//        }
+//        iter2++;
+//    }
+//}
+
 double uGridArrow::distancePointToPoint(int x, int y, int i, int j) const
 {
     return sqrt((double)((x-i)*(x-i) + (y-j)*(y-j)));
