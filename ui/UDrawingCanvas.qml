@@ -657,7 +657,7 @@ Canvas {
     {
         uDebugger.qPrintText("Mouse RELEASED in (" + x +"," + y + ")")
         if(arrowSelected){
-//            gridLayout.mergeSegments(arrowSelectedIndex);
+            gridLayout.mergeSegments(arrowSelectedIndex);
             requestPaint()
         }
         arrowSelected = false;

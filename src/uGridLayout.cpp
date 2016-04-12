@@ -207,10 +207,10 @@ void uGridLayout::modifyArrow(int index, int oldX, int oldY, int newX, int newY)
     mArrows[index]->moveSegments(oldX, oldY, newX, newY);
 }
 
-//void uGridLayout::mergeSegments(int arrowIndex)
-//{
-//    mArrows[arrowIndex]->mergeSegments();
-//}
+void uGridLayout::mergeSegments(int arrowIndex)
+{
+    mArrows[arrowIndex]->mergeSegments();
+}
 
 int uGridLayout::getWidth() const
 {

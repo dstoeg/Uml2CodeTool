@@ -1,5 +1,6 @@
 #include "uGridArrow.h"
 #include "uDebugPrinter.h"
+#include <math.h>
 
 uGridArrow::uGridArrow(QString const& origin, QString const& destination, int type, TGridSegment segments)
 {
@@ -264,27 +265,58 @@ bool uGridArrow::notifyMovement(const QString &name, int movX, int movY)
     return true;
 }
 
-//void uGridArrow::mergeSegments()
-//{
-//    //Check for flat joints to merge them in one segment
-//    double epsilon = 0.00000000001;
-//    TGridSegmentConstIter iter2 = mSegments.begin();
-//    TGridSegmentConstIter iter;
-//    for(iter = mSegments.begin() + 1; iter != mSegments.end(); iter++)
-//    {
+void uGridArrow::mergeSegments()
+{
+    //Check for flat joints to merge them in one segment
+
+    TGridSegmentConstIter iter2 = mSegments.begin();
+    TGridSegmentConstIter iter;
+    for(iter = mSegments.begin() + 1; iter != mSegments.end(); iter++, iter2++)
+    {
 //        double inclination1 = (*iter2)->getInclination();
 //        double inclination2 =
-//        if(((*iter2)->getInclination() - (*iter)->getInclination()) < epsilon*(*iter2)->getInclination())
-//        {
-//            (*iter2)->setX_to((*iter)->getX_to());
-//            (*iter2)->setY_to((*iter)->getY_to());
-//            mSegments.erase(iter);
-//            mergeSegments();
-//            return;
-//        }
-//        iter2++;
-//    }
-//}
+        uDebugPrinter::printText("Trying segments merge");
+        if(similarInclination((*iter2), (*iter)))
+        {
+            uDebugPrinter::printText("Detected segments merge");
+            (*iter2)->setX_to((*iter)->getX_to());
+            (*iter2)->setY_to((*iter)->getY_to());
+            mSegments.erase(iter);
+            mergeSegments();
+            return;
+        }
+        //iter2++;
+    }
+}
+
+bool uGridArrow::similarInclination(const uGridSegment * const seg1, const uGridSegment * const seg2)
+{
+    double epsilon = 0.05;
+
+    int Ax = seg1->getX();
+    int Ay = seg1->getY();
+    int Bx = seg1->getX_to();
+    int By = seg1->getY_to();
+    int Cx = seg2->getX_to();
+    int Cy = seg2->getY_to();
+
+    double dev1, dev2;
+    if(Bx == Ax)
+        dev1 = 0.00000001;
+    else
+        dev1 = Bx - Ax;
+
+    if(Cx == Ax)
+        dev2 = 0.00000001;
+    else
+        dev2 = Cx - Ax;
+
+    double atan1 = atan((By - Ay)/(dev1));
+    double atan2 = atan((Cy - Ay)/(dev2));
+
+    return fabs(atan1 - atan2) < epsilon;
+}
+
 
 double uGridArrow::distancePointToPoint(int x, int y, int i, int j) const
 {

@@ -32,7 +32,7 @@ public:
     Q_INVOKABLE QString getString(int x, int y) const;
     Q_INVOKABLE int getArrowSelected(int x, int y) const;
     Q_INVOKABLE void modifyArrow(int index, int oldX, int oldY, int newX, int newY);
-//    Q_INVOKABLE void mergeSegments(int arrowIndex);
+    Q_INVOKABLE void mergeSegments(int arrowIndex);
 
     Q_INVOKABLE int getWidth() const;
     Q_INVOKABLE int getHeight() const;
